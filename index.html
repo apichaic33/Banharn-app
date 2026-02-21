@@ -1552,10 +1552,10 @@ function rpSetAcc(acc) {
   bh.style.background = acc==='home' ? 'rgba(255,255,255,0.2)' : 'transparent';
   bh.style.borderColor = acc==='home' ? 'rgba(255,255,255,0.55)' : 'transparent';
   bh.style.color = '#FAF0E6'; bh.style.webkitTextFillColor = '#FAF0E6';
-  bf.style.background = acc==='farm' ? 'rgba(255,255,255,0.2)' : 'transparent';
-  bf.style.borderColor = acc==='farm' ? 'rgba(255,255,255,0.55)' : 'transparent';
-  bf.style.color = acc==='farm' ? '#FAF0E6' : 'rgba(250,240,230,0.55)';
-  bf.style.webkitTextFillColor = acc==='farm' ? '#FAF0E6' : 'rgba(250,240,230,0.55)';
+  bf.style.background = acc==='farm' ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)';
+  bf.style.borderColor = acc==='farm' ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.35)';
+  bf.style.color = acc==='farm' ? '#FAF0E6' : 'rgba(250,240,230,0.75)';
+  bf.style.webkitTextFillColor = acc==='farm' ? '#FAF0E6' : 'rgba(250,240,230,0.75)';
   rpRenderCharts();
 }
 
