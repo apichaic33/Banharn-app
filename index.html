@@ -1044,13 +1044,13 @@ width: 100%;
 <div class="modal-overlay" id="modal-debt">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title">บันทึกหนี้สิน</div>
+    <div class="modal-title">บันทึกสินเชื่อ</div>
     <div class="form-group">
-      <label class="form-label">ชื่อเจ้าหนี้ / รายละเอียด</label>
-      <input type="text" class="form-control" id="debt-name" placeholder="เช่น ธ.ก.ส., สหกรณ์">
+      <label class="form-label">ชื่อสินเชื่อ / รายละเอียด</label>
+      <input type="text" class="form-control" id="debt-name" placeholder="เช่น ธ.ก.ส., ธนาคาร,ไฟต์แนนส์ ">
     </div>
     <div class="form-group">
-      <label class="form-label">ยอดหนี้ทั้งหมด (บาท)</label>
+      <label class="form-label">ยอดสินเชื่อทั้งหมด (บาท)</label>
       <input type="number" class="form-control" id="debt-total" placeholder="0.00" inputmode="decimal">
     </div>
     <div class="form-group">
@@ -1065,7 +1065,7 @@ width: 100%;
       <label class="form-label">หมายเหตุ</label>
       <input type="text" class="form-control" id="debt-note" placeholder="ดอกเบี้ย, เงื่อนไข ฯลฯ">
     </div>
-    <button class="btn-primary" id="debt-save-btn" onclick="saveDebt()">บันทึกหนี้สิน</button>
+    <button class="btn-primary" id="debt-save-btn" onclick="saveDebt()">บันทึกสินเชื่อ</button>
     <button class="btn-ghost" onclick="closeModal('modal-debt')">ยกเลิก</button>
   </div>
 </div>
