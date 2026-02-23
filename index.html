@@ -856,6 +856,46 @@ flex: 1;
 width: 100%;
 }
 .search-input::placeholder { color: #A89070 !important; -webkit-text-fill-color: #A89070 !important; }
+
+  /* ── YoY STYLES ── */
+.yoy-kpi-card {
+  background: #FDFAF6;
+  border-radius: 14px;
+  padding: 12px 8px;
+  text-align: center;
+  border: 1px solid #E0D5C4;
+  box-shadow: 0 1px 6px rgba(61,35,20,0.10);
+}
+.yoy-summary-card {
+  background: #FDFAF6;
+  border-radius: 14px;
+  padding: 14px 12px;
+  border: 1px solid #E0D5C4;
+  box-shadow: 0 1px 6px rgba(61,35,20,0.10);
+}
+.yoy-table-header {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  background: #EDE7DB;
+  padding: 10px 12px;
+  border-bottom: 1px solid #E0D5C4;
+}
+.yoy-table-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  padding: 9px 12px;
+  border-bottom: 1px solid #F0E8DB;
+}
+.yoy-table-footer {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  background: #EDE7DB;
+  padding: 10px 12px;
+}
+.yoy-col-label { font-size:11px; font-weight:600; font-family:'Mitr',sans-serif; color:#6C3212!important; -webkit-text-fill-color:#6C3212!important; }
+.yoy-col-inc { font-size:11px; font-weight:600; font-family:'Mitr',sans-serif; color:#4A5E38!important; -webkit-text-fill-color:#4A5E38!important; text-align:right; }
+.yoy-col-exp { font-size:11px; font-weight:600; font-family:'Mitr',sans-serif; color:#7A3020!important; -webkit-text-fill-color:#7A3020!important; text-align:right; }
+
 </style>
 
 </head>
@@ -1104,8 +1144,7 @@ width: 100%;
     <!-- account selector -->
     <div style="display:flex;gap:8px;margin-top:10px;">
       <button id="mg-btn-home" onclick="mgSetAcc('home')"
-        style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.2);border-radius:10px;color:#FAF0E6!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;font-weight:400
-;cursor:pointer;">ครัวเรือน</button>
+        style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.2);border-radius:10px;color:#FAF0E6!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;font-weight:400;cursor:pointer;">ครัวเรือน</button>
       <button id="mg-btn-farm" onclick="mgSetAcc('farm')"
         style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.1);border-radius:10px;color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;font-family:Sarabun,sans-serif;font-size:13px;cursor:pointer;">การเกษตร</button>
     </div>
@@ -1148,18 +1187,73 @@ width: 100%;
         style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.2);border-radius:10px;color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;font-weight:400;cursor:pointer;">ครัวเรือน</button>
       <button id="rp-btn-farm" onclick="rpSetAcc('farm')"
         style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.1);background:transparent;border-radius:10px;color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;font-family:Sarabun,sans-serif;font-size:13px;cursor:pointer;">การเกษตร</button>
+       
+      <!-- Tab bar YoY -->
+    <div style="display:flex;background:rgba(0,0,0,0.18);border-radius:20px;padding:3px;gap:3px;margin-top:10px;">
+      <button id="rp-tab-overview-btn" onclick="rpSwitchTab('overview')" style="flex:1;padding:7px 4px;border:none;border-radius:17px;font-family:Sarabun,sans-serif;font-size:12px;font-weight:600;cursor:pointer;background:rgba(255,255,255,0.22);color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;transition:all 0.18s;">ภาพรวม</button>
+      <button id="rp-tab-yoy-btn" onclick="rpSwitchTab('yoy')" style="flex:1;padding:7px 4px;border:none;border-radius:17px;font-family:Sarabun,sans-serif;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:rgba(250,240,230,0.65)!important;-webkit-text-fill-color:rgba(250,240,230,0.65)!important;transition:all 0.18s;">เปรียบเทียบ YoY</button>
+    </div>
+
     </div>
   </div>
-  <div class="main-content">
-    <div class="chart-box">
-      <div class="chart-title">รายรับ — รายจ่าย 6 เดือนล่าสุด</div>
-      <canvas id="rp-month-chart"></canvas>
+    <div class="main-content">
+
+    <!-- ── TAB: ภาพรวม ── -->
+    <div id="rp-tab-overview" class="tab-content active">
+      <div class="chart-box">
+        <div class="chart-title">รายรับ — รายจ่าย 6 เดือนล่าสุด</div>
+        <canvas id="rp-month-chart"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">รายจ่ายตามหมวดหมู่เดือนนี้</div>
+        <canvas id="rp-cat-chart"></canvas>
+      </div>
     </div>
-    <div class="chart-box">
-      <div class="chart-title">รายจ่ายตามหมวดหมู่เดือนนี้</div>
-      <canvas id="rp-cat-chart"></canvas>
+
+    <!-- ── TAB: YoY ── -->
+    <div id="rp-tab-yoy" class="tab-content">
+
+      <div style="background:#FDFAF6;border-radius:14px;padding:12px 14px;border:1px solid #E0D5C4;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:12px;color:#8A7A68;white-space:nowrap;">เทียบปี</span>
+        <select id="yoy-year-a" onchange="yoyRender()" style="flex:1;padding:7px 10px;border-radius:9px;border:1.5px solid #E0D5C4;background:#F2EDE4;font-family:Mitr,sans-serif;font-size:13px;"></select>
+        <span style="font-size:12px;color:#8A7A68;">vs</span>
+        <select id="yoy-year-b" onchange="yoyRender()" style="flex:1;padding:7px 10px;border-radius:9px;border:1.5px solid #E0D5C4;background:#F2EDE4;font-family:Mitr,sans-serif;font-size:13px;"></select>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+        <div class="yoy-summary-card">
+          <div style="font-size:11px;color:#8A7A68;margin-bottom:6px;" id="yoy-label-a">ปี —</div>
+          <div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;margin-bottom:3px;">รายรับ <span id="yoy-inc-a">0</span></div>
+          <div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#7A3020!important;-webkit-text-fill-color:#7A3020!important;margin-bottom:3px;">รายจ่าย <span id="yoy-exp-a">0</span></div>
+          <div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#2C2010!important;-webkit-text-fill-color:#2C2010!important;">คงเหลือ <span id="yoy-bal-a">0</span></div>
+        </div>
+        <div class="yoy-summary-card">
+          <div style="font-size:11px;color:#8A7A68;margin-bottom:6px;" id="yoy-label-b">ปี —</div>
+          <div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;margin-bottom:3px;">รายรับ <span id="yoy-inc-b">0</span></div>
+          <div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#7A3020!important;-webkit-text-fill-color:#7A3020!important;margin-bottom:3px;">รายจ่าย <span id="yoy-exp-b">0</span></div>
+          <div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#2C2010!important;-webkit-text-fill-color:#2C2010!important;">คงเหลือ <span id="yoy-bal-b">0</span></div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;" id="yoy-kpi-strip"></div>
+
+      <div class="chart-box" style="margin-bottom:12px;">
+        <div class="chart-title">รายรับ — รายจ่าย รายเดือน (เส้นทึบ = ปีที่เลือก / เส้นประ = ปีเทียบ)</div>
+        <canvas id="yoy-month-chart" style="max-height:220px;"></canvas>
+      </div>
+
+      <div class="chart-box" style="margin-bottom:12px;">
+        <div class="chart-title">รายจ่ายตามหมวดหมู่ เปรียบเทียบ 2 ปี</div>
+        <canvas id="yoy-cat-chart" style="max-height:200px;"></canvas>
+      </div>
+
+      <div class="sec-label">ตารางเปรียบเทียบรายเดือน</div>
+      <div style="background:#FDFAF6;border-radius:16px;border:1px solid #E0D5C4;overflow:hidden;margin-bottom:20px;">
+        <div id="yoy-table"></div>
+      </div>
     </div>
   </div>
+
   <!-- ไม่มี FAB -->
 </div>
 
@@ -1560,7 +1654,7 @@ function rpSetAcc(acc) {
   bf.style.borderColor = acc==='farm' ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.35)';
   bf.style.color = acc==='farm' ? '#FAF0E6' : 'rgba(250,240,230,0.75)';
   bf.style.webkitTextFillColor = acc==='farm' ? '#FAF0E6' : 'rgba(250,240,230,0.75)';
-  rpRenderCharts();
+  if (STATE.reportTab === 'yoy') yoyRender(); else rpRenderCharts();
 }
 
 function rpRenderCharts() {
@@ -1827,6 +1921,171 @@ function showToast(msg) {
   t.textContent = msg; t.style.opacity = '1';
   clearTimeout(toastTm);
   toastTm = setTimeout(function(){ t.style.opacity='0'; }, 2500);
+}
+// ============================================================
+// YoY FUNCTIONS
+// ============================================================
+var yoyMChart = null, yoyCChart = null;
+
+function rpSwitchTab(tab) {
+  STATE.reportTab = tab;
+  var ob = document.getElementById('rp-tab-overview-btn');
+  var yb = document.getElementById('rp-tab-yoy-btn');
+  ob.style.background = tab==='overview' ? 'rgba(255,255,255,0.22)' : 'transparent';
+  ob.style.color = tab==='overview' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
+  ob.style.webkitTextFillColor = tab==='overview' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
+  yb.style.background = tab==='yoy' ? 'rgba(255,255,255,0.22)' : 'transparent';
+  yb.style.color = tab==='yoy' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
+  yb.style.webkitTextFillColor = tab==='yoy' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
+  document.getElementById('rp-tab-overview').classList.toggle('active', tab==='overview');
+  document.getElementById('rp-tab-yoy').classList.toggle('active', tab==='yoy');
+  if (tab === 'overview') rpRenderCharts();
+  else { yoyInitYears(); yoyRender(); }
+}
+
+function yoyInitYears() {
+  var years = new Set();
+  var now = new Date().getFullYear();
+  years.add(now); years.add(now - 1);
+  ['home','farm'].forEach(function(acc) {
+    STATE.data[acc].transactions.forEach(function(t) {
+      years.add(new Date(t.date).getFullYear());
+    });
+  });
+  var sorted = Array.from(years).sort(function(a,b){return b-a;});
+  ['yoy-year-a','yoy-year-b'].forEach(function(id, i) {
+    var sel = document.getElementById(id);
+    var cur = parseInt(sel.value) || 0;
+    sel.innerHTML = sorted.map(function(y) {
+      var isSelected = cur ? (y===cur) : (y===sorted[i]);
+      return '<option value="' + y + '" ' + (isSelected ? 'selected' : '') + '>' + (y+543) + '</option>';
+    }).join('');
+  });
+}
+
+function yoyGetYearData(acc, year) {
+  var monthly = Array.from({length:12}, function() { return {inc:0, exp:0}; });
+  var catMap = {};
+  STATE.data[acc].transactions.forEach(function(t) {
+    var d = new Date(t.date);
+    if (d.getFullYear() !== year) return;
+    var m = d.getMonth();
+    if (t.type === 'income') monthly[m].inc += t.amount;
+    else { monthly[m].exp += t.amount; var k = t.category || 'อื่นๆ'; catMap[k] = (catMap[k]||0) + t.amount; }
+  });
+  var totalInc = monthly.reduce(function(s,m){return s+m.inc;}, 0);
+  var totalExp = monthly.reduce(function(s,m){return s+m.exp;}, 0);
+  return { monthly:monthly, catMap:catMap, totalInc:totalInc, totalExp:totalExp };
+}
+
+function yoyCalcPct(a, b) { if (!b || b === 0) return null; return ((a - b) / b) * 100; }
+
+function yoyPctColor(pct, isExpense) {
+  if (pct === null) return '#8A7060';
+  if (isExpense) return pct > 0 ? '#8B3020' : '#4A7A3A';
+  return pct > 0 ? '#4A7A3A' : '#8B3020';
+}
+
+function yoyPctText(pct) {
+  if (pct === null) return 'N/A';
+  return (pct > 0 ? '+' : '') + pct.toFixed(1) + '%';
+}
+
+function yoyRender() {
+  var acc = STATE.reportAcc || 'home';
+  var yearA = parseInt(document.getElementById('yoy-year-a').value);
+  var yearB = parseInt(document.getElementById('yoy-year-b').value);
+  var dA = yoyGetYearData(acc, yearA);
+  var dB = yoyGetYearData(acc, yearB);
+
+  document.getElementById('yoy-label-a').textContent = 'ปี ' + (yearA+543);
+  document.getElementById('yoy-label-b').textContent = 'ปี ' + (yearB+543);
+  document.getElementById('yoy-inc-a').textContent = fmt(dA.totalInc);
+  document.getElementById('yoy-exp-a').textContent = fmt(dA.totalExp);
+  document.getElementById('yoy-bal-a').textContent = fmt(dA.totalInc - dA.totalExp);
+  document.getElementById('yoy-inc-b').textContent = fmt(dB.totalInc);
+  document.getElementById('yoy-exp-b').textContent = fmt(dB.totalExp);
+  document.getElementById('yoy-bal-b').textContent = fmt(dB.totalInc - dB.totalExp);
+
+  var kpis = [
+    { label:'รายรับ', pct:yoyCalcPct(dA.totalInc, dB.totalInc), isExp:false },
+    { label:'รายจ่าย', pct:yoyCalcPct(dA.totalExp, dB.totalExp), isExp:true },
+    { label:'คงเหลือ', pct:yoyCalcPct(dA.totalInc-dA.totalExp, dB.totalInc-dB.totalExp), isExp:false }
+  ];
+  document.getElementById('yoy-kpi-strip').innerHTML = kpis.map(function(k) {
+    var arrow = k.pct === null ? '\u2014' : (k.pct > 0 ? '\u25b2' : '\u25bc');
+    var clr = yoyPctColor(k.pct, k.isExp);
+    return '<div class="yoy-kpi-card">'
+      + '<div style="font-size:11px;color:#8A7A68;margin-bottom:4px;">' + k.label + '</div>'
+      + '<div style="font-family:Mitr,sans-serif;font-size:18px;font-weight:600;color:' + clr + '!important;-webkit-text-fill-color:' + clr + '!important;">' + arrow + ' ' + yoyPctText(k.pct) + '</div>'
+      + '<div style="font-size:10px;color:#8A7A68;margin-top:2px;">เทียบปีก่อน</div></div>';
+  }).join('');
+
+  if (yoyMChart) yoyMChart.destroy();
+  yoyMChart = new Chart(document.getElementById('yoy-month-chart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: MONTHS_TH.map(function(m){return m.slice(0,3);}),
+      datasets: [
+        { label:'รายรับ '+(yearA+543), data:dA.monthly.map(function(m){return m.inc;}), borderColor:'#4A7A3A', backgroundColor:'rgba(74,122,58,0.08)', borderWidth:2, pointRadius:3, tension:0.3 },
+        { label:'รายรับ '+(yearB+543), data:dB.monthly.map(function(m){return m.inc;}), borderColor:'#4A7A3A', backgroundColor:'transparent', borderWidth:2, borderDash:[5,4], pointRadius:3, tension:0.3 },
+        { label:'รายจ่าย '+(yearA+543), data:dA.monthly.map(function(m){return m.exp;}), borderColor:'#8B3020', backgroundColor:'rgba(139,48,32,0.08)', borderWidth:2, pointRadius:3, tension:0.3 },
+        { label:'รายจ่าย '+(yearB+543), data:dB.monthly.map(function(m){return m.exp;}), borderColor:'#8B3020', backgroundColor:'transparent', borderWidth:2, borderDash:[5,4], pointRadius:3, tension:0.3 }
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{ labels:{ font:{family:'Sarabun',size:11}, boxWidth:12, padding:8 } } },
+      scales:{ x:{grid:{display:false}}, y:{grid:{color:'#C8C0B0'}, ticks:{callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}}} }
+    }
+  });
+
+  var allCats = Array.from(new Set(Object.keys(dA.catMap).concat(Object.keys(dB.catMap))));
+  if (yoyCChart) yoyCChart.destroy();
+  yoyCChart = new Chart(document.getElementById('yoy-cat-chart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: allCats,
+      datasets: [
+        { label:(yearA+543)+'', data:allCats.map(function(c){return dA.catMap[c]||0;}), backgroundColor:'rgba(139,48,32,0.80)', borderRadius:4 },
+        { label:(yearB+543)+'', data:allCats.map(function(c){return dB.catMap[c]||0;}), backgroundColor:'rgba(200,118,41,0.70)', borderRadius:4 }
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{ labels:{ font:{family:'Sarabun',size:11}, boxWidth:10, padding:8 } } },
+      scales:{ x:{grid:{display:false}, ticks:{font:{family:'Sarabun',size:10}}}, y:{grid:{color:'#C8C0B0'}, ticks:{callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}}} }
+    }
+  });
+
+  var rows = '<div class="yoy-table-header">'
+    + '<div class="yoy-col-label">เดือน</div>'
+    + '<div class="yoy-col-inc" style="font-size:10px;">รายรับ '+(yearA+543)+'</div>'
+    + '<div class="yoy-col-inc" style="font-size:10px;opacity:0.7;">รายรับ '+(yearB+543)+'</div>'
+    + '<div class="yoy-col-exp" style="font-size:10px;">\u0394 รายรับ</div>'
+    + '</div>';
+
+  MONTHS_TH.forEach(function(mn, i) {
+    var mA = dA.monthly[i], mB = dB.monthly[i];
+    var bg = i % 2 === 0 ? '#FDFAF6' : '#F5EFE6';
+    var delta = mA.inc - mB.inc;
+    var deltaClr = delta >= 0 ? '#4A5E38' : '#7A3020';
+    rows += '<div class="yoy-table-row" style="background:' + bg + ';">'
+      + '<div style="font-size:12px;font-family:Sarabun,sans-serif;color:#2A1A0E;font-weight:500;">' + mn.slice(0,3) + '</div>'
+      + '<div style="font-size:12px;font-family:Mitr,sans-serif;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;text-align:right;">' + (mA.inc ? fmt(mA.inc) : '\u2014') + '</div>'
+      + '<div style="font-size:12px;font-family:Mitr,sans-serif;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;text-align:right;opacity:0.6;">' + (mB.inc ? fmt(mB.inc) : '\u2014') + '</div>'
+      + '<div style="font-size:12px;font-family:Mitr,sans-serif;color:' + deltaClr + '!important;-webkit-text-fill-color:' + deltaClr + '!important;text-align:right;">' + (mA.inc||mB.inc ? (delta>=0?'+':'')+fmt(delta) : '\u2014') + '</div>'
+      + '</div>';
+  });
+
+  var totalDelta = dA.totalInc - dB.totalInc;
+  var totalDeltaClr = totalDelta >= 0 ? '#4A5E38' : '#7A3020';
+  rows += '<div class="yoy-table-footer">'
+    + '<div class="yoy-col-label">รวม</div>'
+    + '<div class="yoy-col-inc">' + fmt(dA.totalInc) + '</div>'
+    + '<div class="yoy-col-inc" style="opacity:0.7;">' + fmt(dB.totalInc) + '</div>'
+    + '<div style="font-size:12px;font-family:Mitr,sans-serif;font-weight:600;color:' + totalDeltaClr + '!important;-webkit-text-fill-color:' + totalDeltaClr + '!important;text-align:right;">' + (totalDelta>=0?'+':'') + fmt(totalDelta) + '</div>'
+    + '</div>';
+
+  document.getElementById('yoy-table').innerHTML = rows;
 }
 
 init();
