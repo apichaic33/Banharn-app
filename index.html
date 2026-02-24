@@ -1795,7 +1795,7 @@
     <div class="main-content">
 
       <!-- ── ภาพรวม ── -->
-      <div id="rp-tab-overview">
+      <div id="rp-tab-overview" class="tab-content active">
         <div class="chart-box">
           <div class="chart-title">รายรับ — รายจ่าย 6 เดือนล่าสุด</div>
           <canvas id="rp-month-chart"></canvas>
@@ -1807,7 +1807,7 @@
       </div>
 
       <!-- ── TAB: YoY ── -->
-      <div id="rp-tab-yoy">
+      <div id="rp-tab-yoy" class="tab-content">
         <div class="sec-label" style="margin-top:4px;">เปรียบเทียบปีต่อปี (YoY)</div>
 
         <div
@@ -2567,9 +2567,11 @@
       yb.style.background = tab === 'yoy' ? 'rgba(255,255,255,0.22)' : 'transparent';
       yb.style.color = tab === 'yoy' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
       yb.style.webkitTextFillColor = tab === 'yoy' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
-      var target = document.getElementById(tab === 'yoy' ? 'rp-tab-yoy' : 'rp-tab-overview');
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (tab === 'yoy') { yoyInitYears(); yoyRender(); }
+      document.getElementById('rp-tab-overview').classList.toggle('active', tab === 'overview');
+      document.getElementById('rp-tab-yoy').classList.toggle('active', tab === 'yoy');
+      window.scrollTo(0, 0);
+      if (tab === 'overview') rpRenderCharts();
+      else { yoyInitYears(); yoyRender(); }
     }
 
     function yoyInitYears() {
