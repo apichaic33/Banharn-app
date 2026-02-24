@@ -2667,7 +2667,7 @@
         },
         options: {
           responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 12, padding: 6 } } },
+          plugins: { legend: { labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 10, padding: 6, useBorderRadius: false }, maxWidth: 160 } },
           scales: {
             x: { grid: { display: false } },
             yInc: { position: 'left', grid: { color: '#C8C0B0' }, ticks: { callback: function (v) { return v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v; } }, title: { display: true, text: 'รายรับ', font: { family: 'Sarabun', size: 10 }, color: '#4A7A3A' } },
