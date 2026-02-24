@@ -1851,7 +1851,8 @@
         </div>
 
         <div class="chart-box" style="margin-bottom:12px;">
-          <div class="chart-title">รายรับ — รายจ่าย รายเดือน (เส้นทึบ = ปีที่เลือก / เส้นประ = ปีเทียบ)</div>
+          <div class="chart-title">รายรับ — รายจ่าย รายเดือน<br><span style="font-size:11px;font-weight:400;">(เส้นทึบ =
+              ปีที่เลือก / เส้นประ = ปีเทียบ)</span></div>
           <canvas id="yoy-month-chart" style="max-height:220px;"></canvas>
         </div>
 
@@ -2618,7 +2619,7 @@
     }
 
     function yoyPctText(pct) {
-      if (pct === null) return 'N/A';
+      if (pct === null) return '—';
       return (pct > 0 ? '+' : '') + pct.toFixed(1) + '%';
     }
 
@@ -2684,7 +2685,7 @@
         },
         options: {
           responsive: true, maintainAspectRatio: true,
-          plugins: { legend: { labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 10, padding: 8 } } },
+          plugins: { legend: { labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 12, padding: 8, boxHeight: 12 }, maxWidth: 180 } },
           scales: { x: { grid: { display: false }, ticks: { font: { family: 'Sarabun', size: 10 } } }, y: { grid: { color: '#C8C0B0' }, ticks: { callback: function (v) { return v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v; } } } }
         }
       });
