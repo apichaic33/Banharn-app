@@ -2527,17 +2527,31 @@
     // NAVIGATION
     // ============================================================
     var PAGE_SCROLL = {};
-    function showPage(id) {
-      document.querySelectorAll('.page.active').forEach(function (p) {
-        PAGE_SCROLL[p.id] = window.scrollY || window.pageYOffset;
-      });
-      document.querySelectorAll('.page').forEach(function (p) {
-        p.classList.remove('active');
-      });
-      document.getElementById(id).classList.add('active');
-      var savedY = PAGE_SCROLL[id] !== undefined ? PAGE_SCROLL[id] : 0;
-      window.scrollTo(0, savedY);
-    }
+function showPage(id) {
+  // บันทึก scroll ของหน้าปัจจุบัน (ทุก browser)
+  var currentY = window.pageYOffset 
+    || window.scrollY 
+    || document.documentElement.scrollTop 
+    || document.body.scrollTop 
+    || 0;
+  document.querySelectorAll('.page.active').forEach(function(p) {
+    PAGE_SCROLL[p.id] = currentY;
+  });
+  // ซ่อนทุกหน้า
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  // แสดงหน้าใหม่
+  document.getElementById(id).classList.add('active');
+  // คืน scroll (รอ DOM render ก่อน)
+  var savedY = PAGE_SCROLL[id] !== undefined ? PAGE_SCROLL[id] : 0;
+  setTimeout(function() {
+    window.scrollTo(0, savedY);
+    document.documentElement.scrollTop = savedY;
+    document.body.scrollTop = savedY;
+  }, 10);
+}
+
 
     // ============================================================
     // TOAST
