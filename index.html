@@ -2527,6 +2527,13 @@
     // ============================================================
     // NAVIGATION
     // ============================================================
+    function goHome() {
+      PAGE_SCROLL = {};
+      showPage('page-home');
+      updateNavActive(0);
+      renderHomePage();
+    }
+
     function goToDebtPage() {
       PAGE_SCROLL = {};
       showPage('page-manage');
@@ -2534,37 +2541,43 @@
       mgSetAcc(STATE.manageAcc || 'home');
     }
 
+    function goToReportPage() {
+      PAGE_SCROLL = {};
+      showPage('page-report');
+      updateNavActive(2);
+      rpSetAcc(STATE.reportAcc || STATE.currentAccount || 'home');
+      yoyInitYears();
+      yoyRender();
+    }
+
     function updateNavActive(idx) {
       document.querySelectorAll('.nav-btn').forEach(function(b, i) {
         b.classList.toggle('active', i === idx);
       });
     }
-    var PAGE_SCROLL = {};
-    function showPage(id) {
-  // บันทึก scroll ของหน้าปัจจุบัน (ทุก browser)
-  var currentY = window.pageYOffset 
-    || window.scrollY 
-    || document.documentElement.scrollTop 
-    || document.body.scrollTop 
-    || 0;
-  document.querySelectorAll('.page.active').forEach(function(p) {
-    PAGE_SCROLL[p.id] = currentY;
-  });
-  // ซ่อนทุกหน้า
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('active');
-  });
-  // แสดงหน้าใหม่
-  document.getElementById(id).classList.add('active');
-  // คืน scroll (รอ DOM render ก่อน)
-  var savedY = PAGE_SCROLL[id] !== undefined ? PAGE_SCROLL[id] : 0;
-  setTimeout(function() {
-    window.scrollTo(0, savedY);
-    document.documentElement.scrollTop = savedY;
-    document.body.scrollTop = savedY;
-  }, 10);
-}
 
+    var PAGE_SCROLL = {};
+
+    function showPage(id) {
+      var currentY = window.pageYOffset
+        || window.scrollY
+        || document.documentElement.scrollTop
+        || document.body.scrollTop
+        || 0;
+      document.querySelectorAll('.page.active').forEach(function(p) {
+        PAGE_SCROLL[p.id] = currentY;
+      });
+      document.querySelectorAll('.page').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+      var savedY = PAGE_SCROLL[id] !== undefined ? PAGE_SCROLL[id] : 0;
+      setTimeout(function() {
+        window.scrollTo(0, savedY);
+        document.documentElement.scrollTop = savedY;
+        document.body.scrollTop = savedY;
+      }, 10);
+    }
 
     // ============================================================
     // TOAST
