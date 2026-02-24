@@ -101,12 +101,12 @@
       background: #6C3212;
       color: #FAF0E6;
       padding: 18px 20px 22px;
-      position: relative;
+      position: sticky;
+      top: 0;
       z-index: 100;
       border-radius: 0 0 28px 28px;
       box-shadow: 0 6px 24px rgba(61, 35, 20, 0.22);
       margin-bottom: 0;
-      flex-shrink: 0;
     }
 
     .header-row {
@@ -166,9 +166,6 @@
     .main-content {
       padding: 16px 15px 100px;
       margin-top: 0;
-      flex: 1;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
     }
 
     /* ── CARD ── */
@@ -443,12 +440,10 @@
     /* ── PAGES ── */
     .page {
       display: none;
-      height: 100vh;
-      flex-direction: column;
     }
 
     .page.active {
-      display: flex;
+      display: block;
     }
 
     /* ── ACCOUNT PAGE HEADER ── */
@@ -456,7 +451,7 @@
       background: #6C3212;
       color: #FAF0E6;
       padding: 16px 16px 20px;
-      position: relative;
+      position: sticky;
       top: 0;
       z-index: 100;
       border-radius: 0 0 28px 28px;
@@ -2532,13 +2527,9 @@
     function showPage(id) {
       document.querySelectorAll('.page').forEach(function (p) {
         p.classList.remove('active');
-        var mc = p.querySelector('.main-content');
-        if (mc) mc.scrollTop = 0;
       });
-      var el = document.getElementById(id);
-      el.classList.add('active');
-      var mc = el.querySelector('.main-content');
-      if (mc) mc.scrollTop = 0;
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
     }
     function goHome() { showPage('page-home'); updateNavActive(0); renderHomePage(); }
     function updateNavActive(idx) {
