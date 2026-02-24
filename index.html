@@ -1909,6 +1909,7 @@
     // CONSTANTS
     // ============================================================
     var MONTHS_TH = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+    var MONTHS_SHORT = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
     var DAYS_TH = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์'];
     var CATEGORIES = {
       home: {
@@ -2657,7 +2658,7 @@
       yoyMChart = new Chart(document.getElementById('yoy-month-chart').getContext('2d'), {
         type: 'line',
         data: {
-          labels: MONTHS_TH.map(function (m) { return m.slice(0, 3); }),
+          labels: MONTHS_SHORT,
           datasets: [
             { label: 'รายรับ ' + (yearA + 543), data: dA.monthly.map(function (m) { return m.inc; }), borderColor: '#4A7A3A', backgroundColor: 'rgba(74,122,58,0.08)', borderWidth: 2, pointRadius: 3, tension: 0.3, yAxisID: 'yInc' },
             { label: 'รายรับ ' + (yearB + 543), data: dB.monthly.map(function (m) { return m.inc; }), borderColor: '#4A7A3A', backgroundColor: 'transparent', borderWidth: 2, borderDash: [5, 4], pointRadius: 3, tension: 0.3, yAxisID: 'yInc' },
@@ -2701,13 +2702,13 @@
         + '<div class="yoy-col-exp" style="font-size:10px;">\u0394 รายรับ</div>'
         + '</div>';
 
-      MONTHS_TH.forEach(function (mn, i) {
+      MONTHS_SHORT.forEach(function (mn, i) {
         var mA = dA.monthly[i], mB = dB.monthly[i];
         var bg = i % 2 === 0 ? '#FDFAF6' : '#F5EFE6';
         var delta = mA.inc - mB.inc;
         var deltaClr = delta >= 0 ? '#4A5E38' : '#7A3020';
         rows += '<div class="yoy-table-row" style="background:' + bg + ';">'
-          + '<div style="font-size:12px;font-family:Sarabun,sans-serif;color:#2A1A0E;font-weight:500;">' + mn.slice(0, 3) + '</div>'
+          + '<div style="font-size:12px;font-family:Sarabun,sans-serif;color:#2A1A0E;font-weight:500;">' + mn + '</div>'
           + '<div style="font-size:12px;font-family:Mitr,sans-serif;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;text-align:right;">' + (mA.inc ? fmt(mA.inc) : '\u2014') + '</div>'
           + '<div style="font-size:12px;font-family:Mitr,sans-serif;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;text-align:right;opacity:0.6;">' + (mB.inc ? fmt(mB.inc) : '\u2014') + '</div>'
           + '<div style="font-size:12px;font-family:Mitr,sans-serif;color:' + deltaClr + '!important;-webkit-text-fill-color:' + deltaClr + '!important;text-align:right;">' + (mA.inc || mB.inc ? (delta >= 0 ? '+' : '') + fmt(delta) : '\u2014') + '</div>'
