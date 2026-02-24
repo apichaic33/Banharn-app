@@ -2260,6 +2260,7 @@
     // REPORT PAGE
     // ============================================================
     function goToReportPage() {
+      PAGE_SCROLL = {};
       showPage('page-report');
       updateNavActive(2);
       rpSetAcc(STATE.reportAcc || STATE.currentAccount || 'home');
@@ -2526,11 +2527,11 @@
     // ============================================================
     // NAVIGATION
     // ============================================================
-        function goHome() {
-      PAGE_SCROLL['page-home'] = 0;
-      showPage('page-home');
-      updateNavActive(0);
-      renderHomePage();
+    function goToDebtPage() {
+      PAGE_SCROLL = {};
+      showPage('page-manage');
+      updateNavActive(1);
+      mgSetAcc(STATE.manageAcc || 'home');
     }
 
     function updateNavActive(idx) {
@@ -2539,7 +2540,7 @@
       });
     }
     var PAGE_SCROLL = {};
-function showPage(id) {
+    function showPage(id) {
   // บันทึก scroll ของหน้าปัจจุบัน (ทุก browser)
   var currentY = window.pageYOffset 
     || window.scrollY 
