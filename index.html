@@ -2526,16 +2526,17 @@
     // ============================================================
     // NAVIGATION
     // ============================================================
+    var PAGE_SCROLL = {};
     function showPage(id) {
+      document.querySelectorAll('.page.active').forEach(function (p) {
+        PAGE_SCROLL[p.id] = window.scrollY || window.pageYOffset;
+      });
       document.querySelectorAll('.page').forEach(function (p) {
         p.classList.remove('active');
       });
       document.getElementById(id).classList.add('active');
-      window.scrollTo(0, 0);
-    }
-    function goHome() { showPage('page-home'); updateNavActive(0); renderHomePage(); }
-    function updateNavActive(idx) {
-      document.querySelectorAll('.nav-btn').forEach(function (b, i) { b.classList.toggle('active', i === idx); });
+      var savedY = PAGE_SCROLL[id] !== undefined ? PAGE_SCROLL[id] : 0;
+      window.scrollTo(0, savedY);
     }
 
     // ============================================================
