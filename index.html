@@ -441,6 +441,9 @@
     /* ── PAGES ── */
     .page {
       display: none;
+      height: 100vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .page.active {
@@ -2526,11 +2529,13 @@
     // NAVIGATION
     // ============================================================
     function showPage(id) {
-      document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
+      document.querySelectorAll('.page').forEach(function (p) {
+        p.classList.remove('active');
+        p.scrollTop = 0;
+      });
       var el = document.getElementById(id);
       el.classList.add('active');
-      var mc = el.querySelector('.main-content');
-      if (mc) mc.scrollTop = 0;
+      el.scrollTop = 0;
       window.scrollTo(0, 0);
     }
     function goHome() { showPage('page-home'); updateNavActive(0); renderHomePage(); }
