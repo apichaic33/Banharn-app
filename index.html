@@ -1196,7 +1196,7 @@ width: 100%;
     </div>
 
     <!-- ── TAB: ภาพรวม ── -->
-    <div id="rp-tab-overview" class="tab-content active">
+    <div id="rp-tab-overview">
       <div class="chart-box">
         <div class="chart-title">รายรับ — รายจ่าย 6 เดือนล่าสุด</div>
         <canvas id="rp-month-chart"></canvas>
@@ -1208,7 +1208,8 @@ width: 100%;
     </div>
 
     <!-- ── TAB: YoY ── -->
-    <div id="rp-tab-yoy" class="tab-content">
+    <div id="rp-tab-yoy">
+      <div class="sec-label" style="margin-top:4px;">เปรียบเทียบปีต่อปี (YoY)</div>
 
       <div style="background:#FDFAF6;border-radius:14px;padding:12px 14px;border:1px solid #E0D5C4;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
         <span style="font-size:12px;color:#8A7A68;white-space:nowrap;">เทียบปี</span>
@@ -1631,10 +1632,12 @@ function mgPayDebt(i) {
 // ============================================================
 // REPORT PAGE
 // ============================================================
-function goToReportPage() {
+ffunction goToReportPage() {
   showPage('page-report');
   updateNavActive(2);
   rpSetAcc(STATE.reportAcc || STATE.currentAccount || 'home');
+  yoyInitYears();
+  yoyRender();
 }
 
 var rpMChart = null, rpCChart = null;
@@ -1934,10 +1937,9 @@ function rpSwitchTab(tab) {
   yb.style.background = tab==='yoy' ? 'rgba(255,255,255,0.22)' : 'transparent';
   yb.style.color = tab==='yoy' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
   yb.style.webkitTextFillColor = tab==='yoy' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
-  document.getElementById('rp-tab-overview').classList.toggle('active', tab==='overview');
-  document.getElementById('rp-tab-yoy').classList.toggle('active', tab==='yoy');
-  if (tab === 'overview') rpRenderCharts();
-  else { yoyInitYears(); yoyRender(); }
+  var target = document.getElementById(tab==='yoy' ? 'rp-tab-yoy' : 'rp-tab-overview');
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (tab === 'yoy') { yoyInitYears(); yoyRender(); }
 }
 
 function yoyInitYears() {
