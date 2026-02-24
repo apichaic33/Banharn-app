@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ดู<!DOCTYPE html>
 
 <html lang="th">
 
@@ -2557,20 +2557,23 @@
     }
 
     function showPage(id) {
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('active');
-  });
-  document.getElementById(id).classList.add('active');
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-  window.scrollTo(0, 0);
-  setTimeout(function() {
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.scrollTo(0, 0);
-  }, 50);
-}
-
+      document.querySelectorAll('.page').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+      console.log('scrollY before:', window.scrollY);
+      requestAnimationFrame(function() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        requestAnimationFrame(function() {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          console.log('scrollY after:', window.scrollY);
+        });
+      });
+    }
 
     // ============================================================
     // TOAST
