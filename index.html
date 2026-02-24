@@ -1459,12 +1459,6 @@
       display: block;
     }
 
-    .page-scroll {
-      height: calc(100vh - 0px);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
   </style>
 
 </head>
@@ -1473,8 +1467,7 @@
 
   <!-- ═══════════════════════ HOME PAGE ═══════════════════════ -->
 
-   <div id="page-home" class="page active">
-    <div class="page-scroll">
+    <div id="page-home" class="page active">
     <div class="app-header">
       <div class="header-row">
         <div>
@@ -2573,25 +2566,19 @@
 
     var PAGE_SCROLL = {};
 
-    function showPage(id) {
-      var currentY = window.pageYOffset
-        || window.scrollY
-        || document.documentElement.scrollTop
-        || document.body.scrollTop
-        || 0;
-      document.querySelectorAll('.page.active').forEach(function(p) {
-        PAGE_SCROLL[p.id] = currentY;
-      });
+        function showPage(id) {
       document.querySelectorAll('.page').forEach(function(p) {
         p.classList.remove('active');
       });
       document.getElementById(id).classList.add('active');
-      var savedY = PAGE_SCROLL[id] !== undefined ? PAGE_SCROLL[id] : 0;
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo(0, 0);
       setTimeout(function() {
-        window.scrollTo(0, savedY);
-        document.documentElement.scrollTop = savedY;
-        document.body.scrollTop = savedY;
-      }, 10);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.scrollTo(0, 0);
+      }, 50);
     }
 
     // ============================================================
