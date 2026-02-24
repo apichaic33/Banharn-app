@@ -10,29 +10,18 @@
   <link rel="stylesheet" href="shared.css">
 </head>
 <body>
-
-  <!-- HEADER -->
-
   <div class="app-header">
     <div class="header-row">
       <div>
-        <div class="app-title">บัญชีครัวเรือน & เกษตร</div>
+        <div class="app-title">บัญชีครัวเรือน &amp; เกษตร</div>
         <div class="header-date" id="header-date"></div>
-        <div class="sync-row">
-          <div class="sync-dot" id="sync-dot"></div>
-          <span id="sync-text">พร้อมใช้งาน</span>
-        </div>
+        <div class="sync-row"><div class="sync-dot" id="sync-dot"></div><span id="sync-text">พร้อมใช้งาน</span></div>
       </div>
-      <button class="icon-btn" onclick="openModal('modal-settings')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-        </svg>
+      <button class="icon-btn" onclick="openSettings()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
     </div>
   </div>
-
-  <!-- CONTENT -->
 
   <div class="main-content">
     <div class="sec-label">ภาพรวมเดือนนี้</div>
@@ -41,54 +30,36 @@
       <div class="sum-card"><div class="sum-label">รายจ่ายรวม</div><div class="sum-value expense" id="total-expense">0</div></div>
       <div class="sum-card"><div class="sum-label">คงเหลือ</div><div class="sum-value pos" id="total-balance">0</div></div>
     </div>
-
-```
-<div class="sec-label">เลือกบัญชี</div>
-<div class="account-grid">
-  <button class="account-btn home" onclick="openQuickAdd('home')">
-    <span class="acc-name">ครัวเรือน</span>
-    <div class="acc-line"></div>
-    <span class="acc-balance" id="home-balance">คงเหลือ —</span>
-    <span class="acc-view-link" onclick="viewAccount('home',event)">ดูรายการ →</span>
-  </button>
-  <button class="account-btn farm" onclick="openQuickAdd('farm')">
-    <span class="acc-name">การเกษตร</span>
-    <div class="acc-line"></div>
-    <span class="acc-balance" id="farm-balance">คงเหลือ —</span>
-    <span class="acc-view-link" onclick="viewAccount('farm',event)">ดูรายการ →</span>
-  </button>
-</div>
-
-<div class="sec-label">การแจ้งเตือน</div>
-<div class="alert-list" id="alert-list">
-  <div class="no-item">ไม่มีรายการแจ้งเตือน</div>
-</div>
-```
-
+    <div class="sec-label">เลือกบัญชี</div>
+    <div class="account-grid">
+      <button class="account-btn home" onclick="openQuickAdd('home')">
+        <span class="acc-name">ครัวเรือน</span><div class="acc-line"></div>
+        <span class="acc-balance" id="home-balance">คงเหลือ —</span>
+        <span class="acc-view-link" onclick="viewAccount('home',event)">ดูรายการ →</span>
+      </button>
+      <button class="account-btn farm" onclick="openQuickAdd('farm')">
+        <span class="acc-name">การเกษตร</span><div class="acc-line"></div>
+        <span class="acc-balance" id="farm-balance">คงเหลือ —</span>
+        <span class="acc-view-link" onclick="viewAccount('farm',event)">ดูรายการ →</span>
+      </button>
+    </div>
+    <div class="sec-label">การแจ้งเตือน</div>
+    <div class="alert-list" id="alert-list"><div class="no-item">ไม่มีรายการแจ้งเตือน</div></div>
   </div>
 
   <!-- MODAL: ดูรายการบัญชี -->
 
   <div class="modal-overlay" id="modal-view-acc" style="align-items:flex-end;padding:0;">
     <div style="background:#F5EFE6;border-radius:28px 28px 0 0;width:100%;max-width:480px;margin:0 auto;height:92vh;display:flex;flex-direction:column;animation:slideUp 0.25s ease;box-shadow:0 -4px 32px rgba(61,35,20,0.18);">
-      <div id="view-acc-hdr" style="background:#9C4722;border-radius:28px 28px 0 0;padding:16px 20px 16px;flex-shrink:0;">
+      <div id="view-acc-hdr" style="background:#9C4722;border-radius:28px 28px 0 0;padding:16px 20px;flex-shrink:0;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
           <span id="view-acc-title" style="font-family:Mitr,sans-serif;font-size:20px;font-weight:600;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">ครัวเรือน</span>
           <button onclick="closeModal('modal-view-acc')" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.22);border:none;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;">
-            <div style="font-size:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;opacity:.85;">รายรับ</div>
-            <div id="view-sum-inc" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#4A7A3A!important;-webkit-text-fill-color:#4A7A3A!important;margin-top:2px;">0</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;">
-            <div style="font-size:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;opacity:.85;">รายจ่าย</div>
-            <div id="view-sum-exp" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#8B3020!important;-webkit-text-fill-color:#8B3020!important;margin-top:2px;">0</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;">
-            <div style="font-size:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;opacity:.85;">คงเหลือ</div>
-            <div id="view-sum-bal" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;margin-top:2px;">0</div>
-          </div>
+          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;opacity:.85;">รายรับ</div><div id="view-sum-inc" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#4A7A3A!important;-webkit-text-fill-color:#4A7A3A!important;margin-top:2px;">0</div></div>
+          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;opacity:.85;">รายจ่าย</div><div id="view-sum-exp" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#8B3020!important;-webkit-text-fill-color:#8B3020!important;margin-top:2px;">0</div></div>
+          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;opacity:.85;">คงเหลือ</div><div id="view-sum-bal" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;margin-top:2px;">0</div></div>
         </div>
       </div>
       <div style="flex:1;overflow-y:auto;padding:16px 20px 40px;">
@@ -121,26 +92,11 @@
         <button class="type-btn active-income" id="btn-income" onclick="setType('income')">รายรับ</button>
         <button class="type-btn" id="btn-expense" onclick="setType('expense')">รายจ่าย</button>
       </div>
-      <div class="form-group">
-        <label class="form-label">จำนวนเงิน (บาท)</label>
-        <input type="number" class="form-control" id="input-amount" placeholder="0.00" inputmode="decimal">
-      </div>
-      <div class="form-group">
-        <label class="form-label">รายการ / คำอธิบาย</label>
-        <input type="text" class="form-control" id="input-desc" placeholder="เช่น ค่าไฟ, ขายข้าว">
-      </div>
-      <div class="form-group">
-        <label class="form-label">หมวดหมู่</label>
-        <select class="form-control" id="input-category"><option value="">เลือกหมวดหมู่</option></select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">วันที่</label>
-        <input type="date" class="form-control" id="input-date">
-      </div>
-      <div class="form-group">
-        <label class="form-label">หมายเหตุ</label>
-        <input type="text" class="form-control" id="input-note" placeholder="ไม่บังคับ">
-      </div>
+      <div class="form-group"><label class="form-label">จำนวนเงิน (บาท)</label><input type="number" class="form-control" id="input-amount" placeholder="0.00" inputmode="decimal"></div>
+      <div class="form-group"><label class="form-label">รายการ / คำอธิบาย</label><input type="text" class="form-control" id="input-desc" placeholder="เช่น ค่าไฟ, ขายข้าว"></div>
+      <div class="form-group"><label class="form-label">หมวดหมู่</label><select class="form-control" id="input-category"><option value="">เลือกหมวดหมู่</option></select></div>
+      <div class="form-group"><label class="form-label">วันที่</label><input type="date" class="form-control" id="input-date"></div>
+      <div class="form-group"><label class="form-label">หมายเหตุ</label><input type="text" class="form-control" id="input-note" placeholder="ไม่บังคับ"></div>
       <button class="btn-primary" id="save-trans-btn" onclick="saveTransaction()">บันทึกรายการ</button>
       <button class="btn-ghost" onclick="closeModal('modal-add')">ยกเลิก</button>
     </div>
@@ -152,16 +108,8 @@
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">ตั้งค่าการเชื่อมต่อ</div>
-      <div class="info-box">
-        <strong>วิธีเชื่อมต่อ Google Sheets</strong><br>
-        1. นำไฟล์ gas-backend.gs ไปวางใน Apps Script<br>
-        2. ใส่ Spreadsheet ID และรัน setupSheets()<br>
-        3. Deploy เป็น Web App แล้วคัดลอก URL มาใส่ด้านล่าง
-      </div>
-      <div class="form-group">
-        <label class="form-label">Google Apps Script Web App URL</label>
-        <input type="url" class="form-control" id="gas-url" placeholder="https://script.google.com/macros/s/...">
-      </div>
+      <div class="info-box"><strong>วิธีเชื่อมต่อ Google Sheets</strong><br>1. นำไฟล์ gas-backend.gs ไปวางใน Apps Script<br>2. ใส่ Spreadsheet ID และรัน setupSheets()<br>3. Deploy เป็น Web App แล้วคัดลอก URL มาใส่ด้านล่าง</div>
+      <div class="form-group"><label class="form-label">Google Apps Script Web App URL</label><input type="url" class="form-control" id="gas-url" placeholder="https://script.google.com/macros/s/..."></div>
       <button class="btn-primary" onclick="saveSettings()">บันทึกและทดสอบการเชื่อมต่อ</button>
       <div id="connection-result" style="margin-top:10px;text-align:center;font-size:13px;color:var(--text-sub);"></div>
       <button class="btn-ghost" onclick="closeModal('modal-settings')">ปิด</button>
@@ -188,124 +136,75 @@
   <script src="shared.js"></script>
 
   <script>
-    var DATA = loadData();
-    var viewAcc = 'home', viewYear = new Date().getFullYear(), viewMonth = new Date().getMonth(), viewFilterMode = 'all', viewSearchText = '';
-    var currentAccount = 'home', transType = 'income';
-    var gasUrl = localStorage.getItem('gasUrl') || '';
+    var DATA={}, STATE={currentAccount:'home',transType:'income',viewAcc:'home',viewYear:new Date().getFullYear(),viewMonth:new Date().getMonth(),viewFilter:'all',viewSearch:'',gasUrl:localStorage.getItem('gasUrl')||''};
 
-    function init() {
-      var d = new Date();
-      document.getElementById('header-date').textContent = DAYS_TH[d.getDay()]+' '+d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);
-      document.getElementById('gas-url').value = gasUrl;
-      document.getElementById('input-date').value = todayStr();
-      renderHome();
+    function init(){
+      DATA=loadData();
+      var d=new Date();
+      document.getElementById('header-date').textContent=DAYS_TH[d.getDay()]+' '+d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);
+      document.getElementById('input-date').value=todayStr();
+      document.getElementById('gas-url').value=STATE.gasUrl;
+      renderHomePage();
     }
 
-    function renderHome() {
-      var now = new Date(); var m = now.getMonth(), y = now.getFullYear();
-      var inc=0, exp=0;
-      ['home','farm'].forEach(function(acc){
-        DATA[acc].transactions.forEach(function(t){
-          var td = new Date(t.date);
-          if(td.getMonth()===m && td.getFullYear()===y){
-            if(t.type==='income') inc+=t.amount; else exp+=t.amount;
-          }
-        });
-      });
-      document.getElementById('total-income').textContent = fmt(inc);
-      document.getElementById('total-expense').textContent = fmt(exp);
-      document.getElementById('total-balance').textContent = fmt(inc-exp);
-      ['home','farm'].forEach(function(acc){
-        var bal=0;
-        DATA[acc].transactions.forEach(function(t){
-          var td=new Date(t.date);
-          if(td.getMonth()===m && td.getFullYear()===y) bal+=(t.type==='income'?t.amount:-t.amount);
-        });
-        document.getElementById(acc+'-balance').textContent = 'คงเหลือ '+fmt(bal)+' บาท';
-      });
+    function renderHomePage(){
+      var now=new Date(),m=now.getMonth(),y=now.getFullYear(),inc=0,exp=0;
+      ['home','farm'].forEach(function(acc){DATA[acc].transactions.forEach(function(t){var d=new Date(t.date);if(d.getMonth()===m&&d.getFullYear()===y){if(t.type==='income')inc+=t.amount;else exp+=t.amount;}});});
+      document.getElementById('total-income').textContent=fmt(inc);
+      document.getElementById('total-expense').textContent=fmt(exp);
+      document.getElementById('total-balance').textContent=fmt(inc-exp);
+      ['home','farm'].forEach(function(acc){var bal=0;DATA[acc].transactions.forEach(function(t){var d=new Date(t.date);if(d.getMonth()===m&&d.getFullYear()===y)bal+=(t.type==='income'?t.amount:-t.amount);});document.getElementById(acc+'-balance').textContent='คงเหลือ '+fmt(bal)+' บาท';});
       renderAlerts();
     }
 
-    function renderAlerts() {
-      var alerts=[], today=new Date(); today.setHours(0,0,0,0);
-      ['home','farm'].forEach(function(acc){
-        DATA[acc].debts.forEach(function(d){
-          if(!d.nextDue) return;
-          var due=new Date(d.nextDue); due.setHours(0,0,0,0);
-          var diff=Math.round((due-today)/86400000);
-          if(diff<=7) alerts.push({name:d.name,acc:acc,diff:diff,nextDue:d.nextDue,installment:d.installment,total:d.total});
-        });
-      });
+    function renderAlerts(){
+      var alerts=[],today=new Date();today.setHours(0,0,0,0);
+      ['home','farm'].forEach(function(acc){DATA[acc].debts.forEach(function(d){if(!d.nextDue)return;var due=new Date(d.nextDue);due.setHours(0,0,0,0);var diff=Math.round((due-today)/86400000);if(diff<=7)alerts.push({name:d.name,acc:acc,diff:diff,nextDue:d.nextDue,installment:d.installment,total:d.total});});});
       var el=document.getElementById('alert-list');
       if(!alerts.length){el.innerHTML='<div class="no-item">ไม่มีรายการแจ้งเตือน</div>';return;}
       el.innerHTML=alerts.map(function(a){
-        var lbl=a.acc==='home'?'ครัวเรือน':'เกษตร';
+        var al=a.acc==='home'?'ครัวเรือน':'เกษตร';
         var st=a.diff<0?'เกินกำหนด '+Math.abs(a.diff)+' วัน':(a.diff===0?'ครบกำหนดวันนี้':'อีก '+a.diff+' วัน');
         var ov=a.diff<0?'overdue':'';
-        return '<div class="alert-item '+ov+'">'
-          +'<div class="alert-dot '+ov+'"></div>'
-          +'<div class="alert-info"><div class="alert-name">'+a.name+' <span style="font-weight:400;font-size:12px;">('+lbl+')</span></div>'
-          +'<div class="alert-due">'+formatDateTH(a.nextDue)+' · '+st+'</div></div>'
-          +'<div class="alert-amount">'+fmt(a.installment||a.total)+'</div></div>';
+        return '<div class="alert-item '+ov+'"><div class="alert-dot '+ov+'"></div><div class="alert-info"><div class="alert-name">'+a.name+' <span style="font-weight:400;color:var(--text-sub);font-size:12px;">('+al+')</span></div><div class="alert-due">'+formatDateTH(a.nextDue)+' \xb7 '+st+'</div></div><div class="alert-amount">'+fmt(a.installment||a.total)+'</div></div>';
       }).join('');
     }
 
-    // View Account Modal
-    function viewAccount(acc, e) {
-      if(e && e.stopPropagation) e.stopPropagation();
-      viewAcc=acc; viewYear=new Date().getFullYear(); viewMonth=new Date().getMonth(); viewFilterMode='all'; viewSearchText='';
+    function viewAccount(acc,e){
+      if(e&&e.stopPropagation)e.stopPropagation();
+      STATE.viewAcc=acc;STATE.viewYear=new Date().getFullYear();STATE.viewMonth=new Date().getMonth();STATE.viewFilter='all';STATE.viewSearch='';
       document.getElementById('view-acc-title').textContent=acc==='home'?'ครัวเรือน':'การเกษตร';
       document.getElementById('view-acc-hdr').style.background=acc==='home'?'#9C4722':'#C87629';
-      document.querySelectorAll('.vf-chip').forEach(function(b,i){
-        var on=i===0;
-        b.style.background=on?'#6C3212':'#FDFAF6'; b.style.color=on?'#FAF0E6':'#6A5848'; b.style.webkitTextFillColor=on?'#FAF0E6':'#6A5848'; b.style.borderColor=on?'#6C3212':'#E0D5C4';
-      });
+      document.querySelectorAll('.vf-chip').forEach(function(b,i){var on=i===0;b.style.background=on?'#6C3212':'#FDFAF6';b.style.color=on?'#FAF0E6':'#6A5848';b.style.webkitTextFillColor=on?'#FAF0E6':'#6A5848';b.style.borderColor=on?'#6C3212':'#E0D5C4';});
       document.getElementById('view-search').value='';
-      viewUpdateMonth(); viewRenderList(); openModal('modal-view-acc');
+      viewUpdateMonth();viewRenderList();openModal('modal-view-acc');
     }
-    function viewUpdateMonth(){ document.getElementById('view-month-lbl').textContent=MONTHS_TH[viewMonth]+' '+(viewYear+543); }
-    function viewChangeMonth(dir){
-      viewMonth+=dir;
-      if(viewMonth<0){viewMonth=11;viewYear--;} if(viewMonth>11){viewMonth=0;viewYear++;}
-      viewUpdateMonth(); viewRenderList();
-    }
-    function viewFilter(mode,btn){
-      viewFilterMode=mode; viewSearchText=''; document.getElementById('view-search').value='';
-      document.querySelectorAll('.vf-chip').forEach(function(b){
-        var on=b===btn; b.style.background=on?'#6C3212':'#FDFAF6'; b.style.color=on?'#FAF0E6':'#6A5848'; b.style.webkitTextFillColor=on?'#FAF0E6':'#6A5848'; b.style.borderColor=on?'#6C3212':'#E0D5C4';
-      });
-      viewRenderList();
-    }
-    function viewSearchFn(text){ viewSearchText=text.toLowerCase(); viewRenderList(); }
+    function viewUpdateMonth(){document.getElementById('view-month-lbl').textContent=MONTHS_TH[STATE.viewMonth]+' '+(STATE.viewYear+543);}
+    function viewChangeMonth(dir){STATE.viewMonth+=dir;if(STATE.viewMonth<0){STATE.viewMonth=11;STATE.viewYear--;}if(STATE.viewMonth>11){STATE.viewMonth=0;STATE.viewYear++;}viewUpdateMonth();viewRenderList();}
+    function viewFilter(mode,btn){STATE.viewFilter=mode;STATE.viewSearch='';document.getElementById('view-search').value='';document.querySelectorAll('.vf-chip').forEach(function(b){var on=b===btn;b.style.background=on?'#6C3212':'#FDFAF6';b.style.color=on?'#FAF0E6':'#6A5848';b.style.webkitTextFillColor=on?'#FAF0E6':'#6A5848';b.style.borderColor=on?'#6C3212':'#E0D5C4';});viewRenderList();}
+    function viewSearchFn(text){STATE.viewSearch=text.toLowerCase();viewRenderList();}
     function viewRenderList(){
-      var list=DATA[viewAcc].transactions.filter(function(t){ var d=new Date(t.date); return d.getMonth()===viewMonth&&d.getFullYear()===viewYear; });
-      var inc=0,exp=0; list.forEach(function(t){if(t.type==='income')inc+=t.amount;else exp+=t.amount;});
-      document.getElementById('view-sum-inc').textContent=fmt(inc);
-      document.getElementById('view-sum-exp').textContent=fmt(exp);
-      document.getElementById('view-sum-bal').textContent=fmt(inc-exp);
-      if(viewFilterMode==='income') list=list.filter(function(t){return t.type==='income';});
-      if(viewFilterMode==='expense') list=list.filter(function(t){return t.type==='expense';});
-      if(viewSearchText) list=list.filter(function(t){return (t.desc||'').toLowerCase().indexOf(viewSearchText)>=0||(t.category||'').toLowerCase().indexOf(viewSearchText)>=0;});
+      var list=DATA[STATE.viewAcc].transactions.filter(function(t){var d=new Date(t.date);return d.getMonth()===STATE.viewMonth&&d.getFullYear()===STATE.viewYear;});
+      var inc=0,exp=0;list.forEach(function(t){if(t.type==='income')inc+=t.amount;else exp+=t.amount;});
+      document.getElementById('view-sum-inc').textContent=fmt(inc);document.getElementById('view-sum-exp').textContent=fmt(exp);document.getElementById('view-sum-bal').textContent=fmt(inc-exp);
+      if(STATE.viewFilter==='income')list=list.filter(function(t){return t.type==='income';});
+      if(STATE.viewFilter==='expense')list=list.filter(function(t){return t.type==='expense';});
+      if(STATE.viewSearch){var s=STATE.viewSearch;list=list.filter(function(t){return(t.desc||'').toLowerCase().indexOf(s)>=0||(t.category||'').toLowerCase().indexOf(s)>=0;});}
       var el=document.getElementById('view-trans-list');
       if(!list.length){el.innerHTML='<div class="empty-state">ยังไม่มีรายการในเดือนนี้</div>';return;}
       list.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
       el.innerHTML=list.map(buildTransItem).join('');
     }
     function buildTransItem(t){
-      var ISVG='<svg viewBox="0 0 24 24" fill="none" stroke="#4A7A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>';
-      var ESVG='<svg viewBox="0 0 24 24" fill="none" stroke="#8B3020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>';
+      var IS='<svg viewBox="0 0 24 24" fill="none" stroke="#4A7A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>';
+      var ES='<svg viewBox="0 0 24 24" fill="none" stroke="#8B3020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>';
       var sign=t.type==='income'?'+':'-';
       var badge=t.category?'<div style="font-size:10px;background:#F0E8D8;color:#6A5040;padding:2px 7px;border-radius:8px;">'+t.category+'</div>':'';
-      return '<div class="trans-item">'
-        +'<div class="trans-icon '+t.type+'">'+(t.type==='income'?ISVG:ESVG)+'</div>'
-        +'<div class="trans-info"><div class="trans-name">'+(t.desc||'')+'</div>'
-        +'<div class="trans-meta">'+formatDateTH(t.date)+(t.category?' · '+t.category:'')+'</div></div>'
-        +'<div class="trans-right"><div class="trans-amount '+t.type+'">'+sign+fmt(t.amount)+'</div>'+badge+'</div></div>';
+      return '<div class="trans-item"><div class="trans-icon '+t.type+'">'+(t.type==='income'?IS:ES)+'</div><div class="trans-info"><div class="trans-name">'+(t.desc||'')+'</div><div class="trans-meta">'+formatDateTH(t.date)+(t.category?' \xb7 '+t.category:'')+'</div></div><div class="trans-right"><div class="trans-amount '+t.type+'">'+sign+fmt(t.amount)+'</div>'+badge+'</div></div>';
     }
 
-    // Quick Add
     function openQuickAdd(acc){
-      currentAccount=acc; transType='income';
+      STATE.currentAccount=acc;STATE.transType='income';
       var cats=CATEGORIES[acc]['income'];
       document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+cats.map(function(c){return '<option>'+c+'</option>';}).join('');
       document.getElementById('input-date').value=todayStr();
@@ -316,8 +215,8 @@
       openModal('modal-add');
     }
     function setType(type){
-      transType=type;
-      var cats=CATEGORIES[currentAccount][type];
+      STATE.transType=type;
+      var cats=CATEGORIES[STATE.currentAccount][type];
       document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+cats.map(function(c){return '<option>'+c+'</option>';}).join('');
       document.getElementById('btn-income').className=type==='income'?'type-btn active-income':'type-btn';
       document.getElementById('btn-expense').className=type==='expense'?'type-btn active-expense':'type-btn';
@@ -330,35 +229,22 @@
       var note=document.getElementById('input-note').value.trim();
       if(!amount||amount<=0){alert('กรุณาระบุจำนวนเงิน');return;}
       if(!desc){alert('กรุณาระบุรายการ');return;}
-      DATA[currentAccount].transactions.push({id:Date.now()+'',type:transType,amount:amount,desc:desc,category:category,date:date,note:note,account:currentAccount});
-      saveData(DATA);
-      closeModal('modal-add');
-      document.getElementById('input-amount').value='';
-      document.getElementById('input-desc').value='';
-      document.getElementById('input-note').value='';
-      renderHome();
-      var mv=document.getElementById('modal-view-acc');
-      if(mv&&mv.classList.contains('open')) viewRenderList();
+      DATA[STATE.currentAccount].transactions.push({id:Date.now()+'',type:STATE.transType,amount:amount,desc:desc,category:category,date:date,note:note,account:STATE.currentAccount});
+      saveData(DATA);closeModal('modal-add');
+      document.getElementById('input-amount').value='';document.getElementById('input-desc').value='';document.getElementById('input-note').value='';
+      renderHomePage();
+      var mv=document.getElementById('modal-view-acc');if(mv&&mv.classList.contains('open'))viewRenderList();
       showToast('บันทึกรายการแล้ว');
     }
 
-    // Settings
+    function openSettings(){openModal('modal-settings');}
     function saveSettings(){
-      var url=document.getElementById('gas-url').value.trim();
-      gasUrl=url; localStorage.setItem('gasUrl',url);
-      var res=document.getElementById('connection-result');
-      res.textContent='กำลังทดสอบ...';
-      fetch(url+'?action=ping').then(function(r){return r.json();}).then(function(d){
-        if(d.status==='ok'){res.textContent='เชื่อมต่อสำเร็จ';res.style.color='#4A7A3A';}
-        else{res.textContent='เชื่อมต่อไม่สำเร็จ';res.style.color='#8B3020';}
-      }).catch(function(){res.textContent='เชื่อมต่อไม่สำเร็จ';res.style.color='#8B3020';});
+      var url=document.getElementById('gas-url').value.trim();STATE.gasUrl=url;localStorage.setItem('gasUrl',url);
+      var res=document.getElementById('connection-result');res.textContent='กำลังทดสอบ...';
+      fetch(url+'?action=ping').then(function(r){return r.json();}).then(function(d){if(d.status==='ok'){res.textContent='เชื่อมต่อสำเร็จ';res.style.color='#4A7A3A';}else{res.textContent='เชื่อมต่อไม่สำเร็จ';res.style.color='#8B3020';}}).catch(function(){res.textContent='เชื่อมต่อไม่สำเร็จ';res.style.color='#8B3020';});
     }
 
-    // Modal outside click
-    document.querySelectorAll('.modal-overlay').forEach(function(el){
-      el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
-    });
-
+    document.querySelectorAll('.modal-overlay').forEach(function(el){el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});});
     init();
   </script>
 
