@@ -1853,7 +1853,7 @@
         <div class="chart-box" style="margin-bottom:12px;">
           <div class="chart-title">รายรับ — รายจ่าย รายเดือน<br><span style="font-size:11px;font-weight:400;">(เส้นทึบ =
               ปีที่เลือก / เส้นประ = ปีเทียบ)</span></div>
-          <canvas id="yoy-month-chart" style="max-height:220px;"></canvas>
+          <canvas id="yoy-month-chart" style="height:220px;"></canvas>
         </div>
 
         <div class="chart-box" style="margin-bottom:12px;">
@@ -2659,16 +2659,20 @@
         data: {
           labels: MONTHS_TH.map(function (m) { return m.slice(0, 3); }),
           datasets: [
-            { label: 'รายรับ ' + (yearA + 543), data: dA.monthly.map(function (m) { return m.inc; }), borderColor: '#4A7A3A', backgroundColor: 'rgba(74,122,58,0.08)', borderWidth: 2, pointRadius: 3, tension: 0.3 },
-            { label: 'รายรับ ' + (yearB + 543), data: dB.monthly.map(function (m) { return m.inc; }), borderColor: '#4A7A3A', backgroundColor: 'transparent', borderWidth: 2, borderDash: [5, 4], pointRadius: 3, tension: 0.3 },
-            { label: 'รายจ่าย ' + (yearA + 543), data: dA.monthly.map(function (m) { return m.exp; }), borderColor: '#8B3020', backgroundColor: 'rgba(139,48,32,0.08)', borderWidth: 2, pointRadius: 3, tension: 0.3 },
-            { label: 'รายจ่าย ' + (yearB + 543), data: dB.monthly.map(function (m) { return m.exp; }), borderColor: '#8B3020', backgroundColor: 'transparent', borderWidth: 2, borderDash: [5, 4], pointRadius: 3, tension: 0.3 }
+            { label: 'รายรับ ' + (yearA + 543), data: dA.monthly.map(function (m) { return m.inc; }), borderColor: '#4A7A3A', backgroundColor: 'rgba(74,122,58,0.08)', borderWidth: 2, pointRadius: 3, tension: 0.3, yAxisID: 'yInc' },
+            { label: 'รายรับ ' + (yearB + 543), data: dB.monthly.map(function (m) { return m.inc; }), borderColor: '#4A7A3A', backgroundColor: 'transparent', borderWidth: 2, borderDash: [5, 4], pointRadius: 3, tension: 0.3, yAxisID: 'yInc' },
+            { label: 'รายจ่าย ' + (yearA + 543), data: dA.monthly.map(function (m) { return m.exp; }), borderColor: '#8B3020', backgroundColor: 'rgba(139,48,32,0.08)', borderWidth: 2, pointRadius: 3, tension: 0.3, yAxisID: 'yExp' },
+            { label: 'รายจ่าย ' + (yearB + 543), data: dB.monthly.map(function (m) { return m.exp; }), borderColor: '#8B3020', backgroundColor: 'transparent', borderWidth: 2, borderDash: [5, 4], pointRadius: 3, tension: 0.3, yAxisID: 'yExp' }
           ]
         },
         options: {
-          responsive: true, maintainAspectRatio: true,
-          plugins: { legend: { labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 12, padding: 8 } } },
-          scales: { x: { grid: { display: false } }, y: { grid: { color: '#C8C0B0' }, ticks: { callback: function (v) { return v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v; } } } }
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 12, padding: 6 } } },
+          scales: {
+            x: { grid: { display: false } },
+            yInc: { position: 'left', grid: { color: '#C8C0B0' }, ticks: { callback: function (v) { return v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v; } }, title: { display: true, text: 'รายรับ', font: { family: 'Sarabun', size: 10 }, color: '#4A7A3A' } },
+            yExp: { position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: function (v) { return v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v; } }, title: { display: true, text: 'รายจ่าย', font: { family: 'Sarabun', size: 10 }, color: '#8B3020' } }
+          }
         }
       });
 
