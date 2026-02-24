@@ -2526,6 +2526,18 @@
     // ============================================================
     // NAVIGATION
     // ============================================================
+        function goHome() {
+      PAGE_SCROLL['page-home'] = 0;
+      showPage('page-home');
+      updateNavActive(0);
+      renderHomePage();
+    }
+
+    function updateNavActive(idx) {
+      document.querySelectorAll('.nav-btn').forEach(function(b, i) {
+        b.classList.toggle('active', i === idx);
+      });
+    }
     var PAGE_SCROLL = {};
 function showPage(id) {
   // บันทึก scroll ของหน้าปัจจุบัน (ทุก browser)
