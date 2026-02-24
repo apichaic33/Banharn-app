@@ -2167,11 +2167,6 @@
     // ============================================================
     // MANAGE PAGE (งบประมาณ + หนี้สิน)
     // ============================================================
-    function goToDebtPage() {
-      showPage('page-manage');
-      updateNavActive(1);
-      mgSetAcc(STATE.manageAcc || 'home');
-    }
 
     function mgSetAcc(acc) {
       STATE.manageAcc = acc;
@@ -2536,21 +2531,18 @@
     // NAVIGATION
     // ============================================================
     function goHome() {
-      PAGE_SCROLL = {};
       showPage('page-home');
       updateNavActive(0);
       renderHomePage();
     }
 
     function goToDebtPage() {
-      PAGE_SCROLL = {};
       showPage('page-manage');
       updateNavActive(1);
       mgSetAcc(STATE.manageAcc || 'home');
     }
 
     function goToReportPage() {
-      PAGE_SCROLL = {};
       showPage('page-report');
       updateNavActive(2);
       rpSetAcc(STATE.reportAcc || STATE.currentAccount || 'home');
@@ -2564,22 +2556,21 @@
       });
     }
 
-    var PAGE_SCROLL = {};
+    function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  window.scrollTo(0, 0);
+  setTimeout(function() {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }, 50);
+}
 
-        function showPage(id) {
-      document.querySelectorAll('.page').forEach(function(p) {
-        p.classList.remove('active');
-      });
-      document.getElementById(id).classList.add('active');
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      window.scrollTo(0, 0);
-      setTimeout(function() {
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-        window.scrollTo(0, 0);
-      }, 50);
-    }
 
     // ============================================================
     // TOAST
