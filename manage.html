@@ -1,1 +1,253 @@
+<!DOCTYPE html>
 
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>จัดการ — บัญชีครัวเรือน</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+
+  <div class="app-header" style="background:#6C3212;">
+    <div class="header-row">
+      <div>
+        <div class="app-title" style="color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">การจัดการสินเชื่อและงบประมาณ</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button id="mg-btn-home" onclick="mgSetAcc('home')" style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.2);border-radius:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">ครัวเรือน</button>
+      <button id="mg-btn-farm" onclick="mgSetAcc('farm')" style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.1);border-radius:10px;color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">การเกษตร</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+
+  <div class="main-content">
+    <div class="tab-bar">
+      <button class="tab-btn active" id="mg-tab-budget-btn" onclick="mgSwitchTab('budget')">งบประมาณ</button>
+      <button class="tab-btn" id="mg-tab-debt-btn" onclick="mgSwitchTab('debt')">สินเชื่อ</button>
+    </div>
+    <div id="mg-tab-budget" class="tab-content active">
+      <div class="row-action">
+        <span>งบประมาณประจำเดือน</span>
+        <button class="action-link" onclick="openBudgetModal()">+ เพิ่มงบ</button>
+      </div>
+      <div id="mg-budget-list"><div class="empty-state">ยังไม่มีงบประมาณ</div></div>
+    </div>
+    <div id="mg-tab-debt" class="tab-content">
+      <div class="row-action">
+        <span>รายการสินเชื่อ</span>
+        <button class="action-link" onclick="openDebtModal()">+ บันทึกสินเชื่อ</button>
+      </div>
+      <div id="mg-debt-list"><div class="empty-state">ไม่มีสินเชื่อ</div></div>
+    </div>
+  </div>
+
+  <!-- MODAL: งบประมาณ -->
+
+  <div class="modal-overlay" id="modal-budget">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">ตั้งงบประมาณ</div>
+      <div class="info-box"><strong>งบประมาณที่บันทึกแล้วจะไม่สามารถแก้ไขได้</strong><br>กรุณาตรวจสอบให้ถูกต้องก่อนกดบันทึก</div>
+      <div class="form-group">
+        <label class="form-label">หมวดหมู่</label>
+        <select class="form-control" id="budget-category"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">งบประมาณต่อเดือน (บาท)</label>
+        <input type="number" class="form-control" id="budget-amount" placeholder="0.00" inputmode="decimal">
+      </div>
+      <div class="form-group">
+        <label class="form-label">เดือนที่ใช้งบ</label>
+        <input type="month" class="form-control" id="budget-month">
+      </div>
+      <button class="btn-primary" onclick="saveBudget()">บันทึกและล็อคงบประมาณ</button>
+      <button class="btn-ghost" onclick="closeModal('modal-budget')">ยกเลิก</button>
+    </div>
+  </div>
+
+  <!-- MODAL: หนี้สิน -->
+
+  <div class="modal-overlay" id="modal-debt">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">บันทึกสินเชื่อ</div>
+      <div class="form-group">
+        <label class="form-label">ชื่อสินเชื่อ / รายละเอียด</label>
+        <input type="text" class="form-control" id="debt-name" placeholder="เช่น ธ.ก.ส., ธนาคาร">
+      </div>
+      <div class="form-group">
+        <label class="form-label">ยอดสินเชื่อทั้งหมด (บาท)</label>
+        <input type="number" class="form-control" id="debt-total" placeholder="0.00" inputmode="decimal">
+      </div>
+      <div class="form-group">
+        <label class="form-label">ยอดผ่อนต่องวด (บาท)</label>
+        <input type="number" class="form-control" id="debt-installment" placeholder="0.00" inputmode="decimal">
+      </div>
+      <div class="form-group">
+        <label class="form-label">วันครบกำหนดชำระ</label>
+        <input type="date" class="form-control" id="debt-due">
+      </div>
+      <div class="form-group">
+        <label class="form-label">หมายเหตุ</label>
+        <input type="text" class="form-control" id="debt-note" placeholder="ดอกเบี้ย, เงื่อนไข ฯลฯ">
+      </div>
+      <button class="btn-primary" onclick="saveDebt()">บันทึกสินเชื่อ</button>
+      <button class="btn-ghost" onclick="closeModal('modal-debt')">ยกเลิก</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+
+  <div class="bottom-nav">
+    <button class="nav-btn" onclick="goHome()">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <span class="nav-label">หน้าหลัก</span>
+    </button>
+    <button class="nav-btn active" onclick="goManage()">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+      <span class="nav-label">จัดการ</span>
+    </button>
+    <button class="nav-btn" onclick="goReport()">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+      <span class="nav-label">รายงาน</span>
+    </button>
+  </div>
+
+  <script src="shared.js"></script>
+
+  <script>
+    var DATA = loadData();
+    var manageAcc = 'home';
+
+    var now = new Date();
+    var currentYear = now.getFullYear();
+    var currentMonth = now.getMonth();
+
+    function init() {
+      mgSetAcc('home');
+    }
+
+    function mgSetAcc(acc) {
+      manageAcc = acc;
+      var bh=document.getElementById('mg-btn-home');
+      var bf=document.getElementById('mg-btn-farm');
+      bh.style.background=acc==='home'?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.1)';
+      bh.style.borderColor=acc==='home'?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.35)';
+      bh.style.color=acc==='home'?'#FAF0E6':'rgba(250,240,230,0.75)';
+      bh.style.webkitTextFillColor=acc==='home'?'#FAF0E6':'rgba(250,240,230,0.75)';
+      bf.style.background=acc==='farm'?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.1)';
+      bf.style.borderColor=acc==='farm'?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.35)';
+      bf.style.color=acc==='farm'?'#FAF0E6':'rgba(250,240,230,0.75)';
+      bf.style.webkitTextFillColor=acc==='farm'?'#FAF0E6':'rgba(250,240,230,0.75)';
+      mgRenderBudget();
+      mgRenderDebt();
+    }
+
+    function mgSwitchTab(tab) {
+      ['budget','debt'].forEach(function(t){
+        document.getElementById('mg-tab-'+t).classList.toggle('active',t===tab);
+        document.getElementById('mg-tab-'+t+'-btn').classList.toggle('active',t===tab);
+      });
+    }
+
+    function mgRenderBudget() {
+      var mk=currentYear+'-'+String(currentMonth+1).padStart(2,'0');
+      var budgets=DATA[manageAcc].budgets.filter(function(b){return b.month===mk;});
+      var trans=DATA[manageAcc].transactions.filter(function(t){
+        var d=new Date(t.date); return d.getMonth()===currentMonth&&d.getFullYear()===currentYear&&t.type==='expense';
+      });
+      var el=document.getElementById('mg-budget-list');
+      if(!budgets.length){el.innerHTML='<div class="empty-state">ยังไม่มีงบประมาณ<br>กด "+ เพิ่มงบ" เพื่อตั้งงบประมาณ</div>';return;}
+      el.innerHTML=budgets.map(function(b){
+        var spent=trans.filter(function(t){return t.category===b.category;}).reduce(function(s,t){return s+t.amount;},0);
+        var pct=b.amount>0?Math.min(100,(spent/b.amount)*100):0;
+        var cls=pct>=100?'over':pct>=80?'warn':'';
+        return '<div class="budget-card">'
+          +'<div class="budget-header"><div class="budget-name">'+b.category+'</div><div class="budget-amounts">'+fmt(spent)+' / '+fmt(b.amount)+' บาท</div></div>'
+          +'<div class="budget-bar"><div class="budget-fill '+cls+'" style="width:'+pct+'%"></div></div>'
+          +'<div class="budget-foot"><div class="budget-pct">'+pct.toFixed(0)+'%</div><div class="locked-tag">ล็อค</div></div>'
+          +'</div>';
+      }).join('');
+    }
+
+    function mgRenderDebt() {
+      var debts=DATA[manageAcc].debts;
+      var el=document.getElementById('mg-debt-list');
+      if(!debts.length){el.innerHTML='<div class="empty-state">ไม่มีหนี้สิน</div>';return;}
+      var today=new Date(); today.setHours(0,0,0,0);
+      el.innerHTML=debts.map(function(d,i){
+        var due=d.nextDue?new Date(d.nextDue):null; if(due) due.setHours(0,0,0,0);
+        var diff=due?Math.round((due-today)/86400000):999;
+        var sc=diff<0?'overdue':diff<=7?'soon':'ok';
+        var st=diff<0?'เกินกำหนด '+Math.abs(diff)+' วัน':(diff===0?'ครบกำหนดวันนี้':'อีก '+diff+' วัน');
+        return '<div class="debt-card">'
+          +'<div class="debt-header"><div class="debt-name">'+d.name+'</div><div class="debt-total">'+fmt(d.remaining||d.total)+' บาท</div></div>'
+          +'<div class="debt-detail">ผ่อนงวดละ '+fmt(d.installment)+' บาท'+(d.note?' · '+d.note:'')+'</div>'
+          +(d.nextDue?'<span class="status-tag '+sc+'">'+formatDateTH(d.nextDue)+' · '+st+'</span>':'')
+          +'<button class="pay-btn" onclick="mgPayDebt('+i+')">ชำระงวดนี้แล้ว</button>'
+          +'</div>';
+      }).join('');
+    }
+
+    function mgPayDebt(i) {
+      var d=DATA[manageAcc].debts[i]; if(!d) return;
+      d.remaining=Math.max(0,(d.remaining||d.total)-(d.installment||0));
+      if(d.nextDue){ var nd=new Date(d.nextDue); nd.setMonth(nd.getMonth()+1); d.nextDue=nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0'); }
+      DATA[manageAcc].transactions.push({id:Date.now()+'',type:'expense',amount:d.installment||0,desc:'ผ่อน'+d.name,category:'ผ่อนชำระ',date:todayStr(),note:'ชำระหนี้',account:manageAcc});
+      saveData(DATA); mgRenderDebt();
+      showToast('บันทึกการชำระ '+fmt(d.installment)+' บาท');
+    }
+
+    function openBudgetModal() {
+      document.getElementById('budget-category').innerHTML=CATEGORIES[manageAcc].expense.map(function(c){return '<option>'+c+'</option>';}).join('');
+      document.getElementById('budget-month').value=currentYear+'-'+String(currentMonth+1).padStart(2,'0');
+      document.getElementById('budget-amount').value='';
+      openModal('modal-budget');
+    }
+
+    function saveBudget() {
+      var category=document.getElementById('budget-category').value;
+      var amount=parseFloat(document.getElementById('budget-amount').value);
+      var month=document.getElementById('budget-month').value;
+      if(!category||!amount||!month){alert('กรุณากรอกข้อมูลให้ครบ');return;}
+      var ex=DATA[manageAcc].budgets.find(function(b){return b.category===category&&b.month===month;});
+      if(ex){alert('งบประมาณ "'+category+'" เดือนนี้ถูกล็อคแล้ว');return;}
+      if(!confirm('ยืนยันตั้งงบ "'+category+'" = '+fmt(amount)+' บาท\n(จะไม่สามารถแก้ไขได้)')) return;
+      DATA[manageAcc].budgets.push({id:Date.now()+'',category:category,amount:amount,month:month});
+      saveData(DATA); closeModal('modal-budget'); mgRenderBudget();
+      showToast('ล็อคงบ "'+category+'" แล้ว');
+    }
+
+    function openDebtModal() {
+      ['debt-name','debt-total','debt-installment','debt-due','debt-note'].forEach(function(id){document.getElementById(id).value='';});
+      openModal('modal-debt');
+    }
+
+    function saveDebt() {
+      var name=document.getElementById('debt-name').value.trim();
+      var total=parseFloat(document.getElementById('debt-total').value);
+      var installment=parseFloat(document.getElementById('debt-installment').value);
+      var nextDue=document.getElementById('debt-due').value;
+      var note=document.getElementById('debt-note').value.trim();
+      if(!name||!total||!installment){alert('กรุณากรอกข้อมูลให้ครบ');return;}
+      DATA[manageAcc].debts.push({id:Date.now()+'',name:name,total:total,remaining:total,installment:installment,nextDue:nextDue,note:note,account:manageAcc});
+      saveData(DATA); closeModal('modal-debt'); mgRenderDebt();
+      showToast('บันทึกหนี้ "'+name+'" แล้ว');
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(function(el){
+      el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
+    });
+
+    init();
+  </script>
+
+</body>
+</html>
