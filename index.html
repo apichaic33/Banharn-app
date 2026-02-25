@@ -4,12 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>บัญชีครัวเรือน & เกษตร</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
   <style>
     :root {
       /* ── Coffee UI Kit Palette ── */
@@ -45,1433 +43,1419 @@
       --gold: var(--accent);
     }
 
-```
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* reset browser defaults ที่ทำให้สีฟ้าโผล่ */
-a,
-a:visited,
-a:link,
-a:active {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  color: inherit;
-}
-
-select,
-input,
-textarea {
-  color: var(--text);
-  accent-color: var(--primary);
-}
-
-select option {
-  background: var(--surface);
-  color: var(--text);
-}
-
-body {
-  font-family: ‘Sarabun’, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  max-width: 480px;
-  margin: 0 auto;
-  overflow-x: hidden;
-}
-
-/* ทำให้พื้นหลัง beige เต็มหน้าจอเสมอ แม้ content สั้น */
-html,
-body {
-  background: #F5EFE6 !important;
-}
-
-/* ── HEADER ── */
-.app-header {
-  background: #6C3212;
-  color: #FAF0E6;
-  padding: 18px 20px 22px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-radius: 0 0 28px 28px;
-  box-shadow: 0 6px 24px rgba(61, 35, 20, 0.22);
-  margin-bottom: 0;
-}
-
-.header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.app-title {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-.header-date {
-  font-size: 12px;
-  opacity: 0.75;
-  margin-top: 3px;
-}
-
-.icon-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-}
-
-.sync-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 2px;
-  font-size: 11px;
-  opacity: 0.7;
-}
-
-.sync-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #A89070;
-}
-
-.sync-dot.offline {
-  background: #C07050;
-}
-
-/* ── SCROLL BODY ── */
-.main-content {
-  padding: 16px 15px 100px;
-  margin-top: 0;
-}
-
-/* ── CARD ── */
-.card {
-  background: var(--surface);
-  border-radius: var(--r);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
-}
-
-/* ── SECTION LABEL ── */
-.sec-label {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: #8A7A68;
-  margin: 18px 0 8px;
-}
-
-/* ── SUMMARY STRIP ── */
-.summary-strip {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 2px;
-}
-
-.sum-card {
-  background: var(--surface);
-  border-radius: 14px;
-  padding: 14px 8px;
-  text-align: center;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
-
-.sum-label {
-  font-size: 11px;
-  color: #8A7A68 !important;
-  margin-bottom: 5px;
-}
-
-.sum-value {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.sum-value {
-  font-family: 'Mitr', sans-serif !important;
-}
-
-.sum-value.income {
-  color: #4A5E38 !important;
-}
-
-.sum-value.expense {
-  color: #7A3020 !important;
-}
-
-.sum-value.pos {
-  color: #2C2010 !important;
-}
-
-.sum-value.neg {
-  color: #7A3020 !important;
-}
-
-/* ── ALERTS ── */
-.alert-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.alert-item {
-  background: var(--surface);
-  border-radius: var(--r);
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border: 1px solid var(--border);
-  border-left: 3px solid #9C4722;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.alert-item:active {
-  background: #E2DCCE;
-}
-
-.alert-item.overdue {
-  border-left-color: #7A3020;
-}
-
-.alert-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #9C4722;
-  flex-shrink: 0;
-}
-
-.alert-dot.overdue {
-  background: #7A3020;
-}
-
-.alert-info {
-  flex: 1;
-}
-
-.alert-name {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.alert-due {
-  font-size: 11px;
-  color: var(--text-sub);
-  margin-top: 1px;
-}
-
-.alert-amount {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #7A3020;
-  white-space: nowrap;
-}
-
-.no-item {
-  background: #E5DFD2;
-  border-radius: var(--r);
-  padding: 14px 16px;
-  text-align: center;
-  color: #8A7A68;
-  font-size: 13px;
-  border: 1px solid var(--border);
-}
-
-/* ── ACCOUNT BUTTONS ── */
-.account-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.account-btn {
-  border-radius: var(--r);
-  padding: 20px 14px;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  transition: transform 0.12s;
-  position: relative;
-  overflow: hidden;
-}
-
-.account-btn:active {
-  transform: scale(0.97);
-}
-
-.account-btn.home {
-  background: #9C4722;
-  color: #FAF0E6;
-  box-shadow: 0 6px 20px rgba(156, 71, 34, 0.35);
-}
-
-.account-btn.farm {
-  background: #C87629;
-  color: #FAF0E6;
-  box-shadow: 0 6px 20px rgba(200, 118, 41, 0.35);
-}
-
-.acc-name {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.acc-balance {
-  font-size: 12px;
-  opacity: 0.85;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.acc-view-link {
-  font-size: 11px;
-  opacity: 0.65;
-  display: block;
-  letter-spacing: 0.3px;
-  color: rgba(242, 237, 228, 0.8) !important;
-  -webkit-text-fill-color: rgba(242, 237, 228, 0.8) !important;
-}
-
-.acc-line {
-  width: 28px;
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.35);
-  margin-bottom: 10px;
-}
-
-/* ── BOTTOM NAV ── */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px;
-  background: #FDFAF6;
-  border-top: 1px solid #E0D5C4;
-  display: flex;
-  z-index: 200;
-  box-shadow: 0 -4px 24px rgba(61, 35, 20, 0.12);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-.nav-btn {
-  flex: 1;
-  padding: 10px 4px 14px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  color: #8A7A68 !important;
-  -webkit-text-fill-color: #8A7A68 !important;
-  transition: color 0.2s;
-  font-family: ‘Sarabun’, sans-serif;
-  -webkit-appearance: none;
-  outline: none;
-}
-
-.nav-btn.active {
-  color: #6C3212 !important;
-  -webkit-text-fill-color: #6C3212 !important;
-}
-
-.nav-icon {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-icon svg {
-  width: 18px;
-  height: 18px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.nav-label {
-  font-size: 10px;
-  font-weight: 500;
-}
-
-/* ── PAGES ── */
-.page {
-  display: none;
-}
-
-.page.active {
-  display: block;
-}
-
-/* ── ACCOUNT PAGE HEADER ── */
-.acc-header {
-  background: #6C3212;
-  color: #FAF0E6;
-  padding: 16px 16px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-radius: 0 0 28px 28px;
-  box-shadow: 0 6px 24px rgba(61, 35, 20, 0.22);
-}
-
-.acc-header.farm {
-  background: #C87629;
-}
-
-.acc-header-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.back-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-
-.acc-header h2 {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-}
-
-.acc-header .summary-strip .sum-card {
-  background: rgba(255, 240, 220, 0.15);
-  border: 1px solid rgba(255, 240, 220, 0.25);
-  border-radius: 12px;
-}
-
-.acc-header .sum-label {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.acc-header .sum-value {
-  color: white;
-  font-size: 14px;
-}
-
-/* ── MONTH SELECTOR ── */
-.month-selector {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #FDFAF6;
-  border-radius: var(--r);
-  padding: 10px 14px;
-  margin-bottom: 12px;
-  border: 1px solid var(--border);
-}
-
-.month-nav {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  color: var(--text-sub);
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.month-label {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-/* ── TAB BAR ── */
-.tab-bar {
-  display: flex;
-  background: #F0E8DB;
-  border-radius: 24px;
-  padding: 4px;
-  gap: 4px;
-  margin-bottom: 14px;
-  border: 1px solid var(--border);
-  box-shadow: inset 0 1px 3px rgba(61, 35, 20, 0.08);
-}
-
-.tab-btn {
-  flex: 1;
-  padding: 8px 4px;
-  border: none;
-  background: none;
-  border-radius: 20px;
-  font-family: ‘Sarabun’, sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  color: #7A6A58 !important;
-  -webkit-text-fill-color: #7A6A58 !important;
-  transition: all 0.18s;
-}
-
-.tab-btn.active {
-  background: #6C3212;
-  color: #F2EDE4 !important;
-  -webkit-text-fill-color: #F2EDE4 !important;
-}
-
-.tab-btn.active.farm-tab {
-  background: var(--brown);
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* ── TRANSACTION LIST — Coffee UI Row Style ── */
-.trans-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.trans-item {
-  background: var(--surface);
-  border-radius: var(--r);
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.12s;
-}
-
-.trans-item:active {
-  transform: scale(0.98);
-}
-
-/* Coffee UI: icon circle แทน bar */
-.trans-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 18px;
-}
-
-.trans-icon.income {
-  background: #D8E8D0;
-}
-
-.trans-icon.expense {
-  background: #EAD4CC;
-}
-
-.trans-icon svg {
-  width: 20px;
-  height: 20px;
-}
-
-.trans-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.trans-name {
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #2A1A0E !important;
-  -webkit-text-fill-color: #2A1A0E !important;
-}
-
-.trans-meta {
-  font-size: 11px;
-  color: #8A7060 !important;
-  -webkit-text-fill-color: #8A7060 !important;
-  margin-top: 2px;
-}
-
-.trans-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-}
-
-.trans-amount {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.trans-amount.income {
-  color: #4A7A3A !important;
-  -webkit-text-fill-color: #4A7A3A !important;
-}
-
-.trans-amount.expense {
-  color: #8B3020 !important;
-  -webkit-text-fill-color: #8B3020 !important;
-}
-
-/* legacy bar — hidden, replaced by icon */
-.trans-bar {
-  display: none;
-}
-
-/* ── FILTER CHIPS ── */
-.filter-row {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 10px;
-  overflow-x: auto;
-  padding-bottom: 2px;
-}
-
-.filter-chip {
-  padding: 5px 14px;
-  border-radius: 20px;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  font-family: ‘Sarabun’, sans-serif;
-  font-size: 12px;
-  cursor: pointer;
-  white-space: nowrap;
-  color: #7A6A58 !important;
-  -webkit-text-fill-color: #7A6A58 !important;
-  transition: all 0.15s;
-}
-
-.filter-chip.active {
-  background: #6C3212;
-  border-color: #2C2010;
-  color: #F2EDE4;
-}
-
-.fab {
-  position: fixed;
-  bottom: 80px;
-  right: max(16px, calc(50vw - 240px + 16px));
-  width: 56px;
-  height: 56px;
-  border-radius: 18px;
-  background: #6C3212;
-  color: #FAF0E6;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  box-shadow: 0 6px 24px rgba(61, 35, 20, 0.38);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 150;
-  transition: transform 0.15s, box-shadow 0.15s;
-  font-weight: 300;
-  line-height: 1;
-}
-
-.fab:active {
-  transform: scale(0.90);
-  box-shadow: 0 2px 12px rgba(61, 35, 20, 0.30);
-}
-
-.fab.farm-mode {
-  background: #9C4722;
-}
-
-/* ── MODAL ── */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 9000;
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.modal-overlay.open {
-  display: flex;
-  pointer-events: all;
-}
-
-.modal-sheet {
-  background: #EDE7DB;
-  border-radius: 28px 28px 0 0;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 16px 20px 60px;
-  max-height: 92vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  animation: slideUp 0.25s ease;
-  box-shadow: 0 -4px 32px rgba(61,35,20,0.18);
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0.5;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.modal-handle {
-  width: 36px;
-  height: 3px;
-  background: var(--border);
-  border-radius: 2px;
-  margin: 0 auto 14px;
-}
-
-.modal-title {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 18px;
-  text-align: center;
-  color: var(--text);
-}
-
-/* ── FORM ── */
-.form-group {
-  margin-bottom: 13px;
-}
-
-.form-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  color: #6A5848;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
-
-.form-control {
-  width: 100%;
-  padding: 11px 13px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  font-family: ‘Sarabun’, sans-serif;
-  font-size: 15px;
-  color: var(--text);
-  background: #F2EDE4;
-  outline: none;
-  transition: border-color 0.2s;
-  -webkit-appearance: none;
-}
-
-.form-control:focus {
-  border-color: #2C2010;
-}
-
-.type-toggle {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.type-btn {
-  padding: 11px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  background: #E0DAD0;
-  cursor: pointer;
-  font-family: ‘Sarabun’, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: #4A3C2C !important;
-  -webkit-text-fill-color: #4A3C2C !important;
-  transition: all 0.18s;
-}
-
-.type-btn.active-income {
-  border-color: #4A5E38;
-  background: #DDE6D8;
-  color: #344A28;
-}
-
-.type-btn.active-expense {
-  border-color: #7A3020;
-  background: #EDD8D4;
-  color: #7A3020;
-}
-
-.btn-primary {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 14px;
-  background: #6C3212;
-  color: #FAF0E6 !important;
-  -webkit-text-fill-color: #FAF0E6 !important;
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 6px;
-  transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 4px 16px rgba(61, 35, 20, 0.30);
-  letter-spacing: 0.3px;
-}
-
-.btn-primary:active {
-  transform: scale(0.97);
-  box-shadow: none;
-}
-
-.btn-primary.farm {
-  background: #9C4722;
-}
-
-.btn-ghost {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  background: none;
-  color: #6A5E4E !important;
-  -webkit-text-fill-color: #6A5E4E !important;
-  font-family: ‘Sarabun’, sans-serif;
-  font-size: 14px;
-  cursor: pointer;
-  margin-top: 4px;
-}
-
-/* ── BUDGET — Coffee UI card style ── */
-.budget-card {
-  background: var(--surface);
-  border-radius: var(--r);
-  padding: 15px;
-  margin-bottom: 10px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.12s;
-}
-
-.budget-card:active {
-  transform: scale(0.98);
-}
-
-.budget-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.budget-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #2A1A0E !important;
-  -webkit-text-fill-color: #2A1A0E !important;
-}
-
-.budget-amounts {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 12px;
-  color: #8A7060 !important;
-  -webkit-text-fill-color: #8A7060 !important;
-}
-
-.budget-bar {
-  height: 8px;
-  background: #E8DDD0;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-
-.budget-fill {
-  height: 100%;
-  border-radius: 3px;
-  background: #6C3212;
-  transition: width 0.5s ease;
-}
-
-.budget-fill.warn {
-  background: #C87629;
-}
-
-.budget-fill.over {
-  background: #7A3020;
-}
-
-.budget-foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.budget-pct {
-  font-size: 11px;
-  color: var(--text-sub);
-}
-
-.locked-tag {
-  font-size: 10px;
-  color: var(--text-sub);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 1px 6px;
-  letter-spacing: 0.3px;
-}
-
-/* ── DEBT — Coffee UI card style ── */
-.debt-card {
-  background: var(--surface);
-  border-radius: var(--r);
-  padding: 15px 16px;
-  margin-bottom: 10px;
-  border: 1px solid var(--border);
-  border-left: 4px solid #9C4722;
-  box-shadow: var(--shadow-sm);
-}
-
-.debt-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 5px;
-}
-
-.debt-name {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.debt-total {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #2C2010;
-}
-
-.debt-detail {
-  font-size: 12px;
-  color: var(--text-sub);
-  margin-bottom: 6px;
-}
-
-.status-tag {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.status-tag.soon {
-  background: #FEF3C7;
-  color: #92400E;
-}
-
-.status-tag.overdue {
-  background: #FEE2E2;
-  color: #991B1B;
-}
-
-.status-tag.ok {
-  background: #D1FAE5;
-  color: #065F46;
-}
-
-.pay-btn {
-  margin-top: 8px;
-  width: 100%;
-  padding: 7px;
-  border: 1.5px solid #2C2010;
-  color: #2C2010;
-  background: none;
-  border-radius: 8px;
-  font-family: ‘Sarabun’, sans-serif;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.pay-btn:active {
-  background: #E8E3D8;
-}
-
-/* ── CHART ── */
-.chart-box {
-  background: var(--surface);
-  border-radius: var(--r);
-  padding: 15px;
-  margin-bottom: 12px;
-  border: 1px solid var(--border);
-}
-
-.chart-title {
-  font-family: ‘Mitr’, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-sub);
-  margin-bottom: 12px;
-  letter-spacing: 0.3px;
-}
-
-canvas {
-  max-height: 180px;
-}
-
-.info-box {
-  background: #EDE7DB;
-  border: 1.5px solid #B8A888;
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 13px;
-  line-height: 1.7;
-  margin-bottom: 13px;
-  color: #2C2010;
-}
-
-.info-box strong {
-  color: #1A1208;
-}
-
-/* ── EMPTY STATE ── */
-.empty-state {
-  text-align: center;
-  padding: 36px 20px;
-  color: var(--text-sub);
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-/* ── SMALL ACTIONS ROW ── */
-.row-action {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.row-action span {
-  font-size: 12px;
-  color: var(--text-sub);
-}
-
-.action-link {
-  font-size: 13px;
-  font-weight: 500;
-  color: #2C2010;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: ‘Sarabun’, sans-serif;
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid #D2C9B8;
-  background: #E8E3D8;
-}
-
-.action-link.debt {
-  color: #2C2010;
-  background: #E8E3D8;
-  border-color: #D2C9B8;
-}
-
-/* ── Reset browser blue defaults ── */
-
-* {
-  color: inherit;
-}
-
-a,
-a:visited,
-a:link,
-a:active,
-a:hover {
-  color: inherit !important;
-  text-decoration: none;
-}
-
-button,
-select,
-input,
-textarea,
-option {
-  color: #1A1208;
-  font-family: ‘Sarabun’, sans-serif;
-  -webkit-text-fill-color: #1A1208;
-  accent-color: #2C2010;
-}
-
-input[type=“date”]::-webkit-calendar-picker-indicator {
-  filter: invert(0.3) sepia(1) saturate(0.5) hue-rotate(10deg);
-}
-
-select option {
-  background: #EDE7DB;
-  color: #1A1208;
-}
-
-::-webkit-input-placeholder {
-  color: #A89070 !important;
-  -webkit-text-fill-color: #A89070 !important;
-}
-
-::-moz-placeholder {
-  color: #A89070 !important;
-}
-
-::placeholder {
-  color: #A89070 !important;
-}
-
-.month-nav {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #4A3820 !important;
-  -webkit-text-fill-color: #4A3820 !important;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-input[type=“date”],
-input[type=“month”] {
-  color: #1A1208 !important;
-  -webkit-text-fill-color: #1A1208 !important;
-}
-
-select {
-  color: #1A1208 !important;
-  -webkit-text-fill-color: #1A1208 !important;
-}
-
-/* ── FINAL COLOR OVERRIDES: ลบล้างทุกสีฟ้าจาก browser ── */
-.sec-label,
-.row-action span,
-.alert-due,
-.trans-meta,
-.debt-detail,
-.budget-pct,
-.locked-tag,
-.sum-label,
-.chart-title,
-.empty-state,
-.alert-name span,
-.debt-name span {
-  color: #8A7A68 !important;
-  -webkit-text-fill-color: #8A7A68 !important;
-}
-
-.trans-amount.income {
-  color: #4A5E38 !important;
-  -webkit-text-fill-color: #4A5E38 !important;
-}
-
-.trans-amount.expense {
-  color: #7A3020 !important;
-  -webkit-text-fill-color: #7A3020 !important;
-}
-
-.alert-amount {
-  color: #7A3020 !important;
-  -webkit-text-fill-color: #7A3020 !important;
-}
-
-.debt-total {
-  color: #2C2010 !important;
-  -webkit-text-fill-color: #2C2010 !important;
-}
-
-.trans-name,
-.debt-name,
-.budget-name,
-.alert-name,
-.month-label {
-  color: #1A1208 !important;
-  -webkit-text-fill-color: #1A1208 !important;
-}
-
-/* Modal: ปุ่มและ text ทั้งหมด */
-.modal-title {
-  color: #1A1208 !important;
-  -webkit-text-fill-color: #1A1208 !important;
-}
-
-.form-label {
-  color: #6A5848 !important;
-  -webkit-text-fill-color: #6A5848 !important;
-}
-
-/* Tab bar ทุกสถานะ */
-.tab-btn {
-  color: #7A6A58 !important;
-  -webkit-text-fill-color: #7A6A58 !important;
-}
-
-.tab-btn.active {
-  color: #FAF0E6 !important;
-  -webkit-text-fill-color: #FAF0E6 !important;
-  background: #6C3212 !important;
-}
-
-/* Bottom nav */
-.nav-label {
-  color: inherit !important;
-  -webkit-text-fill-color: inherit !important;
-}
-
-/* Filter chips */
-.filter-chip {
-  color: #7A6A58 !important;
-  -webkit-text-fill-color: #7A6A58 !important;
-}
-
-.filter-chip.active {
-  color: #FAF0E6 !important;
-  -webkit-text-fill-color: #FAF0E6 !important;
-  background: #6C3212 !important;
-}
-
-/* action links ไม่ให้ฟ้า */
-.action-link,
-.pay-btn,
-.btn-ghost {
-  color: #3D2314 !important;
-  -webkit-text-fill-color: #3D2314 !important;
-}
-
-/* back btn สีขาวบน header */
-.back-btn {
-  color: #F2EDE4 !important;
-  -webkit-text-fill-color: #F2EDE4 !important;
-}
-
-.acc-header h2 {
-  color: #F2EDE4 !important;
-  -webkit-text-fill-color: #F2EDE4 !important;
-}
-
-/* input date / select value text */
-input,
-select,
-textarea {
-  color: #1A1208 !important;
-  -webkit-text-fill-color: #1A1208 !important;
-}
-
-/* status tags */
-.status-tag.soon {
-  background: #EDE0C0;
-  color: #5A3C10 !important;
-  -webkit-text-fill-color: #5A3C10 !important;
-}
-
-.status-tag.overdue {
-  background: #E8D0C8;
-  color: #5A2010 !important;
-  -webkit-text-fill-color: #5A2010 !important;
-}
-
-.status-tag.ok {
-  background: #D0E0C8;
-  color: #2A4020 !important;
-  -webkit-text-fill-color: #2A4020 !important;
-}
-
-/* month nav arrows */
-.month-nav {
-  color: #4A3820 !important;
-  -webkit-text-fill-color: #4A3820 !important;
-}
-
-/* ── SEARCH BAR — Coffee UI style ── */
-.search-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 24px;
-  padding: 9px 14px;
-  margin-bottom: 12px;
-  box-shadow: var(--shadow-sm);
-}
-
-.search-bar svg {
-  width: 16px;
-  height: 16px;
-  stroke: #8A7060;
-  flex-shrink: 0;
-}
-
-.search-input {
-  border: none;
-  background: none;
-  font-family: ‘Sarabun’, sans-serif;
-  font-size: 14px;
-  color: #2A1A0E !important;
-  -webkit-text-fill-color: #2A1A0E !important;
-  outline: none;
-  flex: 1;
-  width: 100%;
-}
-
-.search-input::placeholder {
-  color: #A89070 !important;
-  -webkit-text-fill-color: #A89070 !important;
-}
-
-/* ── YoY STYLES ── */
-.yoy-kpi-card {
-  background: #FDFAF6;
-  border-radius: 14px;
-  padding: 12px 8px;
-  text-align: center;
-  border: 1px solid #E0D5C4;
-  box-shadow: 0 1px 6px rgba(61, 35, 20, 0.10);
-}
-
-.yoy-summary-card {
-  background: #FDFAF6;
-  border-radius: 14px;
-  padding: 14px 12px;
-  border: 1px solid #E0D5C4;
-  box-shadow: 0 1px 6px rgba(61, 35, 20, 0.10);
-}
-
-.yoy-table-header {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  background: #EDE7DB;
-  padding: 10px 12px;
-  border-bottom: 1px solid #E0D5C4;
-}
-
-.yoy-table-row {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  padding: 9px 12px;
-  border-bottom: 1px solid #F0E8DB;
-}
-
-.yoy-table-footer {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  background: #EDE7DB;
-  padding: 10px 12px;
-}
-
-.yoy-col-label {
-  font-size: 11px;
-  font-weight: 600;
-  font-family: 'Mitr', sans-serif;
-  color: #6C3212 !important;
-  -webkit-text-fill-color: #6C3212 !important;
-}
-
-.yoy-col-inc {
-  font-size: 11px;
-  font-weight: 600;
-  font-family: 'Mitr', sans-serif;
-  color: #4A5E38 !important;
-  -webkit-text-fill-color: #4A5E38 !important;
-  text-align: right;
-}
-
-.yoy-col-exp {
-  font-size: 11px;
-  font-weight: 600;
-  font-family: 'Mitr', sans-serif;
-  color: #7A3020 !important;
-  -webkit-text-fill-color: #7A3020 !important;
-  text-align: right;
-}
-```
-
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* reset browser defaults ที่ทำให้สีฟ้าโผล่ */
+    a,
+    a:visited,
+    a:link,
+    a:active {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    select,
+    input,
+    textarea {
+      color: var(--text);
+      accent-color: var(--primary);
+    }
+
+    select option {
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    body {
+      font-family: ‘Sarabun’, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ทำให้พื้นหลัง beige เต็มหน้าจอเสมอ แม้ content สั้น */
+    html,
+    body {
+      background: #F5EFE6 !important;
+    }
+
+    /* ── HEADER ── */
+    .app-header {
+      background: #6C3212;
+      color: #FAF0E6;
+      padding: 18px 20px 22px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-radius: 0 0 28px 28px;
+      box-shadow: 0 6px 24px rgba(61, 35, 20, 0.22);
+      margin-bottom: 0;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .app-title {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .header-date {
+      font-size: 12px;
+      opacity: 0.75;
+      margin-top: 3px;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .sync-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 2px;
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .sync-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #A89070;
+    }
+
+    .sync-dot.offline {
+      background: #C07050;
+    }
+
+    /* ── SCROLL BODY ── */
+    .main-content {
+      padding: 16px 15px 100px;
+      margin-top: 0;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border-radius: var(--r);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+    }
+
+    /* ── SECTION LABEL ── */
+    .sec-label {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #8A7A68;
+      margin: 18px 0 8px;
+    }
+
+    /* ── SUMMARY STRIP ── */
+    .summary-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+
+    .sum-card {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 14px 8px;
+      text-align: center;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sum-label {
+      font-size: 11px;
+      color: #8A7A68 !important;
+      margin-bottom: 5px;
+    }
+
+    .sum-value {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .sum-value {
+      font-family: 'Mitr', sans-serif !important;
+    }
+
+    .sum-value.income {
+      color: #4A5E38 !important;
+    }
+
+    .sum-value.expense {
+      color: #7A3020 !important;
+    }
+
+    .sum-value.pos {
+      color: #2C2010 !important;
+    }
+
+    .sum-value.neg {
+      color: #7A3020 !important;
+    }
+
+    /* ── ALERTS ── */
+    .alert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .alert-item {
+      background: var(--surface);
+      border-radius: var(--r);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--border);
+      border-left: 3px solid #9C4722;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .alert-item:active {
+      background: #E2DCCE;
+    }
+
+    .alert-item.overdue {
+      border-left-color: #7A3020;
+    }
+
+    .alert-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #9C4722;
+      flex-shrink: 0;
+    }
+
+    .alert-dot.overdue {
+      background: #7A3020;
+    }
+
+    .alert-info {
+      flex: 1;
+    }
+
+    .alert-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .alert-due {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-top: 1px;
+    }
+
+    .alert-amount {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #7A3020;
+      white-space: nowrap;
+    }
+
+    .no-item {
+      background: #E5DFD2;
+      border-radius: var(--r);
+      padding: 14px 16px;
+      text-align: center;
+      color: #8A7A68;
+      font-size: 13px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── ACCOUNT BUTTONS ── */
+    .account-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .account-btn {
+      border-radius: var(--r);
+      padding: 20px 14px;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: transform 0.12s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .account-btn:active {
+      transform: scale(0.97);
+    }
+
+    .account-btn.home {
+      background: #9C4722;
+      color: #FAF0E6;
+      box-shadow: 0 6px 20px rgba(156, 71, 34, 0.35);
+    }
+
+    .account-btn.farm {
+      background: #C87629;
+      color: #FAF0E6;
+      box-shadow: 0 6px 20px rgba(200, 118, 41, 0.35);
+    }
+
+    .acc-name {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .acc-balance {
+      font-size: 12px;
+      opacity: 0.85;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .acc-view-link {
+      font-size: 11px;
+      opacity: 0.65;
+      display: block;
+      letter-spacing: 0.3px;
+      color: rgba(242, 237, 228, 0.8) !important;
+      -webkit-text-fill-color: rgba(242, 237, 228, 0.8) !important;
+    }
+
+    .acc-line {
+      width: 28px;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.35);
+      margin-bottom: 10px;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: #FDFAF6;
+      border-top: 1px solid #E0D5C4;
+      display: flex;
+      z-index: 200;
+      box-shadow: 0 -4px 24px rgba(61, 35, 20, 0.12);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 10px 4px 14px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: #8A7A68 !important;
+      -webkit-text-fill-color: #8A7A68 !important;
+      transition: color 0.2s;
+      font-family: ‘Sarabun’, sans-serif;
+      -webkit-appearance: none;
+      outline: none;
+    }
+
+    .nav-btn.active {
+      color: #6C3212 !important;
+      -webkit-text-fill-color: #6C3212 !important;
+    }
+
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    /* ── PAGES ── */
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ── ACCOUNT PAGE HEADER ── */
+    .acc-header {
+      background: #6C3212;
+      color: #FAF0E6;
+      padding: 16px 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-radius: 0 0 28px 28px;
+      box-shadow: 0 6px 24px rgba(61, 35, 20, 0.22);
+    }
+
+    .acc-header.farm {
+      background: #C87629;
+    }
+
+    .acc-header-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .back-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .acc-header h2 {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .acc-header .summary-strip .sum-card {
+      background: rgba(255, 240, 220, 0.15);
+      border: 1px solid rgba(255, 240, 220, 0.25);
+      border-radius: 12px;
+    }
+
+    .acc-header .sum-label {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .acc-header .sum-value {
+      color: white;
+      font-size: 14px;
+    }
+
+    /* ── MONTH SELECTOR ── */
+    .month-selector {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #FDFAF6;
+      border-radius: var(--r);
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .month-nav {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--text-sub);
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .month-label {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    /* ── TAB BAR ── */
+    .tab-bar {
+      display: flex;
+      background: #F0E8DB;
+      border-radius: 24px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 14px;
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 3px rgba(61, 35, 20, 0.08);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 8px 4px;
+      border: none;
+      background: none;
+      border-radius: 20px;
+      font-family: ‘Sarabun’, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      color: #7A6A58 !important;
+      -webkit-text-fill-color: #7A6A58 !important;
+      transition: all 0.18s;
+    }
+
+    .tab-btn.active {
+      background: #6C3212;
+      color: #F2EDE4 !important;
+      -webkit-text-fill-color: #F2EDE4 !important;
+    }
+
+    .tab-btn.active.farm-tab {
+      background: var(--brown);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ── TRANSACTION LIST — Coffee UI Row Style ── */
+    .trans-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .trans-item {
+      background: var(--surface);
+      border-radius: var(--r);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.12s;
+    }
+
+    .trans-item:active {
+      transform: scale(0.98);
+    }
+
+    /* Coffee UI: icon circle แทน bar */
+    .trans-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .trans-icon.income {
+      background: #D8E8D0;
+    }
+
+    .trans-icon.expense {
+      background: #EAD4CC;
+    }
+
+    .trans-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .trans-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .trans-name {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #2A1A0E !important;
+      -webkit-text-fill-color: #2A1A0E !important;
+    }
+
+    .trans-meta {
+      font-size: 11px;
+      color: #8A7060 !important;
+      -webkit-text-fill-color: #8A7060 !important;
+      margin-top: 2px;
+    }
+
+    .trans-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .trans-amount {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .trans-amount.income {
+      color: #4A7A3A !important;
+      -webkit-text-fill-color: #4A7A3A !important;
+    }
+
+    .trans-amount.expense {
+      color: #8B3020 !important;
+      -webkit-text-fill-color: #8B3020 !important;
+    }
+
+    /* legacy bar — hidden, replaced by icon */
+    .trans-bar {
+      display: none;
+    }
+
+    /* ── FILTER CHIPS ── */
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .filter-chip {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      font-family: ‘Sarabun’, sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      color: #7A6A58 !important;
+      -webkit-text-fill-color: #7A6A58 !important;
+      transition: all 0.15s;
+    }
+
+    .filter-chip.active {
+      background: #6C3212;
+      border-color: #2C2010;
+      color: #F2EDE4;
+    }
+
+    .fab {
+      position: fixed;
+      bottom: 80px;
+      right: max(16px, calc(50vw - 240px + 16px));
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: #6C3212;
+      color: #FAF0E6;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(61, 35, 20, 0.38);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      transition: transform 0.15s, box-shadow 0.15s;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .fab:active {
+      transform: scale(0.90);
+      box-shadow: 0 2px 12px rgba(61, 35, 20, 0.30);
+    }
+
+    .fab.farm-mode {
+      background: #9C4722;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 300;
+      display: none;
+      align-items: flex-end;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-sheet {
+      background: #EDE7DB;
+      border-radius: 28px 28px 0 0;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px 20px 40px;
+      max-height: 92vh;
+      overflow-y: auto;
+      animation: slideUp 0.25s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+        opacity: 0.5;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-handle {
+      width: 36px;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 0 auto 14px;
+    }
+
+    .modal-title {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-align: center;
+      color: var(--text);
+    }
+
+    /* ── FORM ── */
+    .form-group {
+      margin-bottom: 13px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      color: #6A5848;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: ‘Sarabun’, sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      background: #F2EDE4;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .form-control:focus {
+      border-color: #2C2010;
+    }
+
+    .type-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .type-btn {
+      padding: 11px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: #E0DAD0;
+      cursor: pointer;
+      font-family: ‘Sarabun’, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #4A3C2C !important;
+      -webkit-text-fill-color: #4A3C2C !important;
+      transition: all 0.18s;
+    }
+
+    .type-btn.active-income {
+      border-color: #4A5E38;
+      background: #DDE6D8;
+      color: #344A28;
+    }
+
+    .type-btn.active-expense {
+      border-color: #7A3020;
+      background: #EDD8D4;
+      color: #7A3020;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: #6C3212;
+      color: #FAF0E6 !important;
+      -webkit-text-fill-color: #FAF0E6 !important;
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 16px rgba(61, 35, 20, 0.30);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+      box-shadow: none;
+    }
+
+    .btn-primary.farm {
+      background: #9C4722;
+    }
+
+    .btn-ghost {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: none;
+      color: #6A5E4E !important;
+      -webkit-text-fill-color: #6A5E4E !important;
+      font-family: ‘Sarabun’, sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    /* ── BUDGET — Coffee UI card style ── */
+    .budget-card {
+      background: var(--surface);
+      border-radius: var(--r);
+      padding: 15px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.12s;
+    }
+
+    .budget-card:active {
+      transform: scale(0.98);
+    }
+
+    .budget-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .budget-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2A1A0E !important;
+      -webkit-text-fill-color: #2A1A0E !important;
+    }
+
+    .budget-amounts {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 12px;
+      color: #8A7060 !important;
+      -webkit-text-fill-color: #8A7060 !important;
+    }
+
+    .budget-bar {
+      height: 8px;
+      background: #E8DDD0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .budget-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: #6C3212;
+      transition: width 0.5s ease;
+    }
+
+    .budget-fill.warn {
+      background: #C87629;
+    }
+
+    .budget-fill.over {
+      background: #7A3020;
+    }
+
+    .budget-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .budget-pct {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    .locked-tag {
+      font-size: 10px;
+      color: var(--text-sub);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── DEBT — Coffee UI card style ── */
+    .debt-card {
+      background: var(--surface);
+      border-radius: var(--r);
+      padding: 15px 16px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      border-left: 4px solid #9C4722;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .debt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 5px;
+    }
+
+    .debt-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .debt-total {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2C2010;
+    }
+
+    .debt-detail {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    .status-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .status-tag.soon {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .status-tag.overdue {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    .status-tag.ok {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .pay-btn {
+      margin-top: 8px;
+      width: 100%;
+      padding: 7px;
+      border: 1.5px solid #2C2010;
+      color: #2C2010;
+      background: none;
+      border-radius: 8px;
+      font-family: ‘Sarabun’, sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .pay-btn:active {
+      background: #E8E3D8;
+    }
+
+    /* ── CHART ── */
+    .chart-box {
+      background: var(--surface);
+      border-radius: var(--r);
+      padding: 15px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .chart-title {
+      font-family: ‘Mitr’, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    canvas {
+      max-height: 180px;
+    }
+
+    .info-box {
+      background: #EDE7DB;
+      border: 1.5px solid #B8A888;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 13px;
+      color: #2C2010;
+    }
+
+    .info-box strong {
+      color: #1A1208;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 36px 20px;
+      color: var(--text-sub);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* ── SMALL ACTIONS ROW ── */
+    .row-action {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .row-action span {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .action-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: #2C2010;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: ‘Sarabun’, sans-serif;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #D2C9B8;
+      background: #E8E3D8;
+    }
+
+    .action-link.debt {
+      color: #2C2010;
+      background: #E8E3D8;
+      border-color: #D2C9B8;
+    }
+
+    /* ── Reset browser blue defaults ── */
+
+    * {
+      color: inherit;
+    }
+
+    a,
+    a:visited,
+    a:link,
+    a:active,
+    a:hover {
+      color: inherit !important;
+      text-decoration: none;
+    }
+
+    button,
+    select,
+    input,
+    textarea,
+    option {
+      color: #1A1208;
+      font-family: ‘Sarabun’, sans-serif;
+      -webkit-text-fill-color: #1A1208;
+      accent-color: #2C2010;
+    }
+
+    input[type=“date”]::-webkit-calendar-picker-indicator {
+      filter: invert(0.3) sepia(1) saturate(0.5) hue-rotate(10deg);
+    }
+
+    select option {
+      background: #EDE7DB;
+      color: #1A1208;
+    }
+
+    ::-webkit-input-placeholder {
+      color: #A89070 !important;
+      -webkit-text-fill-color: #A89070 !important;
+    }
+
+    ::-moz-placeholder {
+      color: #A89070 !important;
+    }
+
+    ::placeholder {
+      color: #A89070 !important;
+    }
+
+    .month-nav {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #4A3820 !important;
+      -webkit-text-fill-color: #4A3820 !important;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input[type=“date”],
+    input[type=“month”] {
+      color: #1A1208 !important;
+      -webkit-text-fill-color: #1A1208 !important;
+    }
+
+    select {
+      color: #1A1208 !important;
+      -webkit-text-fill-color: #1A1208 !important;
+    }
+
+    /* ── FINAL COLOR OVERRIDES: ลบล้างทุกสีฟ้าจาก browser ── */
+    .sec-label,
+    .row-action span,
+    .alert-due,
+    .trans-meta,
+    .debt-detail,
+    .budget-pct,
+    .locked-tag,
+    .sum-label,
+    .chart-title,
+    .empty-state,
+    .alert-name span,
+    .debt-name span {
+      color: #8A7A68 !important;
+      -webkit-text-fill-color: #8A7A68 !important;
+    }
+
+    .trans-amount.income {
+      color: #4A5E38 !important;
+      -webkit-text-fill-color: #4A5E38 !important;
+    }
+
+    .trans-amount.expense {
+      color: #7A3020 !important;
+      -webkit-text-fill-color: #7A3020 !important;
+    }
+
+    .alert-amount {
+      color: #7A3020 !important;
+      -webkit-text-fill-color: #7A3020 !important;
+    }
+
+    .debt-total {
+      color: #2C2010 !important;
+      -webkit-text-fill-color: #2C2010 !important;
+    }
+
+    .trans-name,
+    .debt-name,
+    .budget-name,
+    .alert-name,
+    .month-label {
+      color: #1A1208 !important;
+      -webkit-text-fill-color: #1A1208 !important;
+    }
+
+    /* Modal: ปุ่มและ text ทั้งหมด */
+    .modal-title {
+      color: #1A1208 !important;
+      -webkit-text-fill-color: #1A1208 !important;
+    }
+
+    .form-label {
+      color: #6A5848 !important;
+      -webkit-text-fill-color: #6A5848 !important;
+    }
+
+    /* Tab bar ทุกสถานะ */
+    .tab-btn {
+      color: #7A6A58 !important;
+      -webkit-text-fill-color: #7A6A58 !important;
+    }
+
+    .tab-btn.active {
+      color: #FAF0E6 !important;
+      -webkit-text-fill-color: #FAF0E6 !important;
+      background: #6C3212 !important;
+    }
+
+    /* Bottom nav */
+    .nav-label {
+      color: inherit !important;
+      -webkit-text-fill-color: inherit !important;
+    }
+
+    /* Filter chips */
+    .filter-chip {
+      color: #7A6A58 !important;
+      -webkit-text-fill-color: #7A6A58 !important;
+    }
+
+    .filter-chip.active {
+      color: #FAF0E6 !important;
+      -webkit-text-fill-color: #FAF0E6 !important;
+      background: #6C3212 !important;
+    }
+
+    /* action links ไม่ให้ฟ้า */
+    .action-link,
+    .pay-btn,
+    .btn-ghost {
+      color: #3D2314 !important;
+      -webkit-text-fill-color: #3D2314 !important;
+    }
+
+    /* back btn สีขาวบน header */
+    .back-btn {
+      color: #F2EDE4 !important;
+      -webkit-text-fill-color: #F2EDE4 !important;
+    }
+
+    .acc-header h2 {
+      color: #F2EDE4 !important;
+      -webkit-text-fill-color: #F2EDE4 !important;
+    }
+
+    /* input date / select value text */
+    input,
+    select,
+    textarea {
+      color: #1A1208 !important;
+      -webkit-text-fill-color: #1A1208 !important;
+    }
+
+    /* status tags */
+    .status-tag.soon {
+      background: #EDE0C0;
+      color: #5A3C10 !important;
+      -webkit-text-fill-color: #5A3C10 !important;
+    }
+
+    .status-tag.overdue {
+      background: #E8D0C8;
+      color: #5A2010 !important;
+      -webkit-text-fill-color: #5A2010 !important;
+    }
+
+    .status-tag.ok {
+      background: #D0E0C8;
+      color: #2A4020 !important;
+      -webkit-text-fill-color: #2A4020 !important;
+    }
+
+    /* month nav arrows */
+    .month-nav {
+      color: #4A3820 !important;
+      -webkit-text-fill-color: #4A3820 !important;
+    }
+
+    /* ── SEARCH BAR — Coffee UI style ── */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      padding: 9px 14px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-bar svg {
+      width: 16px;
+      height: 16px;
+      stroke: #8A7060;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      border: none;
+      background: none;
+      font-family: ‘Sarabun’, sans-serif;
+      font-size: 14px;
+      color: #2A1A0E !important;
+      -webkit-text-fill-color: #2A1A0E !important;
+      outline: none;
+      flex: 1;
+      width: 100%;
+    }
+
+    .search-input::placeholder {
+      color: #A89070 !important;
+      -webkit-text-fill-color: #A89070 !important;
+    }
+
+    /* ── YoY STYLES ── */
+    .yoy-kpi-card {
+      background: #FDFAF6;
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+      border: 1px solid #E0D5C4;
+      box-shadow: 0 1px 6px rgba(61, 35, 20, 0.10);
+    }
+
+    .yoy-summary-card {
+      background: #FDFAF6;
+      border-radius: 14px;
+      padding: 14px 12px;
+      border: 1px solid #E0D5C4;
+      box-shadow: 0 1px 6px rgba(61, 35, 20, 0.10);
+    }
+
+    .yoy-table-header {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      background: #EDE7DB;
+      padding: 10px 12px;
+      border-bottom: 1px solid #E0D5C4;
+    }
+
+    .yoy-table-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      padding: 9px 12px;
+      border-bottom: 1px solid #F0E8DB;
+    }
+
+    .yoy-table-footer {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      background: #EDE7DB;
+      padding: 10px 12px;
+    }
+
+    .yoy-col-label {
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'Mitr', sans-serif;
+      color: #6C3212 !important;
+      -webkit-text-fill-color: #6C3212 !important;
+    }
+
+    .yoy-col-inc {
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'Mitr', sans-serif;
+      color: #4A5E38 !important;
+      -webkit-text-fill-color: #4A5E38 !important;
+      text-align: right;
+    }
+
+    .yoy-col-exp {
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'Mitr', sans-serif;
+      color: #7A3020 !important;
+      -webkit-text-fill-color: #7A3020 !important;
+      text-align: right;
+    }
   </style>
+
 </head>
 <body>
-
-  <!-- ── HEADER ── -->
 
   <div class="app-header">
     <div class="header-row">
       <div>
         <div class="app-title">บัญชีครัวเรือน & เกษตร</div>
         <div class="header-date" id="header-date"></div>
-        <div class="sync-row"><div class="sync-dot" id="sync-dot"></div><span id="sync-text">พร้อมใช้งาน</span></div>
+        <div class="sync-row"><div class="sync-dot"></div><span>พร้อมใช้งาน</span></div>
       </div>
       <button class="icon-btn" onclick="openModal('modal-settings')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1481,8 +1465,6 @@ textarea {
       </button>
     </div>
   </div>
-
-  <!-- ── MAIN ── -->
 
   <div class="main-content">
     <div class="sec-label">ภาพรวมเดือนนี้</div>
@@ -1510,17 +1492,17 @@ textarea {
 
   <!-- MODAL: ดูรายการ -->
 
-  <div class="modal-overlay" id="modal-view-acc" style="align-items:flex-end;padding:0 0;">
+  <div class="modal-overlay" id="modal-view-acc" style="align-items:flex-end;padding:0;">
     <div style="background:#F5EFE6;border-radius:28px 28px 0 0;width:100%;max-width:480px;margin:0 auto;height:92vh;display:flex;flex-direction:column;animation:slideUp 0.25s ease;box-shadow:0 -4px 32px rgba(61,35,20,0.18);">
-      <div id="view-acc-hdr" style="background:#9C4722;border-radius:28px 28px 0 0;padding:16px 20px 16px;flex-shrink:0;">
+      <div id="view-acc-hdr" style="background:#9C4722;border-radius:28px 28px 0 0;padding:16px 20px;flex-shrink:0;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
           <span id="view-acc-title" style="font-family:Mitr,sans-serif;font-size:20px;font-weight:600;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">ครัวเรือน</span>
-          <button onclick="closeModal('modal-view-acc')" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.22);border:none;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+          <button onclick="closeModal('modal-view-acc')" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.22);border:none;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#x2715;</button>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;opacity:.85;">รายรับ</div><div id="view-sum-inc" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#4A7A3A!important;-webkit-text-fill-color:#4A7A3A!important;margin-top:2px;">0</div></div>
-          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;opacity:.85;">รายจ่าย</div><div id="view-sum-exp" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#8B3020!important;-webkit-text-fill-color:#8B3020!important;margin-top:2px;">0</div></div>
-          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;opacity:.85;">คงเหลือ</div><div id="view-sum-bal" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;margin-top:2px;">0</div></div>
+          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;color:rgba(250,240,230,0.85);">รายรับ</div><div id="view-sum-inc" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#4AEA3A!important;-webkit-text-fill-color:#4AEA3A!important;">0</div></div>
+          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;color:rgba(250,240,230,0.85);">รายจ่าย</div><div id="view-sum-exp" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#EB8070!important;-webkit-text-fill-color:#EB8070!important;">0</div></div>
+          <div style="background:rgba(255,255,255,0.18);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;color:rgba(250,240,230,0.85);">คงเหลือ</div><div id="view-sum-bal" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">0</div></div>
         </div>
       </div>
       <div style="flex:1;overflow-y:auto;padding:16px 20px 40px;">
@@ -1530,13 +1512,13 @@ textarea {
           <button onclick="viewChangeMonth(1)" style="background:none;border:none;font-size:22px;cursor:pointer;color:#6C3212!important;-webkit-text-fill-color:#6C3212!important;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">&#8250;</button>
         </div>
         <div style="display:flex;gap:8px;margin-bottom:12px;">
-          <button class="vf-chip active" onclick="viewFilter('all',this)" style="flex:1;padding:9px 4px;border-radius:24px;border:1.5px solid #E0D5C4;background:#6C3212;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;cursor:pointer;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;transition:all .15s;">ทั้งหมด</button>
-          <button class="vf-chip" onclick="viewFilter('income',this)" style="flex:1;padding:9px 4px;border-radius:24px;border:1.5px solid #E0D5C4;background:#FDFAF6;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;cursor:pointer;color:#6A5848!important;-webkit-text-fill-color:#6A5848!important;transition:all .15s;">รายรับ</button>
-          <button class="vf-chip" onclick="viewFilter('expense',this)" style="flex:1;padding:9px 4px;border-radius:24px;border:1.5px solid #E0D5C4;background:#FDFAF6;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;cursor:pointer;color:#6A5848!important;-webkit-text-fill-color:#6A5848!important;transition:all .15s;">รายจ่าย</button>
+          <button class="vf-chip active" onclick="viewFilter('all',this)" style="flex:1;padding:9px 4px;border-radius:24px;border:1.5px solid #E0D5C4;background:#6C3212;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;cursor:pointer;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">ทั้งหมด</button>
+          <button class="vf-chip" onclick="viewFilter('income',this)" style="flex:1;padding:9px 4px;border-radius:24px;border:1.5px solid #E0D5C4;background:#FDFAF6;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;cursor:pointer;color:#6A5848!important;-webkit-text-fill-color:#6A5848!important;">รายรับ</button>
+          <button class="vf-chip" onclick="viewFilter('expense',this)" style="flex:1;padding:9px 4px;border-radius:24px;border:1.5px solid #E0D5C4;background:#FDFAF6;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;cursor:pointer;color:#6A5848!important;-webkit-text-fill-color:#6A5848!important;">รายจ่าย</button>
         </div>
         <div style="display:flex;align-items:center;gap:8px;background:#FDFAF6;border:1.5px solid #E0D5C4;border-radius:24px;padding:8px 14px;margin-bottom:12px;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A7060" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input id="view-search" type="text" placeholder="ค้นหารายการ..." oninput="viewSearchFn(this.value)" style="border:none;background:none;font-family:Sarabun,sans-serif;font-size:14px;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;outline:none;flex:1;width:100%;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A7060" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="view-search" type="text" placeholder="ค้นหารายการ..." oninput="viewSearchFn(this.value)" style="border:none;background:none;font-family:Sarabun,sans-serif;font-size:14px;outline:none;flex:1;">
         </div>
         <div class="trans-list" id="view-trans-list"><div class="empty-state">ยังไม่มีรายการ</div></div>
       </div>
@@ -1547,17 +1529,17 @@ textarea {
 
   <div class="modal-overlay" id="modal-add" style="align-items:flex-end;padding:0;">
     <div style="background:#F5EFE6;border-radius:28px 28px 0 0;width:100%;max-width:480px;margin:0 auto;height:92vh;display:flex;flex-direction:column;animation:slideUp 0.25s ease;box-shadow:0 -4px 32px rgba(61,35,20,0.18);">
-      <div id="modal-add-hdr" style="background:#4A7A3A;border-radius:28px 28px 0 0;padding:16px 20px 16px;flex-shrink:0;">
+      <div id="modal-add-hdr" style="background:#4A7A3A;border-radius:28px 28px 0 0;padding:16px 20px;flex-shrink:0;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
           <span id="modal-add-title" style="font-family:Mitr,sans-serif;font-size:20px;font-weight:600;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">ครัวเรือน</span>
-          <button onclick="closeModal('modal-add')" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.22);border:none;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+          <button onclick="closeModal('modal-add')" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.22);border:none;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#x2715;</button>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <button id="btn-income" onclick="setType('income')" style="background:rgba(255,255,255,0.25);border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:#FAF0E6;-webkit-text-fill-color:#FAF0E6;">รายรับ ✓</button>
-          <button id="btn-expense" onclick="setType('expense')" style="background:rgba(0,0,0,0.12);border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:rgba(250,240,230,0.50);-webkit-text-fill-color:rgba(250,240,230,0.50);">รายจ่าย</button>
+          <button id="btn-income" onclick="setType('income')" style="background:rgba(255,255,255,0.25);border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">รายรับ &#x2713;</button>
+          <button id="btn-expense" onclick="setType('expense')" style="background:rgba(0,0,0,0.12);border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;cursor:pointer;color:rgba(250,240,230,0.5)!important;-webkit-text-fill-color:rgba(250,240,230,0.5)!important;">รายจ่าย</button>
         </div>
       </div>
-      <div style="flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:16px 20px 40px;">
+      <div style="flex:1;overflow-y:auto;overflow-x:hidden;padding:16px 20px 40px;">
         <div class="form-group"><label class="form-label">จำนวนเงิน (บาท)</label><input type="number" class="form-control" id="input-amount" placeholder="0.00" inputmode="decimal"></div>
         <div class="form-group"><label class="form-label">รายการ / คำอธิบาย</label><input type="text" class="form-control" id="input-desc" placeholder="เช่น ค่าไฟ, ขายข้าว"></div>
         <div class="form-group"><label class="form-label">หมวดหมู่</label><select class="form-control" id="input-category"><option value="">เลือกหมวดหมู่</option></select></div>
@@ -1575,14 +1557,12 @@ textarea {
       <div class="modal-handle"></div>
       <div class="modal-title">ตั้งค่าการเชื่อมต่อ</div>
       <div class="info-box"><strong>วิธีเชื่อมต่อ Google Sheets</strong><br>1. นำไฟล์ gas-backend.gs ไปวางใน Apps Script<br>2. ใส่ Spreadsheet ID และรัน setupSheets()<br>3. Deploy เป็น Web App แล้วคัดลอก URL มาใส่ด้านล่าง</div>
-      <div class="form-group"><label class="form-label">Google Apps Script Web App URL</label><input type="url" class="form-control" id="gas-url" placeholder="https://script.google.com/macros/s/..."></div>
+      <div class="form-group"><label class="form-label">Google Apps Script URL</label><input type="url" class="form-control" id="gas-url" placeholder="https://script.google.com/macros/s/..."></div>
       <button class="btn-primary" onclick="saveSettings()">บันทึกและทดสอบการเชื่อมต่อ</button>
       <div id="connection-result" style="margin-top:10px;text-align:center;font-size:13px;color:var(--text-sub);"></div>
       <button class="btn-ghost" onclick="closeModal('modal-settings')">ปิด</button>
     </div>
   </div>
-
-  <!-- BOTTOM NAV -->
 
   <div class="bottom-nav">
     <button class="nav-btn active" onclick="location.href='index.html'">
@@ -1601,7 +1581,6 @@ textarea {
 <script>
 
 ```
-// ── SHARED ──
 var MONTHS_TH=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 var MONTHS_SHORT=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 var DAYS_TH=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
@@ -1609,7 +1588,11 @@ var CATEGORIES={
   home:{income:['เงินเดือน','โบนัส','ค่าเช่า','ดอกเบี้ย','อื่นๆ'],expense:['อาหาร','เดินทาง','สาธารณูปโภค','ช้อปปิ้ง','สุขภาพ','บันเทิง','การศึกษา','ซ่อมบำรุง','อื่นๆ']},
   farm:{income:['ขายพืชผล','ขายสัตว์','เงินอุดหนุน','อื่นๆ'],expense:['เมล็ดพันธุ์','ปุ๋ย','ยาฆ่าแมลง','น้ำมัน','ค่าแรง','อุปกรณ์','อื่นๆ']}
 };
-var DATA=(function(){var r=localStorage.getItem('banharnData');try{return r?JSON.parse(r):{home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}catch(e){return {home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}})();
+var DATA=(function(){
+  var r=localStorage.getItem('banharnData');
+  try{return r?JSON.parse(r):{home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
+  catch(e){return {home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
+})();
 function saveData(){localStorage.setItem('banharnData',JSON.stringify(DATA));}
 function fmt(n){return (parseFloat(n)||0).toLocaleString('th-TH');}
 function todayStr(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -1622,57 +1605,51 @@ function showToast(msg){
   if(!t){t=document.createElement('div');t.id='toast-el';t.style.cssText='position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:#6C3212;color:#FAF0E6;padding:9px 18px;border-radius:8px;font-family:Sarabun,sans-serif;font-size:13px;z-index:9999;transition:opacity 0.3s;white-space:nowrap;pointer-events:none;';document.body.appendChild(t);}
   t.textContent=msg;t.style.opacity='1';clearTimeout(_toastTm);_toastTm=setTimeout(function(){t.style.opacity='0';},2500);
 }
-window.addEventListener('load', function(){
-  document.querySelectorAll('.modal-overlay').forEach(function(el){
-    el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
-  });
-  init();
-});
 
-var _currentAcc = 'home';
-var _transType = 'income';
-var _viewAcc = 'home', _viewYear = new Date().getFullYear(), _viewMonth = new Date().getMonth(), _viewFilter = 'all', _viewSearch = '';
-var TYPE_COLOR = { income: '#4A7A3A', expense: '#8B3020' };
+var _acc = 'home';
+var _type = 'income';
+var _vAcc = 'home', _vY = new Date().getFullYear(), _vM = new Date().getMonth(), _vF = 'all', _vS = '';
+var TYPE_COLOR = {income:'#4A7A3A', expense:'#8B3020'};
+var BTN_BASE = 'border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;cursor:pointer;';
 
 function init() {
   var d = new Date();
-  document.getElementById('header-date').textContent = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'][d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS_TH[d.getMonth()] + ' ' + (d.getFullYear()+543);
+  document.getElementById('header-date').textContent = DAYS_TH[d.getDay()]+' '+d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);
   document.getElementById('input-date').value = todayStr();
-  document.getElementById('gas-url').value = localStorage.getItem('gasUrl') || '';
+  document.getElementById('gas-url').value = localStorage.getItem('gasUrl')||'';
   renderHome();
 }
 
 function renderHome() {
-  var now = new Date(); var m = now.getMonth(), y = now.getFullYear();
-  var inc=0, exp=0;
-  ['home','farm'].forEach(function(acc){
-    DATA[acc].transactions.forEach(function(t){
+  var now=new Date(), m=now.getMonth(), y=now.getFullYear(), inc=0, exp=0;
+  ['home','farm'].forEach(function(a){
+    DATA[a].transactions.forEach(function(t){
       var d=new Date(t.date);
-      if(d.getMonth()===m && d.getFullYear()===y){ if(t.type==='income') inc+=t.amount; else exp+=t.amount; }
+      if(d.getMonth()===m&&d.getFullYear()===y){if(t.type==='income')inc+=t.amount;else exp+=t.amount;}
     });
   });
-  document.getElementById('total-income').textContent = fmt(inc);
-  document.getElementById('total-expense').textContent = fmt(exp);
-  document.getElementById('total-balance').textContent = fmt(inc-exp);
-  ['home','farm'].forEach(function(acc){
+  document.getElementById('total-income').textContent=fmt(inc);
+  document.getElementById('total-expense').textContent=fmt(exp);
+  document.getElementById('total-balance').textContent=fmt(inc-exp);
+  ['home','farm'].forEach(function(a){
     var bal=0;
-    DATA[acc].transactions.forEach(function(t){
+    DATA[a].transactions.forEach(function(t){
       var d=new Date(t.date);
-      if(d.getMonth()===m && d.getFullYear()===y) bal+=(t.type==='income'?t.amount:-t.amount);
+      if(d.getMonth()===m&&d.getFullYear()===y) bal+=(t.type==='income'?t.amount:-t.amount);
     });
-    document.getElementById(acc+'-balance').textContent = 'คงเหลือ '+fmt(bal)+' บาท';
+    document.getElementById(a+'-balance').textContent='คงเหลือ '+fmt(bal)+' บาท';
   });
   renderAlerts();
 }
 
 function renderAlerts() {
   var alerts=[], today=new Date(); today.setHours(0,0,0,0);
-  ['home','farm'].forEach(function(acc){
-    DATA[acc].debts.forEach(function(d){
-      if(!d.nextDue) return;
+  ['home','farm'].forEach(function(a){
+    DATA[a].debts.forEach(function(d){
+      if(!d.nextDue)return;
       var due=new Date(d.nextDue); due.setHours(0,0,0,0);
       var diff=Math.round((due-today)/86400000);
-      if(diff<=7) alerts.push({name:d.name,acc:acc,diff:diff,nextDue:d.nextDue,installment:d.installment,total:d.total});
+      if(diff<=7) alerts.push({name:d.name,acc:a,diff:diff,nextDue:d.nextDue,installment:d.installment,total:d.total});
     });
   });
   var el=document.getElementById('alert-list');
@@ -1681,48 +1658,45 @@ function renderAlerts() {
     var lbl=a.acc==='home'?'ครัวเรือน':'เกษตร';
     var st=a.diff<0?'เกินกำหนด '+Math.abs(a.diff)+' วัน':(a.diff===0?'ครบกำหนดวันนี้':'อีก '+a.diff+' วัน');
     var ov=a.diff<0?'overdue':'';
-    return '<div class="alert-item '+ov+'" onclick="openViewModal(''+a.acc+'',event)">'
+    return '<div class="alert-item '+ov+'" onclick="openViewModal(\''+a.acc+'\',event)">'
       +'<div class="alert-dot '+ov+'"></div>'
       +'<div class="alert-info"><div class="alert-name">'+a.name+' <span style="font-weight:400;color:var(--text-sub);font-size:12px;">('+lbl+')</span></div>'
-      +'<div class="alert-due">'+formatDateTH(a.nextDue)+' · '+st+'</div></div>'
+      +'<div class="alert-due">'+formatDateTH(a.nextDue)+' \u00B7 '+st+'</div></div>'
       +'<div class="alert-amount">'+fmt(a.installment||a.total)+'</div></div>';
   }).join('');
 }
 
-// ── modal add ──
-
-var BASE_BTN = 'border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;cursor:pointer;';
-
 function _setHdr(acc, type) {
-  var isInc = type==='income';
+  var isInc=type==='income';
   var hdr=document.getElementById('modal-add-hdr');
+  if(hdr) hdr.style.background=isInc?TYPE_COLOR.income:TYPE_COLOR.expense;
+  var t=document.getElementById('modal-add-title');
+  if(t) t.textContent=acc==='home'?'ครัวเรือน':'การเกษตร';
   var bi=document.getElementById('btn-income');
   var be=document.getElementById('btn-expense');
-  if(hdr) hdr.style.background = isInc ? TYPE_COLOR.income : TYPE_COLOR.expense;
-  document.getElementById('modal-add-title').textContent = acc==='home'?'ครัวเรือน':'การเกษตร';
-  if(bi) bi.setAttribute('style', BASE_BTN+'background:'+(isInc?'rgba(255,255,255,0.25)':'rgba(0,0,0,0.12)')+';color:'+(isInc?'#FAF0E6':'rgba(250,240,230,0.50)')+';-webkit-text-fill-color:'+(isInc?'#FAF0E6':'rgba(250,240,230,0.50)')+';font-weight:'+(isInc?'600':'400')+';');
-  if(be) be.setAttribute('style', BASE_BTN+'background:'+(!isInc?'rgba(255,255,255,0.25)':'rgba(0,0,0,0.12)')+';color:'+(!isInc?'#FAF0E6':'rgba(250,240,230,0.50)')+';-webkit-text-fill-color:'+(!isInc?'#FAF0E6':'rgba(250,240,230,0.50)')+';font-weight:'+(!isInc?'600':'400')+';');
-  bi.textContent = isInc ? 'รายรับ ✓' : 'รายรับ';
-  be.textContent = !isInc ? 'รายจ่าย ✓' : 'รายจ่าย';
+  if(bi) bi.setAttribute('style',BTN_BASE+'background:'+(isInc?'rgba(255,255,255,0.25)':'rgba(0,0,0,0.12)')+';color:'+(isInc?'#FAF0E6':'rgba(250,240,230,0.5)')+';-webkit-text-fill-color:'+(isInc?'#FAF0E6':'rgba(250,240,230,0.5)')+';font-weight:'+(isInc?'600':'400')+';');
+  if(be) be.setAttribute('style',BTN_BASE+'background:'+(!isInc?'rgba(255,255,255,0.25)':'rgba(0,0,0,0.12)')+';color:'+(!isInc?'#FAF0E6':'rgba(250,240,230,0.5)')+';-webkit-text-fill-color:'+(!isInc?'#FAF0E6':'rgba(250,240,230,0.5)')+';font-weight:'+(!isInc?'600':'400')+';');
+  if(bi) bi.textContent=isInc?'รายรับ \u2713':'รายรับ';
+  if(be) be.textContent=!isInc?'รายจ่าย \u2713':'รายจ่าย';
   var sb=document.getElementById('save-trans-btn');
   if(sb) sb.className='btn-primary'+(acc==='farm'?' farm':'');
 }
 
 function openQuickAdd(acc) {
-  _currentAcc = acc; _transType = 'income';
-  document.getElementById('input-category').innerHTML = '<option value="">เลือกหมวดหมู่</option>'+CATEGORIES[acc].income.map(function(c){return '<option>'+c+'</option>';}).join('');
-  document.getElementById('input-date').value = todayStr();
-  document.getElementById('input-amount').value = '';
-  document.getElementById('input-desc').value = '';
-  document.getElementById('input-note').value = '';
-  _setHdr(acc, 'income');
+  _acc=acc; _type='income';
+  document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES[acc].income.map(function(c){return '<option>'+c+'</option>';}).join('');
+  document.getElementById('input-date').value=todayStr();
+  document.getElementById('input-amount').value='';
+  document.getElementById('input-desc').value='';
+  document.getElementById('input-note').value='';
+  _setHdr(acc,'income');
   openModal('modal-add');
 }
 
 function setType(type) {
-  _transType = type;
-  document.getElementById('input-category').innerHTML = '<option value="">เลือกหมวดหมู่</option>'+CATEGORIES[_currentAcc][type].map(function(c){return '<option>'+c+'</option>';}).join('');
-  _setHdr(_currentAcc, type);
+  _type=type;
+  document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES[_acc][type].map(function(c){return '<option>'+c+'</option>';}).join('');
+  _setHdr(_acc,type);
 }
 
 function saveTransaction() {
@@ -1733,7 +1707,7 @@ function saveTransaction() {
   var note=document.getElementById('input-note').value.trim();
   if(!amount||amount<=0){alert('กรุณาระบุจำนวนเงิน');return;}
   if(!desc){alert('กรุณาระบุรายการ');return;}
-  DATA[_currentAcc].transactions.push({id:Date.now()+'',type:_transType,amount:amount,desc:desc,category:category,date:date,note:note});
+  DATA[_acc].transactions.push({id:Date.now()+'',type:_type,amount:amount,desc:desc,category:category,date:date,note:note});
   saveData();
   closeModal('modal-add');
   document.getElementById('input-amount').value='';
@@ -1741,17 +1715,15 @@ function saveTransaction() {
   document.getElementById('input-note').value='';
   renderHome();
   var mv=document.getElementById('modal-view-acc');
-  if(mv && mv.classList.contains('open')) viewRenderList();
+  if(mv&&mv.classList.contains('open')) viewRenderList();
   showToast('บันทึกรายการแล้ว');
 }
 
-// ── modal view ──
 function openViewModal(acc, e) {
-  if(e && e.stopPropagation) e.stopPropagation();
-  _viewAcc=acc; _viewYear=new Date().getFullYear(); _viewMonth=new Date().getMonth();
-  _viewFilter='all'; _viewSearch='';
-  document.getElementById('view-acc-title').textContent = acc==='home'?'ครัวเรือน':'การเกษตร';
-  document.getElementById('view-acc-hdr').style.background = acc==='home'?'#9C4722':'#C87629';
+  if(e&&e.stopPropagation) e.stopPropagation();
+  _vAcc=acc; _vY=new Date().getFullYear(); _vM=new Date().getMonth(); _vF='all'; _vS='';
+  document.getElementById('view-acc-title').textContent=acc==='home'?'ครัวเรือน':'การเกษตร';
+  document.getElementById('view-acc-hdr').style.background=acc==='home'?'#9C4722':'#C87629';
   document.querySelectorAll('.vf-chip').forEach(function(b,i){
     b.style.background=i===0?'#6C3212':'#FDFAF6';
     b.style.color=i===0?'#FAF0E6':'#6A5848';
@@ -1762,17 +1734,16 @@ function openViewModal(acc, e) {
   openModal('modal-view-acc');
 }
 
-function viewUpdateMonth() {
-  document.getElementById('view-month-lbl').textContent = MONTHS_TH[_viewMonth]+' '+(_viewYear+543);
-}
-function viewChangeMonth(dir) {
-  _viewMonth+=dir;
-  if(_viewMonth<0){_viewMonth=11;_viewYear--;}
-  if(_viewMonth>11){_viewMonth=0;_viewYear++;}
+function viewUpdateMonth(){document.getElementById('view-month-lbl').textContent=MONTHS_TH[_vM]+' '+(_vY+543);}
+
+function viewChangeMonth(dir){
+  _vM+=dir;
+  if(_vM<0){_vM=11;_vY--;} if(_vM>11){_vM=0;_vY++;}
   viewUpdateMonth(); viewRenderList();
 }
-function viewFilter(mode, btn) {
-  _viewFilter=mode; _viewSearch='';
+
+function viewFilter(mode,btn){
+  _vF=mode; _vS='';
   document.getElementById('view-search').value='';
   document.querySelectorAll('.vf-chip').forEach(function(b){
     var a=b===btn;
@@ -1782,48 +1753,53 @@ function viewFilter(mode, btn) {
   });
   viewRenderList();
 }
-function viewSearchFn(text){ _viewSearch=text.toLowerCase(); viewRenderList(); }
-function viewRenderList() {
-  var list=DATA[_viewAcc].transactions.filter(function(t){
-    var d=new Date(t.date); return d.getMonth()===_viewMonth && d.getFullYear()===_viewYear;
-  });
+
+function viewSearchFn(text){_vS=text.toLowerCase();viewRenderList();}
+
+function viewRenderList(){
+  var list=DATA[_vAcc].transactions.filter(function(t){var d=new Date(t.date);return d.getMonth()===_vM&&d.getFullYear()===_vY;});
   var inc=0,exp=0;
   list.forEach(function(t){if(t.type==='income')inc+=t.amount;else exp+=t.amount;});
   document.getElementById('view-sum-inc').textContent=fmt(inc);
   document.getElementById('view-sum-exp').textContent=fmt(exp);
   document.getElementById('view-sum-bal').textContent=fmt(inc-exp);
-  if(_viewFilter==='income') list=list.filter(function(t){return t.type==='income';});
-  if(_viewFilter==='expense') list=list.filter(function(t){return t.type==='expense';});
-  if(_viewSearch){var s=_viewSearch;list=list.filter(function(t){return (t.desc||'').toLowerCase().indexOf(s)>=0||(t.category||'').toLowerCase().indexOf(s)>=0;});}
+  if(_vF==='income') list=list.filter(function(t){return t.type==='income';});
+  if(_vF==='expense') list=list.filter(function(t){return t.type==='expense';});
+  if(_vS){var s=_vS;list=list.filter(function(t){return(t.desc||'').toLowerCase().indexOf(s)>=0||(t.category||'').toLowerCase().indexOf(s)>=0;});}
   var el=document.getElementById('view-trans-list');
   if(!list.length){el.innerHTML='<div class="empty-state">ยังไม่มีรายการในเดือนนี้</div>';return;}
   list.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-  var ISVG='<svg viewBox="0 0 24 24" fill="none" stroke="#4A7A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>';
-  var ESVG='<svg viewBox="0 0 24 24" fill="none" stroke="#8B3020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>';
+  var IS='<svg viewBox="0 0 24 24" fill="none" stroke="#4A7A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>';
+  var ES='<svg viewBox="0 0 24 24" fill="none" stroke="#8B3020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>';
   el.innerHTML=list.map(function(t){
-    var icon=t.type==='income'?ISVG:ESVG;
-    var sign=t.type==='income'?'+':'-';
-    return '<div class="trans-item"><div class="trans-icon '+t.type+'">'+icon+'</div>'
+    return '<div class="trans-item"><div class="trans-icon '+t.type+'">'+(t.type==='income'?IS:ES)+'</div>'
       +'<div class="trans-info"><div class="trans-name">'+(t.desc||'')+'</div>'
-      +'<div class="trans-meta">'+formatDateTH(t.date)+(t.category?' · '+t.category:'')+'</div></div>'
-      +'<div class="trans-right"><div class="trans-amount '+t.type+'">'+sign+fmt(t.amount)+'</div>'
+      +'<div class="trans-meta">'+formatDateTH(t.date)+(t.category?' \u00B7 '+t.category:'')+'</div></div>'
+      +'<div class="trans-right"><div class="trans-amount '+t.type+'">'+(t.type==='income'?'+':'-')+fmt(t.amount)+'</div>'
       +(t.category?'<div style="font-size:10px;background:#F0E8D8;color:#6A5040;padding:2px 7px;border-radius:8px;">'+t.category+'</div>':'')
       +'</div></div>';
   }).join('');
 }
 
-function saveSettings() {
+function saveSettings(){
   var url=document.getElementById('gas-url').value.trim();
   localStorage.setItem('gasUrl',url);
   var res=document.getElementById('connection-result');
   res.textContent='กำลังทดสอบ...';
   fetch(url+'?action=ping').then(function(r){return r.json();}).then(function(d){
-    if(d.status==='ok'){res.textContent='เชื่อมต่อสำเร็จ';res.style.color='#4A7A3A';}
-    else{res.textContent='เชื่อมต่อไม่สำเร็จ';res.style.color='#8B3020';}
+    res.textContent=d.status==='ok'?'เชื่อมต่อสำเร็จ':'เชื่อมต่อไม่สำเร็จ';
+    res.style.color=d.status==='ok'?'#4A7A3A':'#8B3020';
   }).catch(function(){res.textContent='เชื่อมต่อไม่สำเร็จ';res.style.color='#8B3020';});
 }
+
+window.addEventListener('load', function(){
+  document.querySelectorAll('.modal-overlay').forEach(function(el){
+    el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
+  });
+  init();
+});
 ```
 
-  </script>
+</script>
 </body>
 </html>
