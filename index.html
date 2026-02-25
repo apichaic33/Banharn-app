@@ -1600,6 +1600,7 @@ textarea {
   </div>
 <script>
 
+```
 // ── SHARED ──
 var MONTHS_TH=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 var MONTHS_SHORT=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
@@ -1625,6 +1626,7 @@ window.addEventListener('load', function(){
   document.querySelectorAll('.modal-overlay').forEach(function(el){
     el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
   });
+  init();
 });
 
 var _currentAcc = 'home';
@@ -1820,8 +1822,7 @@ function saveSettings() {
     else{res.textContent='เชื่อมต่อไม่สำเร็จ';res.style.color='#8B3020';}
   }).catch(function(){res.textContent='เชื่อมต่อไม่สำเร็จ';res.style.color='#8B3020';});
 }
-
-init();
+```
 
   </script>
 </body>
