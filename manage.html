@@ -3,40 +3,1486 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <!-- v2.1-multipage -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>จัดการ — บัญชีครัวเรือน & เกษตร</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="shared.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <style>
+    :root {
+      /* ── Coffee UI Kit Palette ── */
+      --primary: #6C3212;
+      /* Chestnut Brown — header primary */
+      --primary2: #9C4722;
+      /* Cinnamon Stick — ครัวเรือน */
+      --accent: #C87629;
+      /* Desert Sun — เกษตร */
+      --income: #4A7A3A;
+      /* muted green รายรับ */
+      --expense: #8B3020;
+      /* dark red-brown รายจ่าย */
+      --warn: #9B6828;
+      --bg: #F5EFE6;
+      /* warm cream พื้นหลัง (coffee UI background) */
+      --surface: #FDFAF6;
+      /* near-white card */
+      --surface2: #F0E8DB;
+      /* beige alt card */
+      --border: #E0D5C4;
+      --text: #2A1A0E;
+      /* dark espresso text */
+      --text-sub: #8A7060;
+      --shadow-sm: 0 1px 6px rgba(61, 35, 20, 0.10);
+      --shadow: 0 4px 20px rgba(61, 35, 20, 0.13);
+      --r: 16px;
+      --r-sm: 10px;
+      /* aliases */
+      --green: var(--primary);
+      --green-light: #F0E8DB;
+      --brown: var(--accent);
+      --gold: var(--accent);
+    }
+
+```
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* reset browser defaults ที่ทำให้สีฟ้าโผล่ */
+a,
+a:visited,
+a:link,
+a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  color: inherit;
+}
+
+select,
+input,
+textarea {
+  color: var(--text);
+  accent-color: var(--primary);
+}
+
+select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+body {
+  font-family: ‘Sarabun’, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+/* ทำให้พื้นหลัง beige เต็มหน้าจอเสมอ แม้ content สั้น */
+html,
+body {
+  background: #F5EFE6 !important;
+}
+
+/* ── HEADER ── */
+.app-header {
+  background: #6C3212;
+  color: #FAF0E6;
+  padding: 18px 20px 22px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-radius: 0 0 28px 28px;
+  box-shadow: 0 6px 24px rgba(61, 35, 20, 0.22);
+  margin-bottom: 0;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.app-title {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.header-date {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 3px;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.sync-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.sync-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #A89070;
+}
+
+.sync-dot.offline {
+  background: #C07050;
+}
+
+/* ── SCROLL BODY ── */
+.main-content {
+  padding: 16px 15px 100px;
+  margin-top: 0;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #8A7A68;
+  margin: 18px 0 8px;
+}
+
+/* ── SUMMARY STRIP ── */
+.summary-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.sum-card {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 14px 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.sum-label {
+  font-size: 11px;
+  color: #8A7A68 !important;
+  margin-bottom: 5px;
+}
+
+.sum-value {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sum-value {
+  font-family: 'Mitr', sans-serif !important;
+}
+
+.sum-value.income {
+  color: #4A5E38 !important;
+}
+
+.sum-value.expense {
+  color: #7A3020 !important;
+}
+
+.sum-value.pos {
+  color: #2C2010 !important;
+}
+
+.sum-value.neg {
+  color: #7A3020 !important;
+}
+
+/* ── ALERTS ── */
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.alert-item {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-left: 3px solid #9C4722;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.alert-item:active {
+  background: #E2DCCE;
+}
+
+.alert-item.overdue {
+  border-left-color: #7A3020;
+}
+
+.alert-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9C4722;
+  flex-shrink: 0;
+}
+
+.alert-dot.overdue {
+  background: #7A3020;
+}
+
+.alert-info {
+  flex: 1;
+}
+
+.alert-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.alert-due {
+  font-size: 11px;
+  color: var(--text-sub);
+  margin-top: 1px;
+}
+
+.alert-amount {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #7A3020;
+  white-space: nowrap;
+}
+
+.no-item {
+  background: #E5DFD2;
+  border-radius: var(--r);
+  padding: 14px 16px;
+  text-align: center;
+  color: #8A7A68;
+  font-size: 13px;
+  border: 1px solid var(--border);
+}
+
+/* ── ACCOUNT BUTTONS ── */
+.account-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.account-btn {
+  border-radius: var(--r);
+  padding: 20px 14px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.12s;
+  position: relative;
+  overflow: hidden;
+}
+
+.account-btn:active {
+  transform: scale(0.97);
+}
+
+.account-btn.home {
+  background: #9C4722;
+  color: #FAF0E6;
+  box-shadow: 0 6px 20px rgba(156, 71, 34, 0.35);
+}
+
+.account-btn.farm {
+  background: #C87629;
+  color: #FAF0E6;
+  box-shadow: 0 6px 20px rgba(200, 118, 41, 0.35);
+}
+
+.acc-name {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.acc-balance {
+  font-size: 12px;
+  opacity: 0.85;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.acc-view-link {
+  font-size: 11px;
+  opacity: 0.65;
+  display: block;
+  letter-spacing: 0.3px;
+  color: rgba(242, 237, 228, 0.8) !important;
+  -webkit-text-fill-color: rgba(242, 237, 228, 0.8) !important;
+}
+
+.acc-line {
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  margin-bottom: 10px;
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: #FDFAF6;
+  border-top: 1px solid #E0D5C4;
+  display: flex;
+  z-index: 200;
+  box-shadow: 0 -4px 24px rgba(61, 35, 20, 0.12);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 10px 4px 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #8A7A68 !important;
+  -webkit-text-fill-color: #8A7A68 !important;
+  transition: color 0.2s;
+  font-family: ‘Sarabun’, sans-serif;
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.nav-btn.active {
+  color: #6C3212 !important;
+  -webkit-text-fill-color: #6C3212 !important;
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* ── PAGES ── */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* ── ACCOUNT PAGE HEADER ── */
+.acc-header {
+  background: #6C3212;
+  color: #FAF0E6;
+  padding: 16px 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-radius: 0 0 28px 28px;
+  box-shadow: 0 6px 24px rgba(61, 35, 20, 0.22);
+}
+
+.acc-header.farm {
+  background: #C87629;
+}
+
+.acc-header-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.back-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.acc-header h2 {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.acc-header .summary-strip .sum-card {
+  background: rgba(255, 240, 220, 0.15);
+  border: 1px solid rgba(255, 240, 220, 0.25);
+  border-radius: 12px;
+}
+
+.acc-header .sum-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.acc-header .sum-value {
+  color: white;
+  font-size: 14px;
+}
+
+/* ── MONTH SELECTOR ── */
+.month-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FDFAF6;
+  border-radius: var(--r);
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+
+.month-nav {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-sub);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.month-label {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* ── TAB BAR ── */
+.tab-bar {
+  display: flex;
+  background: #F0E8DB;
+  border-radius: 24px;
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  box-shadow: inset 0 1px 3px rgba(61, 35, 20, 0.08);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border: none;
+  background: none;
+  border-radius: 20px;
+  font-family: ‘Sarabun’, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #7A6A58 !important;
+  -webkit-text-fill-color: #7A6A58 !important;
+  transition: all 0.18s;
+}
+
+.tab-btn.active {
+  background: #6C3212;
+  color: #F2EDE4 !important;
+  -webkit-text-fill-color: #F2EDE4 !important;
+}
+
+.tab-btn.active.farm-tab {
+  background: var(--brown);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ── TRANSACTION LIST — Coffee UI Row Style ── */
+.trans-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trans-item {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.12s;
+}
+
+.trans-item:active {
+  transform: scale(0.98);
+}
+
+/* Coffee UI: icon circle แทน bar */
+.trans-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.trans-icon.income {
+  background: #D8E8D0;
+}
+
+.trans-icon.expense {
+  background: #EAD4CC;
+}
+
+.trans-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.trans-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.trans-name {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #2A1A0E !important;
+  -webkit-text-fill-color: #2A1A0E !important;
+}
+
+.trans-meta {
+  font-size: 11px;
+  color: #8A7060 !important;
+  -webkit-text-fill-color: #8A7060 !important;
+  margin-top: 2px;
+}
+
+.trans-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.trans-amount {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.trans-amount.income {
+  color: #4A7A3A !important;
+  -webkit-text-fill-color: #4A7A3A !important;
+}
+
+.trans-amount.expense {
+  color: #8B3020 !important;
+  -webkit-text-fill-color: #8B3020 !important;
+}
+
+/* legacy bar — hidden, replaced by icon */
+.trans-bar {
+  display: none;
+}
+
+/* ── FILTER CHIPS ── */
+.filter-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.filter-chip {
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-family: ‘Sarabun’, sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: #7A6A58 !important;
+  -webkit-text-fill-color: #7A6A58 !important;
+  transition: all 0.15s;
+}
+
+.filter-chip.active {
+  background: #6C3212;
+  border-color: #2C2010;
+  color: #F2EDE4;
+}
+
+.fab {
+  position: fixed;
+  bottom: 80px;
+  right: max(16px, calc(50vw - 240px + 16px));
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: #6C3212;
+  color: #FAF0E6;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(61, 35, 20, 0.38);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 150;
+  transition: transform 0.15s, box-shadow 0.15s;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.fab:active {
+  transform: scale(0.90);
+  box-shadow: 0 2px 12px rgba(61, 35, 20, 0.30);
+}
+
+.fab.farm-mode {
+  background: #9C4722;
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9000;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.modal-overlay.open {
+  display: flex;
+  pointer-events: all;
+}
+
+.modal-sheet {
+  background: #EDE7DB;
+  border-radius: 28px 28px 0 0;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px 20px 60px;
+  max-height: 92vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  animation: slideUp 0.25s ease;
+  box-shadow: 0 -4px 32px rgba(61,35,20,0.18);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0.5;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-handle {
+  width: 36px;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 0 auto 14px;
+}
+
+.modal-title {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  text-align: center;
+  color: var(--text);
+}
+
+/* ── FORM ── */
+.form-group {
+  margin-bottom: 13px;
+}
+
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: #6A5848;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.form-control {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: ‘Sarabun’, sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  background: #F2EDE4;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+
+.form-control:focus {
+  border-color: #2C2010;
+}
+
+.type-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.type-btn {
+  padding: 11px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: #E0DAD0;
+  cursor: pointer;
+  font-family: ‘Sarabun’, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4A3C2C !important;
+  -webkit-text-fill-color: #4A3C2C !important;
+  transition: all 0.18s;
+}
+
+.type-btn.active-income {
+  border-color: #4A5E38;
+  background: #DDE6D8;
+  color: #344A28;
+}
+
+.type-btn.active-expense {
+  border-color: #7A3020;
+  background: #EDD8D4;
+  color: #7A3020;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: #6C3212;
+  color: #FAF0E6 !important;
+  -webkit-text-fill-color: #FAF0E6 !important;
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 16px rgba(61, 35, 20, 0.30);
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+
+.btn-primary.farm {
+  background: #9C4722;
+}
+
+.btn-ghost {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: none;
+  color: #6A5E4E !important;
+  -webkit-text-fill-color: #6A5E4E !important;
+  font-family: ‘Sarabun’, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+/* ── BUDGET — Coffee UI card style ── */
+.budget-card {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.12s;
+}
+
+.budget-card:active {
+  transform: scale(0.98);
+}
+
+.budget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.budget-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2A1A0E !important;
+  -webkit-text-fill-color: #2A1A0E !important;
+}
+
+.budget-amounts {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 12px;
+  color: #8A7060 !important;
+  -webkit-text-fill-color: #8A7060 !important;
+}
+
+.budget-bar {
+  height: 8px;
+  background: #E8DDD0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.budget-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: #6C3212;
+  transition: width 0.5s ease;
+}
+
+.budget-fill.warn {
+  background: #C87629;
+}
+
+.budget-fill.over {
+  background: #7A3020;
+}
+
+.budget-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.budget-pct {
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+.locked-tag {
+  font-size: 10px;
+  color: var(--text-sub);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  letter-spacing: 0.3px;
+}
+
+/* ── DEBT — Coffee UI card style ── */
+.debt-card {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 15px 16px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-left: 4px solid #9C4722;
+  box-shadow: var(--shadow-sm);
+}
+
+.debt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+.debt-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.debt-total {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2C2010;
+}
+
+.debt-detail {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-bottom: 6px;
+}
+
+.status-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.status-tag.soon {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.status-tag.overdue {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.status-tag.ok {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.pay-btn {
+  margin-top: 8px;
+  width: 100%;
+  padding: 7px;
+  border: 1.5px solid #2C2010;
+  color: #2C2010;
+  background: none;
+  border-radius: 8px;
+  font-family: ‘Sarabun’, sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pay-btn:active {
+  background: #E8E3D8;
+}
+
+/* ── CHART ── */
+.chart-box {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 15px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+
+.chart-title {
+  font-family: ‘Mitr’, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-sub);
+  margin-bottom: 12px;
+  letter-spacing: 0.3px;
+}
+
+canvas {
+  max-height: 180px;
+}
+
+.info-box {
+  background: #EDE7DB;
+  border: 1.5px solid #B8A888;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 13px;
+  color: #2C2010;
+}
+
+.info-box strong {
+  color: #1A1208;
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center;
+  padding: 36px 20px;
+  color: var(--text-sub);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* ── SMALL ACTIONS ROW ── */
+.row-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.row-action span {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.action-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2C2010;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: ‘Sarabun’, sans-serif;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #D2C9B8;
+  background: #E8E3D8;
+}
+
+.action-link.debt {
+  color: #2C2010;
+  background: #E8E3D8;
+  border-color: #D2C9B8;
+}
+
+/* ── Reset browser blue defaults ── */
+
+* {
+  color: inherit;
+}
+
+a,
+a:visited,
+a:link,
+a:active,
+a:hover {
+  color: inherit !important;
+  text-decoration: none;
+}
+
+button,
+select,
+input,
+textarea,
+option {
+  color: #1A1208;
+  font-family: ‘Sarabun’, sans-serif;
+  -webkit-text-fill-color: #1A1208;
+  accent-color: #2C2010;
+}
+
+input[type=“date”]::-webkit-calendar-picker-indicator {
+  filter: invert(0.3) sepia(1) saturate(0.5) hue-rotate(10deg);
+}
+
+select option {
+  background: #EDE7DB;
+  color: #1A1208;
+}
+
+::-webkit-input-placeholder {
+  color: #A89070 !important;
+  -webkit-text-fill-color: #A89070 !important;
+}
+
+::-moz-placeholder {
+  color: #A89070 !important;
+}
+
+::placeholder {
+  color: #A89070 !important;
+}
+
+.month-nav {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #4A3820 !important;
+  -webkit-text-fill-color: #4A3820 !important;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type=“date”],
+input[type=“month”] {
+  color: #1A1208 !important;
+  -webkit-text-fill-color: #1A1208 !important;
+}
+
+select {
+  color: #1A1208 !important;
+  -webkit-text-fill-color: #1A1208 !important;
+}
+
+/* ── FINAL COLOR OVERRIDES: ลบล้างทุกสีฟ้าจาก browser ── */
+.sec-label,
+.row-action span,
+.alert-due,
+.trans-meta,
+.debt-detail,
+.budget-pct,
+.locked-tag,
+.sum-label,
+.chart-title,
+.empty-state,
+.alert-name span,
+.debt-name span {
+  color: #8A7A68 !important;
+  -webkit-text-fill-color: #8A7A68 !important;
+}
+
+.trans-amount.income {
+  color: #4A5E38 !important;
+  -webkit-text-fill-color: #4A5E38 !important;
+}
+
+.trans-amount.expense {
+  color: #7A3020 !important;
+  -webkit-text-fill-color: #7A3020 !important;
+}
+
+.alert-amount {
+  color: #7A3020 !important;
+  -webkit-text-fill-color: #7A3020 !important;
+}
+
+.debt-total {
+  color: #2C2010 !important;
+  -webkit-text-fill-color: #2C2010 !important;
+}
+
+.trans-name,
+.debt-name,
+.budget-name,
+.alert-name,
+.month-label {
+  color: #1A1208 !important;
+  -webkit-text-fill-color: #1A1208 !important;
+}
+
+/* Modal: ปุ่มและ text ทั้งหมด */
+.modal-title {
+  color: #1A1208 !important;
+  -webkit-text-fill-color: #1A1208 !important;
+}
+
+.form-label {
+  color: #6A5848 !important;
+  -webkit-text-fill-color: #6A5848 !important;
+}
+
+/* Tab bar ทุกสถานะ */
+.tab-btn {
+  color: #7A6A58 !important;
+  -webkit-text-fill-color: #7A6A58 !important;
+}
+
+.tab-btn.active {
+  color: #FAF0E6 !important;
+  -webkit-text-fill-color: #FAF0E6 !important;
+  background: #6C3212 !important;
+}
+
+/* Bottom nav */
+.nav-label {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* Filter chips */
+.filter-chip {
+  color: #7A6A58 !important;
+  -webkit-text-fill-color: #7A6A58 !important;
+}
+
+.filter-chip.active {
+  color: #FAF0E6 !important;
+  -webkit-text-fill-color: #FAF0E6 !important;
+  background: #6C3212 !important;
+}
+
+/* action links ไม่ให้ฟ้า */
+.action-link,
+.pay-btn,
+.btn-ghost {
+  color: #3D2314 !important;
+  -webkit-text-fill-color: #3D2314 !important;
+}
+
+/* back btn สีขาวบน header */
+.back-btn {
+  color: #F2EDE4 !important;
+  -webkit-text-fill-color: #F2EDE4 !important;
+}
+
+.acc-header h2 {
+  color: #F2EDE4 !important;
+  -webkit-text-fill-color: #F2EDE4 !important;
+}
+
+/* input date / select value text */
+input,
+select,
+textarea {
+  color: #1A1208 !important;
+  -webkit-text-fill-color: #1A1208 !important;
+}
+
+/* status tags */
+.status-tag.soon {
+  background: #EDE0C0;
+  color: #5A3C10 !important;
+  -webkit-text-fill-color: #5A3C10 !important;
+}
+
+.status-tag.overdue {
+  background: #E8D0C8;
+  color: #5A2010 !important;
+  -webkit-text-fill-color: #5A2010 !important;
+}
+
+.status-tag.ok {
+  background: #D0E0C8;
+  color: #2A4020 !important;
+  -webkit-text-fill-color: #2A4020 !important;
+}
+
+/* month nav arrows */
+.month-nav {
+  color: #4A3820 !important;
+  -webkit-text-fill-color: #4A3820 !important;
+}
+
+/* ── SEARCH BAR — Coffee UI style ── */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 24px;
+  padding: 9px 14px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.search-bar svg {
+  width: 16px;
+  height: 16px;
+  stroke: #8A7060;
+  flex-shrink: 0;
+}
+
+.search-input {
+  border: none;
+  background: none;
+  font-family: ‘Sarabun’, sans-serif;
+  font-size: 14px;
+  color: #2A1A0E !important;
+  -webkit-text-fill-color: #2A1A0E !important;
+  outline: none;
+  flex: 1;
+  width: 100%;
+}
+
+.search-input::placeholder {
+  color: #A89070 !important;
+  -webkit-text-fill-color: #A89070 !important;
+}
+
+/* ── YoY STYLES ── */
+.yoy-kpi-card {
+  background: #FDFAF6;
+  border-radius: 14px;
+  padding: 12px 8px;
+  text-align: center;
+  border: 1px solid #E0D5C4;
+  box-shadow: 0 1px 6px rgba(61, 35, 20, 0.10);
+}
+
+.yoy-summary-card {
+  background: #FDFAF6;
+  border-radius: 14px;
+  padding: 14px 12px;
+  border: 1px solid #E0D5C4;
+  box-shadow: 0 1px 6px rgba(61, 35, 20, 0.10);
+}
+
+.yoy-table-header {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  background: #EDE7DB;
+  padding: 10px 12px;
+  border-bottom: 1px solid #E0D5C4;
+}
+
+.yoy-table-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  padding: 9px 12px;
+  border-bottom: 1px solid #F0E8DB;
+}
+
+.yoy-table-footer {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  background: #EDE7DB;
+  padding: 10px 12px;
+}
+
+.yoy-col-label {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Mitr', sans-serif;
+  color: #6C3212 !important;
+  -webkit-text-fill-color: #6C3212 !important;
+}
+
+.yoy-col-inc {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Mitr', sans-serif;
+  color: #4A5E38 !important;
+  -webkit-text-fill-color: #4A5E38 !important;
+  text-align: right;
+}
+
+.yoy-col-exp {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Mitr', sans-serif;
+  color: #7A3020 !important;
+  -webkit-text-fill-color: #7A3020 !important;
+  text-align: right;
+}
+
+  </style>
 </head>
 <body>
 
   <div class="app-header" style="background:#6C3212;">
     <div class="header-row">
-      <div>
-        <div class="app-title" style="color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">การจัดการสินเชื่อและงบประมาณ</div>
-      </div>
+      <div><div class="app-title" style="color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">การจัดการสินเชื่อและงบประมาณ</div></div>
     </div>
     <div style="display:flex;gap:8px;margin-top:10px;">
-      <button id="mg-btn-home" onclick="mgSetAcc('home')"
-        style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.2);border-radius:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-weight:600;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">ครัวเรือน</button>
-      <button id="mg-btn-farm" onclick="mgSetAcc('farm')"
-        style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.1);border-radius:10px;color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">การเกษตร</button>
+      <button id="mg-btn-home" onclick="mgSetAcc('home')" style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.2);border-radius:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">ครัวเรือน</button>
+      <button id="mg-btn-farm" onclick="mgSetAcc('farm')" style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.1);border-radius:10px;color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">การเกษตร</button>
     </div>
   </div>
-
   <div class="main-content">
     <div class="tab-bar">
       <button class="tab-btn active" id="mg-tab-budget-btn" onclick="mgSwitchTab('budget')">งบประมาณ</button>
       <button class="tab-btn" id="mg-tab-debt-btn" onclick="mgSwitchTab('debt')">สินเชื่อ</button>
     </div>
     <div id="mg-tab-budget" class="tab-content active">
-      <div class="row-action"><span>งบประมาณประจำเดือน</span><button class="action-link" onclick="openBudgetModal()">+ เพิ่มงบ</button></div>
+      <div class="row-action"><span>งบประมาณประจำเดือน</span><button class="action-link" onclick="openBudgetModalSetup()">+ เพิ่มงบ</button></div>
       <div id="mg-budget-list"><div class="empty-state">ยังไม่มีงบประมาณ</div></div>
     </div>
     <div id="mg-tab-debt" class="tab-content">
-      <div class="row-action"><span>รายการสินเชื่อ</span><button class="action-link" onclick="openDebtModal()">+ บันทึกสินเชื่อ</button></div>
+      <div class="row-action"><span>รายการสินเชื่อ</span><button class="action-link" onclick="openModal('modal-debt')">+ บันทึกสินเชื่อ</button></div>
       <div id="mg-debt-list"><div class="empty-state">ไม่มีสินเชื่อ</div></div>
     </div>
   </div>
@@ -62,7 +1508,7 @@
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">บันทึกสินเชื่อ</div>
-      <div class="form-group"><label class="form-label">ชื่อสินเชื่อ / รายละเอียด</label><input type="text" class="form-control" id="debt-name" placeholder="เช่น ธ.ก.ส., ธนาคาร, ไฟแนนส์"></div>
+      <div class="form-group"><label class="form-label">ชื่อสินเชื่อ / รายละเอียด</label><input type="text" class="form-control" id="debt-name" placeholder="เช่น ธ.ก.ส., ธนาคาร"></div>
       <div class="form-group"><label class="form-label">ยอดสินเชื่อทั้งหมด (บาท)</label><input type="number" class="form-control" id="debt-total" placeholder="0.00" inputmode="decimal"></div>
       <div class="form-group"><label class="form-label">ยอดผ่อนต่องวด (บาท)</label><input type="number" class="form-control" id="debt-installment" placeholder="0.00" inputmode="decimal"></div>
       <div class="form-group"><label class="form-label">วันครบกำหนดชำระ</label><input type="date" class="form-control" id="debt-due"></div>
@@ -72,152 +1518,157 @@
     </div>
   </div>
 
-  <!-- BOTTOM NAV -->
-
   <div class="bottom-nav">
-    <button class="nav-btn" onclick="goHome()">
+    <button class="nav-btn " onclick="location.href='index.html'">
       <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
       <span class="nav-label">หน้าหลัก</span>
     </button>
-    <button class="nav-btn active" onclick="goManage()">
+    <button class="nav-btn active" onclick="location.href='manage.html'">
       <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
       <span class="nav-label">จัดการ</span>
     </button>
-    <button class="nav-btn" onclick="goReport()">
+    <button class="nav-btn " onclick="location.href='report.html'">
       <div class="nav-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
       <span class="nav-label">รายงาน</span>
     </button>
   </div>
+<script>
 
-  <script src="shared.js"></script>
+```
+var MONTHS_TH=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+var MONTHS_SHORT=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+var DAYS_TH=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
+var CATEGORIES={
+  home:{income:['เงินเดือน','โบนัส','ค่าเช่า','ดอกเบี้ย','อื่นๆ'],expense:['อาหาร','เดินทาง','สาธารณูปโภค','ช้อปปิ้ง','สุขภาพ','บันเทิง','การศึกษา','ซ่อมบำรุง','อื่นๆ']},
+  farm:{income:['ขายพืชผล','ขายสัตว์','เงินอุดหนุน','อื่นๆ'],expense:['เมล็ดพันธุ์','ปุ๋ย','ยาฆ่าแมลง','น้ำมัน','ค่าแรง','อุปกรณ์','อื่นๆ']}
+};
+var DATA=(function(){var r=localStorage.getItem('banharnData');try{return r?JSON.parse(r):{home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}catch(e){return {home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}})();
+function saveData(){localStorage.setItem('banharnData',JSON.stringify(DATA));}
+function fmt(n){return (parseFloat(n)||0).toLocaleString('th-TH');}
+function todayStr(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function formatDateTH(str){if(!str)return '-';var d=new Date(str);if(isNaN(d))return str;return d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);}
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+var _toastTm;
+function showToast(msg){
+  var t=document.getElementById('toast-el');
+  if(!t){t=document.createElement('div');t.id='toast-el';t.style.cssText='position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:#6C3212;color:#FAF0E6;padding:9px 18px;border-radius:8px;font-family:Sarabun,sans-serif;font-size:13px;z-index:9999;transition:opacity 0.3s;white-space:nowrap;pointer-events:none;';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';clearTimeout(_toastTm);_toastTm=setTimeout(function(){t.style.opacity='0';},2500);
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.modal-overlay').forEach(function(el){
+    el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
+  });
+});
 
-  <script>
-    var DATA = {};
-    var STATE = { manageAcc:'home' };
+var _mgAcc = 'home';
 
-    function init(){
-      DATA=loadData();
-      var now=new Date();
-      document.getElementById('budget-month').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-      mgSetAcc('home');
-    }
+function init() {
+  var now = new Date();
+  document.getElementById('budget-month').value = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  mgSetAcc('home');
+}
 
-    function mgSetAcc(acc){
-      STATE.manageAcc=acc;
-      var bh=document.getElementById('mg-btn-home'), bf=document.getElementById('mg-btn-farm');
-      bh.style.background=acc==='home'?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.1)';
-      bh.style.borderColor=acc==='home'?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.35)';
-      bh.style.color=acc==='home'?'#FAF0E6':'rgba(250,240,230,0.55)';
-      bh.style.webkitTextFillColor=acc==='home'?'#FAF0E6':'rgba(250,240,230,0.55)';
-      bh.style.fontWeight=acc==='home'?'600':'400';
-      bf.style.background=acc==='farm'?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.1)';
-      bf.style.borderColor=acc==='farm'?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.35)';
-      bf.style.color=acc==='farm'?'#FAF0E6':'rgba(250,240,230,0.55)';
-      bf.style.webkitTextFillColor=acc==='farm'?'#FAF0E6':'rgba(250,240,230,0.55)';
-      bf.style.fontWeight=acc==='farm'?'600':'400';
-      mgRenderBudget(); mgRenderDebt();
-    }
+function mgSetAcc(acc) {
+  _mgAcc = acc;
+  var bh=document.getElementById('mg-btn-home'), bf=document.getElementById('mg-btn-farm');
+  bh.style.background=acc==='home'?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.1)';
+  bh.style.borderColor=acc==='home'?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.35)';
+  bh.style.color=acc==='home'?'#FAF0E6':'rgba(250,240,230,0.55)';
+  bh.style.webkitTextFillColor=acc==='home'?'#FAF0E6':'rgba(250,240,230,0.55)';
+  bf.style.background=acc==='farm'?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.1)';
+  bf.style.borderColor=acc==='farm'?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.35)';
+  bf.style.color=acc==='farm'?'#FAF0E6':'rgba(250,240,230,0.55)';
+  bf.style.webkitTextFillColor=acc==='farm'?'#FAF0E6':'rgba(250,240,230,0.55)';
+  mgRenderBudget(); mgRenderDebt();
+}
 
-    function mgSwitchTab(tab){
-      ['budget','debt'].forEach(function(t){
-        document.getElementById('mg-tab-'+t).classList.toggle('active',t===tab);
-        document.getElementById('mg-tab-'+t+'-btn').classList.toggle('active',t===tab);
-      });
-    }
+function mgSwitchTab(tab) {
+  ['budget','debt'].forEach(function(t){
+    document.getElementById('mg-tab-'+t).classList.toggle('active',t===tab);
+    document.getElementById('mg-tab-'+t+'-btn').classList.toggle('active',t===tab);
+  });
+}
 
-    function mgRenderBudget(){
-      var acc=STATE.manageAcc, now=new Date();
-      var mk=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-      var budgets=DATA[acc].budgets.filter(function(b){return b.month===mk;});
-      var trans=DATA[acc].transactions.filter(function(t){
-        var d=new Date(t.date); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()&&t.type==='expense';
-      });
-      var el=document.getElementById('mg-budget-list');
-      if(!budgets.length){el.innerHTML='<div class="empty-state">ยังไม่มีงบประมาณ<br>กด "+ เพิ่มงบ" เพื่อตั้งงบประมาณ</div>';return;}
-      el.innerHTML=budgets.map(function(b){
-        var spent=trans.filter(function(t){return t.category===b.category;}).reduce(function(s,t){return s+t.amount;},0);
-        var pct=b.amount>0?Math.min(100,(spent/b.amount)*100):0;
-        var cls=pct>=100?'over':pct>=80?'warn':'';
-        return '<div class="budget-card">'
-          +'<div class="budget-header"><div class="budget-name">'+b.category+'</div><div class="budget-amounts">'+fmt(spent)+' / '+fmt(b.amount)+' บาท</div></div>'
-          +'<div class="budget-bar"><div class="budget-fill '+cls+'" style="width:'+pct+'%"></div></div>'
-          +'<div class="budget-foot"><div class="budget-pct">'+pct.toFixed(0)+'%</div><div class="locked-tag">ล็อค</div></div>'
-          +'</div>';
-      }).join('');
-    }
+function mgRenderBudget() {
+  var now=new Date();
+  var mk=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  var budgets=DATA[_mgAcc].budgets.filter(function(b){return b.month===mk;});
+  var trans=DATA[_mgAcc].transactions.filter(function(t){
+    var d=new Date(t.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()&&t.type==='expense';
+  });
+  var el=document.getElementById('mg-budget-list');
+  if(!budgets.length){el.innerHTML='<div class="empty-state">ยังไม่มีงบประมาณ<br>กด "+ เพิ่มงบ" เพื่อตั้งงบประมาณ</div>';return;}
+  el.innerHTML=budgets.map(function(b){
+    var spent=trans.filter(function(t){return t.category===b.category;}).reduce(function(s,t){return s+t.amount;},0);
+    var pct=b.amount>0?Math.min(100,(spent/b.amount)*100):0;
+    var cls=pct>=100?'over':pct>=80?'warn':'';
+    return '<div class="budget-card"><div class="budget-header"><div class="budget-name">'+b.category+'</div><div class="budget-amounts">'+fmt(spent)+' / '+fmt(b.amount)+' บาท</div></div>'
+      +'<div class="budget-bar"><div class="budget-fill '+cls+'" style="width:'+pct+'%"></div></div>'
+      +'<div class="budget-foot"><div class="budget-pct">'+pct.toFixed(0)+'%</div><div class="locked-tag">ล็อค</div></div></div>';
+  }).join('');
+}
 
-    function mgRenderDebt(){
-      var acc=STATE.manageAcc, debts=DATA[acc].debts;
-      var el=document.getElementById('mg-debt-list');
-      if(!debts.length){el.innerHTML='<div class="empty-state">ไม่มีสินเชื่อ</div>';return;}
-      var today=new Date(); today.setHours(0,0,0,0);
-      el.innerHTML=debts.map(function(d,i){
-        var due=d.nextDue?new Date(d.nextDue):null; if(due) due.setHours(0,0,0,0);
-        var diff=due?Math.round((due-today)/86400000):999;
-        var sc=diff<0?'overdue':diff<=7?'soon':'ok';
-        var st=diff<0?'เกินกำหนด '+Math.abs(diff)+' วัน':(diff===0?'ครบกำหนดวันนี้':'อีก '+diff+' วัน');
-        return '<div class="debt-card">'
-          +'<div class="debt-header"><div class="debt-name">'+d.name+'</div><div class="debt-total">'+fmt(d.remaining||d.total)+' บาท</div></div>'
-          +'<div class="debt-detail">ผ่อนงวดละ '+fmt(d.installment)+' บาท'+(d.note?' \xb7 '+d.note:'')+'</div>'
-          +(d.nextDue?'<span class="status-tag '+sc+'">'+formatDateTH(d.nextDue)+' \xb7 '+st+'</span>':'')
-          +'<button class="pay-btn" onclick="mgPayDebt('+i+')">ชำระงวดนี้แล้ว</button>'
-          +'</div>';
-      }).join('');
-    }
+function mgRenderDebt() {
+  var debts=DATA[_mgAcc].debts;
+  var el=document.getElementById('mg-debt-list');
+  if(!debts.length){el.innerHTML='<div class="empty-state">ไม่มีหนี้สิน</div>';return;}
+  var today=new Date(); today.setHours(0,0,0,0);
+  el.innerHTML=debts.map(function(d,i){
+    var due=d.nextDue?new Date(d.nextDue):null;
+    if(due)due.setHours(0,0,0,0);
+    var diff=due?Math.round((due-today)/86400000):999;
+    var sc=diff<0?'overdue':diff<=7?'soon':'ok';
+    var st=diff<0?'เกินกำหนด '+Math.abs(diff)+' วัน':(diff===0?'ครบกำหนดวันนี้':'อีก '+diff+' วัน');
+    return '<div class="debt-card"><div class="debt-header"><div class="debt-name">'+d.name+'</div><div class="debt-total">'+fmt(d.remaining||d.total)+' บาท</div></div>'
+      +'<div class="debt-detail">ผ่อนงวดละ '+fmt(d.installment)+' บาท'+(d.note?' · '+d.note:'')+'</div>'
+      +(d.nextDue?'<span class="status-tag '+sc+'">'+formatDateTH(d.nextDue)+' · '+st+'</span>':'')
+      +'<button class="pay-btn" onclick="mgPayDebt('+i+')">ชำระงวดนี้แล้ว</button></div>';
+  }).join('');
+}
 
-    function mgPayDebt(i){
-      var acc=STATE.manageAcc, d=DATA[acc].debts[i]; if(!d) return;
-      d.remaining=Math.max(0,(d.remaining||d.total)-(d.installment||0));
-      if(d.nextDue){var nd=new Date(d.nextDue);nd.setMonth(nd.getMonth()+1);d.nextDue=nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0');}
-      DATA[acc].transactions.push({id:Date.now()+'',type:'expense',amount:d.installment||0,desc:'ผ่อน'+d.name,category:'ผ่อนชำระ',date:todayStr(),note:'ชำระหนี้',account:acc});
-      saveData(DATA); mgRenderDebt(); mgRenderBudget();
-      showToast('บันทึกการชำระ '+fmt(d.installment)+' บาท · คงเหลือ '+fmt(d.remaining)+' บาท');
-    }
+function mgPayDebt(i) {
+  var d=DATA[_mgAcc].debts[i]; if(!d)return;
+  d.remaining=Math.max(0,(d.remaining||d.total)-(d.installment||0));
+  if(d.nextDue){var nd=new Date(d.nextDue);nd.setMonth(nd.getMonth()+1);d.nextDue=nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0');}
+  DATA[_mgAcc].transactions.push({id:Date.now()+'',type:'expense',amount:d.installment||0,desc:'ผ่อน'+d.name,category:'ผ่อนชำระ',date:todayStr()});
+  saveData(); mgRenderDebt(); showToast('บันทึกการชำระ '+fmt(d.installment)+' บาท');
+}
 
-    function openBudgetModal(){
-      document.getElementById('budget-category').innerHTML=CATEGORIES[STATE.manageAcc].expense.map(function(c){return'<option>'+c+'</option>';}).join('');
-      document.getElementById('budget-amount').value='';
-      var now=new Date(); document.getElementById('budget-month').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-      openModal('modal-budget');
-    }
+function saveBudget() {
+  var category=document.getElementById('budget-category').value;
+  var amount=parseFloat(document.getElementById('budget-amount').value);
+  var month=document.getElementById('budget-month').value;
+  if(!category||!amount||!month){alert('กรุณากรอกข้อมูลให้ครบ');return;}
+  var ex=DATA[_mgAcc].budgets.find(function(b){return b.category===category&&b.month===month;});
+  if(ex){alert('งบประมาณ "'+category+'" เดือนนี้ถูกล็อคแล้ว');return;}
+  if(!confirm('ยืนยันตั้งงบ "'+category+'" = '+fmt(amount)+' บาท\n(จะไม่สามารถแก้ไขได้)'))return;
+  DATA[_mgAcc].budgets.push({id:Date.now()+'',category:category,amount:amount,month:month});
+  saveData(); closeModal('modal-budget'); mgRenderBudget(); showToast('ล็อคงบ "'+category+'" แล้ว');
+}
 
-    function saveBudget(){
-      var acc=STATE.manageAcc;
-      var category=document.getElementById('budget-category').value;
-      var amount=parseFloat(document.getElementById('budget-amount').value);
-      var month=document.getElementById('budget-month').value;
-      if(!category||!amount||!month){alert('กรุณากรอกข้อมูลให้ครบ');return;}
-      if(DATA[acc].budgets.find(function(b){return b.category===category&&b.month===month;})){alert('งบประมาณ "'+category+'" เดือนนี้ถูกล็อคแล้ว');return;}
-      if(!confirm('ยืนยันตั้งงบ "'+category+'" = '+fmt(amount)+' บาท\n(จะไม่สามารถแก้ไขได้)')) return;
-      DATA[acc].budgets.push({id:Date.now()+'',category:category,amount:amount,month:month});
-      saveData(DATA); closeModal('modal-budget'); mgRenderBudget();
-      showToast('ล็อคงบ "'+category+'" แล้ว');
-    }
+function saveDebt() {
+  var name=document.getElementById('debt-name').value.trim();
+  var total=parseFloat(document.getElementById('debt-total').value);
+  var installment=parseFloat(document.getElementById('debt-installment').value);
+  var nextDue=document.getElementById('debt-due').value;
+  var note=document.getElementById('debt-note').value.trim();
+  if(!name||!total||!installment){alert('กรุณากรอกข้อมูลให้ครบ');return;}
+  DATA[_mgAcc].debts.push({id:Date.now()+'',name:name,total:total,remaining:total,installment:installment,nextDue:nextDue,note:note});
+  saveData(); closeModal('modal-debt'); mgRenderDebt(); showToast('บันทึกหนี้ "'+name+'" แล้ว');
+}
 
-    function openDebtModal(){
-      ['debt-name','debt-total','debt-installment','debt-due','debt-note'].forEach(function(id){document.getElementById(id).value='';});
-      openModal('modal-debt');
-    }
+// เติม category dropdown เมื่อเปิด modal
+document.addEventListener('DOMContentLoaded', function(){
+  document.getElementById('modal-budget').addEventListener('click',function(){});
+});
+function openBudgetModalSetup() {
+  document.getElementById('budget-category').innerHTML = CATEGORIES[_mgAcc].expense.map(function(c){return '<option>'+c+'</option>';}).join('');
+  openModal('modal-budget');
+}
 
-    function saveDebt(){
-      var acc=STATE.manageAcc;
-      var name=document.getElementById('debt-name').value.trim();
-      var total=parseFloat(document.getElementById('debt-total').value);
-      var installment=parseFloat(document.getElementById('debt-installment').value);
-      var nextDue=document.getElementById('debt-due').value;
-      var note=document.getElementById('debt-note').value.trim();
-      if(!name||!total||!installment){alert('กรุณากรอกข้อมูลให้ครบ');return;}
-      DATA[acc].debts.push({id:Date.now()+'',name:name,total:total,remaining:total,installment:installment,nextDue:nextDue,note:note,account:acc});
-      saveData(DATA); closeModal('modal-debt'); mgRenderDebt();
-      showToast('บันทึกสินเชื่อ "'+name+'" แล้ว');
-    }
+init();
 
-    document.querySelectorAll('.modal-overlay').forEach(function(el){
-      el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
-    });
-
-    init();
   </script>
-
 </body>
 </html>
