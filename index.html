@@ -754,14 +754,17 @@ body {
 /* ── MODAL ── */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  max-width: 100vw;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 9000;
   display: none;
   align-items: flex-end;
   justify-content: center;
-  width: 100vw;
-  max-width: 480px;
 }
 
 .modal-overlay.open {
@@ -1547,7 +1550,7 @@ textarea {
 
   <!-- ═══════ MODAL: ดูรายการบัญชี ═══════ -->
 
-  <div class="modal-overlay" id="modal-view-acc" style="align-items:flex-end;padding:0 0;">
+  <div class="modal-overlay" id="modal-view-acc" style="align-items:flex-end;padding:0;justify-content:center;">
     <div
       style="background:#F5EFE6;border-radius:28px 28px 0 0;width:100%;max-width:480px;margin:0 auto;height:92vh;display:flex;flex-direction:column;animation:slideUp 0.25s ease;box-shadow:0 -4px 32px rgba(61,35,20,0.18);">
       <!-- header สี -->
@@ -1626,7 +1629,7 @@ textarea {
 
   <!-- ═══════ MODAL: เพิ่มรายการ ═══════ -->
 
-  <div class="modal-overlay" id="modal-add" style="align-items:flex-end;padding:0 0;">
+  <div class="modal-overlay" id="modal-add" style="align-items:flex-end;padding:0;justify-content:center;">
     <div style="background:#F5EFE6;border-radius:28px 28px 0 0;width:100%;max-width:480px;margin:0 auto;height:92vh;display:flex;flex-direction:column;animation:slideUp 0.25s ease;box-shadow:0 -4px 32px rgba(61,35,20,0.18);">
 
 ```
@@ -1660,7 +1663,7 @@ textarea {
 
   <!-- ═══════ MODAL: งบประมาณ ═══════ -->
 
-  <div class="modal-overlay" id="modal-budget" style="padding:0;">
+  <div class="modal-overlay" id="modal-budget" style="padding:0;justify-content:center;">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">ตั้งงบประมาณ</div>
@@ -1687,7 +1690,7 @@ textarea {
 
   <!-- ═══════ MODAL: หนี้สิน ═══════ -->
 
-  <div class="modal-overlay" id="modal-debt" style="padding:0;">
+  <div class="modal-overlay" id="modal-debt" style="padding:0;justify-content:center;">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">บันทึกสินเชื่อ</div>
@@ -1718,7 +1721,7 @@ textarea {
 
   <!-- ═══════ MODAL: ตั้งค่า ═══════ -->
 
-  <div class="modal-overlay" id="modal-settings" style="padding:0;">
+  <div class="modal-overlay" id="modal-settings" style="padding:0;justify-content:center;">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">ตั้งค่าการเชื่อมต่อ</div>
