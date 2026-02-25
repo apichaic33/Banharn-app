@@ -1626,32 +1626,32 @@ textarea {
 
   <!-- ═══════ MODAL: เพิ่มรายการ ═══════ -->
 
-  <div class="modal-overlay" id="modal-add" style="align-items:flex-end;padding:0;">
-    <div style="background:#F5EFE6;border-radius:28px 28px 0 0;width:100%;max-width:480px;margin:0 auto;height:88vh;display:flex;flex-direction:column;animation:slideUp 0.25s ease;box-shadow:0 -4px 32px rgba(61,35,20,0.18);">
+  <div class="modal-overlay" id="modal-add" style="align-items:flex-end;padding:0 0;">
+    <div style="background:#F5EFE6;border-radius:28px 28px 0 0;width:100%;max-width:480px;margin:0 auto;height:92vh;display:flex;flex-direction:column;animation:slideUp 0.25s ease;box-shadow:0 -4px 32px rgba(61,35,20,0.18);">
 
 ```
-  <!-- colored header -->
-  <div id="modal-add-hdr" style="background:#9C4722;border-radius:28px 28px 0 0;padding:16px 20px 18px;flex-shrink:0;">
+  <!-- header สี (เหมือน view-acc-hdr) -->
+  <div id="modal-add-hdr" style="background:#4A7A3A;border-radius:28px 28px 0 0;padding:16px 20px 18px;flex-shrink:0;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-      <span id="modal-add-title" style="font-family:Mitr,sans-serif;font-size:20px;font-weight:600;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">เพิ่มรายการ</span>
+      <span id="modal-add-title" style="font-family:Mitr,sans-serif;font-size:20px;font-weight:600;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">ครัวเรือน</span>
       <button onclick="closeModal('modal-add')" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.22);border:none;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
     </div>
-    <!-- type toggle บน header -->
+    <!-- รายรับ / รายจ่าย toggle -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <button id="btn-income" onclick="setType('income')" style="padding:10px;border-radius:12px;border:none;background:rgba(255,255,255,0.25);font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;transition:all .18s;">รายรับ</button>
-      <button id="btn-expense" onclick="setType('expense')" style="padding:10px;border-radius:12px;border:none;background:rgba(0,0,0,0.12);font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;transition:all .18s;">รายจ่าย</button>
+      <button id="btn-income" onclick="setType('income')" style="padding:10px;border-radius:12px;border:none;background:rgba(255,255,255,0.30);font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">รายรับ</button>
+      <button id="btn-expense" onclick="setType('expense')" style="padding:10px;border-radius:12px;border:none;background:rgba(0,0,0,0.15);font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:rgba(250,240,230,0.50)!important;-webkit-text-fill-color:rgba(250,240,230,0.50)!important;">รายจ่าย</button>
     </div>
   </div>
 
-  <!-- body scroll -->
-  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 20px 40px;background:#F5EFE6;">
+  <!-- body scroll (เหมือน modal-view-acc body) -->
+  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 20px 50px;">
     <div class="form-group"><label class="form-label">จำนวนเงิน (บาท)</label><input type="number" class="form-control" id="input-amount" placeholder="0.00" inputmode="decimal"></div>
     <div class="form-group"><label class="form-label">รายการ / คำอธิบาย</label><input type="text" class="form-control" id="input-desc" placeholder="เช่น ค่าไฟ, ขายข้าว"></div>
     <div class="form-group"><label class="form-label">หมวดหมู่</label><select class="form-control" id="input-category"><option value="">เลือกหมวดหมู่</option></select></div>
     <div class="form-group"><label class="form-label">วันที่</label><input type="date" class="form-control" id="input-date"></div>
     <div class="form-group"><label class="form-label">หมายเหตุ</label><input type="text" class="form-control" id="input-note" placeholder="ไม่บังคับ"></div>
-    <button class="btn-primary" id="save-trans-btn" onclick="saveTransaction()">บันทึกรายการ</button>
-    <button class="btn-ghost" onclick="closeModal('modal-add')">ยกเลิก</button>
+    <button class="btn-primary" id="save-trans-btn" onclick="saveTransaction()" style="margin-top:8px;">บันทึกรายการ</button>
+
   </div>
 
 </div>
@@ -2358,27 +2358,44 @@ textarea {
     // ============================================================
     // QUICK ADD (กดการ์ดบัญชีหน้าหลัก)
     // ============================================================
+    // สีตาม account
+    var ACC_COLOR = { home: '#9C4722', farm: '#C87629' };
+    var TYPE_COLOR = { income: '#4A7A3A', expense: '#8B3020' };
+
+    function _setAddModalHeader(acc, type) {
+      var hdr = document.getElementById('modal-add-hdr');
+      var title = document.getElementById('modal-add-title');
+      var bi = document.getElementById('btn-income');
+      var be = document.getElementById('btn-expense');
+      var baseColor = type === 'income' ? TYPE_COLOR.income : TYPE_COLOR.expense;
+      if (hdr) hdr.style.background = baseColor;
+      if (title) title.textContent = acc === 'home' ? 'ครัวเรือน' : 'การเกษตร';
+      if (bi) {
+        bi.style.background = type==='income' ? 'rgba(255,255,255,0.30)' : 'rgba(0,0,0,0.15)';
+        bi.style.color = type==='income' ? '#FAF0E6' : 'rgba(250,240,230,0.50)';
+        bi.style.webkitTextFillColor = bi.style.color;
+        bi.style.fontWeight = type==='income' ? '600' : '400';
+      }
+      if (be) {
+        be.style.background = type==='expense' ? 'rgba(255,255,255,0.30)' : 'rgba(0,0,0,0.15)';
+        be.style.color = type==='expense' ? '#FAF0E6' : 'rgba(250,240,230,0.50)';
+        be.style.webkitTextFillColor = be.style.color;
+        be.style.fontWeight = type==='expense' ? '600' : '400';
+      }
+      var saveBtn = document.getElementById('save-trans-btn');
+      if (saveBtn) saveBtn.className = 'btn-primary' + (acc==='farm' ? ' farm' : '');
+    }
+
     function openQuickAdd(acc) {
       STATE.currentAccount = acc;
       STATE.transType = 'income';
       var cats = CATEGORIES[acc]['income'];
-      document.getElementById('input-category').innerHTML = '<option value="">เลือกหมวดหมู่</option>' + cats.map(function (c) { return '<option>' + c + '</option>'; }).join('');
+      document.getElementById('input-category').innerHTML = '<option value="">เลือกหมวดหมู่</option>' + cats.map(function(c){ return '<option>'+c+'</option>'; }).join('');
       document.getElementById('input-date').value = todayStr();
       document.getElementById('input-amount').value = '';
       document.getElementById('input-desc').value = '';
       document.getElementById('input-note').value = '';
-      var saveBtn = document.getElementById('save-trans-btn');
-      saveBtn.className = 'btn-primary' + (acc === 'farm' ? ' farm' : '');
-      // set header
-      var hdr = document.getElementById('modal-add-hdr');
-      var title = document.getElementById('modal-add-title');
-      if (hdr) hdr.style.background = '#4A7A3A';
-      if (title) title.textContent = acc === 'home' ? 'ครัวเรือน' : 'การเกษตร';
-      // reset type buttons
-      var bi = document.getElementById('btn-income');
-      var be = document.getElementById('btn-expense');
-      if (bi) { bi.style.background = 'rgba(255,255,255,0.25)'; bi.style.color = '#FAF0E6'; bi.style.webkitTextFillColor = '#FAF0E6'; }
-      if (be) { be.style.background = 'rgba(0,0,0,0.12)'; be.style.color = 'rgba(250,240,230,0.55)'; be.style.webkitTextFillColor = 'rgba(250,240,230,0.55)'; }
+      _setAddModalHeader(acc, 'income');
       openModal('modal-add');
     }
 
@@ -2447,15 +2464,8 @@ textarea {
     function setType(type) {
       STATE.transType = type;
       var cats = CATEGORIES[STATE.currentAccount][type];
-      document.getElementById('input-category').innerHTML = '<option value="">เลือกหมวดหมู่</option>' + cats.map(function (c) { return '<option>' + c + '</option>'; }).join('');
-      // อัพเดท header color
-      var hdr = document.getElementById('modal-add-hdr');
-      if (hdr) hdr.style.background = type === 'income' ? '#4A7A3A' : '#9C4722';
-      // อัพเดท button style
-      var bi = document.getElementById('btn-income');
-      var be = document.getElementById('btn-expense');
-      if (bi) { bi.style.background = type==='income' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.12)'; bi.style.color = type==='income' ? '#FAF0E6' : 'rgba(250,240,230,0.55)'; bi.style.webkitTextFillColor = type==='income' ? '#FAF0E6' : 'rgba(250,240,230,0.55)'; }
-      if (be) { be.style.background = type==='expense' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.12)'; be.style.color = type==='expense' ? '#FAF0E6' : 'rgba(250,240,230,0.55)'; be.style.webkitTextFillColor = type==='expense' ? '#FAF0E6' : 'rgba(250,240,230,0.55)'; }
+      document.getElementById('input-category').innerHTML = '<option value="">เลือกหมวดหมู่</option>' + cats.map(function(c){ return '<option>'+c+'</option>'; }).join('');
+      _setAddModalHeader(STATE.currentAccount, type);
     }
 
     // ============================================================
