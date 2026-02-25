@@ -487,12 +487,38 @@ input, select, textarea { color: #1A1208 !important; -webkit-text-fill-color: #1
       </div>
       <div class="modal-full-body">
         <div id="form-home-fields">
-          <div class="form-group"><label class="form-label">หมวดหมู่</label><select class="form-control" id="input-category"><option value="">เลือกหมวดหมู่</option></select></div>
-          <div class="form-group"><label class="form-label">รายการ / คำอธิบาย</label><input type="text" class="form-control" id="input-desc" placeholder="เช่น ค่าไฟ, ค่าอาหาร"></div>
-          <div class="form-group"><label class="form-label">จำนวนเงิน (บาท)</label><input type="number" class="form-control" id="input-amount" placeholder="0.00" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;"></div>
-        </div>
+          <div class="form-group"><label class="form-label">หมวดหมู่</label><select class="form-control" id="input-category" onchange="homeExpCatChange(this.value)"><option value="">เลือกหมวดหมู่</option></select></div>
 
 ```
+      <!-- แสดงเฉพาะเมื่อเลือก "ผ่อนชำระสินเชื่อ" -->
+      <div id="debt-select-wrap" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">เลือกสินเชื่อที่ชำระ</label>
+          <select class="form-control" id="input-debt-select" onchange="debtSelectChange(this.value)">
+            <option value="">— เลือกสินเชื่อ —</option>
+          </select>
+        </div>
+        <div id="debt-info-box" style="display:none;background:#F5EFE6;border:1px solid #D8C8B0;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#8A7A68;">ยอดคงเหลือ</span>
+            <span id="debt-remaining" style="font-family:Mitr,sans-serif;font-size:15px;font-weight:600;color:#8B3020!important;-webkit-text-fill-color:#8B3020!important;">0 ฿</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+            <span style="color:#8A7A68;">งวด / เดือน</span>
+            <span id="debt-installment" style="font-family:Mitr,sans-serif;font-size:13px;font-weight:500;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;">0 ฿</span>
+          </div>
+          <button type="button" onclick="fillDebtInstallment()" style="margin-top:8px;width:100%;padding:7px;border:1.5px solid #6C3212;color:#6C3212!important;-webkit-text-fill-color:#6C3212!important;background:none;border-radius:8px;font-family:Sarabun,sans-serif;font-size:13px;cursor:pointer;">ใช้ยอดงวดที่ต้องชำระ</button>
+        </div>
+      </div>
+
+      <!-- คำอธิบาย: ซ่อนเมื่อเลือกผ่อนสินเชื่อ -->
+      <div class="form-group" id="desc-wrap">
+        <label class="form-label">รายการ / คำอธิบาย</label>
+        <input type="text" class="form-control" id="input-desc" placeholder="เช่น ค่าไฟ, ค่าอาหาร">
+      </div>
+      <div class="form-group"><label class="form-label">จำนวนเงิน (บาท)</label><input type="number" class="form-control" id="input-amount" placeholder="0.00" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;"></div>
+    </div>
+
     <div id="form-farm-fields" style="display:none;">
       <div class="form-group">
         <label class="form-label">หมวดหมู่หลัก</label>
@@ -798,6 +824,51 @@ function _setHdr(acc,type){
   if(sb)sb.className='btn-primary'+(acc==='farm'?' farm':'');
 }
 
+function homeExpCatChange(cat){
+  var isDebt=cat==='ผ่อนชำระสินเชื่อ';
+  var debtWrap=document.getElementById('debt-select-wrap');
+  var descWrap=document.getElementById('desc-wrap');
+  var infoBox=document.getElementById('debt-info-box');
+  if(debtWrap)debtWrap.style.display=isDebt?'block':'none';
+  if(descWrap)descWrap.style.display=isDebt?'none':'block';
+  if(infoBox&&!isDebt)infoBox.style.display='none';
+  if(isDebt){
+    var sel=document.getElementById('input-debt-select');
+    var allDebts=[];
+    ['home','farm'].forEach(function(a){DATA[a].debts.forEach(function(d){allDebts.push({acc:a,data:d});});});
+    if(!allDebts.length){
+      sel.innerHTML='<option value="">— ยังไม่มีสินเชื่อ —</option>';
+    } else {
+      sel.innerHTML='<option value="">— เลือกสินเชื่อ —</option>'+allDebts.map(function(x){
+        var lbl=x.acc==='home'?'[ครัวเรือน]':'[เกษตร]';
+        return '<option value="'+x.acc+'|'+x.data.id+'">'+lbl+' '+x.data.name+' (คงเหลือ '+fmt(x.data.total)+' ฿)</option>';
+      }).join('');
+    }
+    sel.value='';document.getElementById('input-desc').value='';
+  }
+}
+
+function debtSelectChange(val){
+  var infoBox=document.getElementById('debt-info-box');
+  if(!val){infoBox.style.display='none';return;}
+  var parts=val.split('|');var acc=parts[0],id=parts[1];
+  var debt=null;DATA[acc].debts.forEach(function(d){if(d.id===id)debt=d;});
+  if(!debt){infoBox.style.display='none';return;}
+  document.getElementById('debt-remaining').textContent=fmt(debt.total)+' ฿';
+  document.getElementById('debt-installment').textContent=fmt(debt.installment||0)+' ฿';
+  document.getElementById('input-desc').value='ผ่อนชำระ '+debt.name;
+  infoBox.style.display='block';
+}
+
+function fillDebtInstallment(){
+  var val=document.getElementById('input-debt-select').value;
+  if(!val)return;
+  var parts=val.split('|');var acc=parts[0],id=parts[1];
+  var debt=null;DATA[acc].debts.forEach(function(d){if(d.id===id)debt=d;});
+  if(!debt)return;
+  document.getElementById('input-amount').value=debt.installment||'';
+}
+
 function calcAmount(){
   var qty=parseFloat(document.getElementById('input-qty').value)||0;
   var up=parseFloat(document.getElementById('input-unit-price').value)||0;
@@ -865,6 +936,9 @@ function openQuickAdd(acc){
     document.getElementById('form-home-fields').style.display='block';
     document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.home.income.map(function(c){return '<option>'+c+'</option>';}).join('');
     document.getElementById('input-amount').value='';document.getElementById('input-desc').value='';
+    document.getElementById('debt-select-wrap').style.display='none';
+    document.getElementById('debt-info-box').style.display='none';
+    document.getElementById('desc-wrap').style.display='block';
   } else {
     document.getElementById('form-farm-fields').style.display='block';
     var mainSel=document.getElementById('input-category-farm-main');
@@ -882,6 +956,10 @@ function setType(type){
   if(_acc==='home'){
     document.getElementById('form-home-fields').style.display='block';
     document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.home[type].map(function(c){return '<option>'+c+'</option>';}).join('');
+    document.getElementById('debt-select-wrap').style.display='none';
+    document.getElementById('debt-info-box').style.display='none';
+    document.getElementById('desc-wrap').style.display='block';
+    document.getElementById('input-desc').value='';
   } else {
     if(type==='income'){
       document.getElementById('form-farm-fields').style.display='block';
@@ -929,15 +1007,40 @@ function saveTransaction(){
     desc=document.getElementById('input-desc').value.trim();
     amount=parseFloat(document.getElementById('input-amount').value);
     if(!amount||amount<=0){alert('กรุณาระบุจำนวนเงิน');return;}
-    if(!desc){alert('กรุณาระบุรายการ');return;}
+    // ถ้าเลือกหมวด ผ่อนชำระสินเชื่อ ต้องมี desc
+    if(!desc&&category!=='ผ่อนชำระสินเชื่อ'){alert('กรุณาระบุรายการ');return;}
+    if(!desc)desc='ผ่อนชำระสินเชื่อ';
   }
   var date=document.getElementById('input-date').value;
   var note=document.getElementById('input-note').value.trim();
   var tx={id:Date.now()+'',type:_type,amount:amount,desc:desc,category:category,date:date,note:note};
   if(qty)tx.qty=qty;if(unitPrice)tx.unitPrice=unitPrice;if(unit)tx.unit=unit;
+
+  // ถ้าเลือกผ่อนชำระสินเชื่อ → หักยอดสินเชื่อนั้น
+  if(_acc==='home'&&_type==='expense'&&category==='ผ่อนชำระสินเชื่อ'){
+    var debtVal=document.getElementById('input-debt-select').value;
+    if(debtVal){
+      var dp=debtVal.split('|'),dAcc=dp[0],dId=dp[1];
+      DATA[dAcc].debts.forEach(function(d){
+        if(d.id===dId){
+          var prev=d.total;
+          d.total=Math.max(0,d.total-amount);
+          // บันทึก nextDue เลื่อนไป 1 เดือน
+          if(d.nextDue){var nd=new Date(d.nextDue);nd.setMonth(nd.getMonth()+1);d.nextDue=nd.toISOString().split('T')[0];}
+          tx.note=(tx.note?tx.note+' ':'')+'[หักสินเชื่อ: '+d.name+' '+fmt(prev)+'→'+fmt(d.total)+' ฿]';
+          // ถ้าหมดแล้ว
+          if(d.total<=0){d.total=0;tx.note+=' [ปิดบัญชีสินเชื่อ]';}
+        }
+      });
+    }
+  }
+
   DATA[_acc].transactions.push(tx);saveData();closeModal('modal-add');
   ['input-amount','input-amount-farm','input-qty','input-unit-price','input-desc','input-note','input-exp-amount-simple','input-exp-amount','input-exp-qty','input-exp-unit-price'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
   var hint=document.getElementById('amount-hint');if(hint)hint.textContent='';
+  var debtWrap=document.getElementById('debt-select-wrap');if(debtWrap)debtWrap.style.display='none';
+  var debtInfo=document.getElementById('debt-info-box');if(debtInfo)debtInfo.style.display='none';
+  var descWrap=document.getElementById('desc-wrap');if(descWrap)descWrap.style.display='block';
   renderHome();
   var mv=document.getElementById('modal-view-acc');if(mv&&mv.classList.contains('open'))viewRenderList();
   showToast('บันทึกรายการแล้ว');
