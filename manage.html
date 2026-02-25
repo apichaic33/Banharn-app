@@ -1516,13 +1516,14 @@ textarea {
 
   <div class="modal-overlay" id="modal-budget">
     <div class="modal-sheet">
-      <div class="modal-handle"></div>
-      <div class="modal-title">ตั้งงบประมาณ</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div class="modal-title" style="margin:0;">ตั้งงบประมาณ</div>
+        <button onclick="closeModal('modal-budget')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;flex-shrink:0;">&#x2715;</button>
+      </div>
       <div class="form-group"><label class="form-label">หมวดหมู่รายจ่าย</label><select class="form-control" id="budget-cat"><option value="">เลือกหมวดหมู่</option></select></div>
       <div class="form-group"><label class="form-label">จำนวนเงิน (บาท)</label><input type="number" class="form-control" id="budget-amount" placeholder="0.00" inputmode="decimal"></div>
       <div class="form-group"><label class="form-label">เดือน</label><input type="month" class="form-control" id="budget-month"></div>
       <button class="btn-primary" onclick="saveBudget()">บันทึกงบประมาณ</button>
-      <button class="btn-ghost" onclick="closeModal('modal-budget')">ยกเลิก</button>
     </div>
   </div>
 
@@ -1530,15 +1531,16 @@ textarea {
 
   <div class="modal-overlay" id="modal-debt">
     <div class="modal-sheet">
-      <div class="modal-handle"></div>
-      <div class="modal-title">บันทึกหนี้สิน</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div class="modal-title" style="margin:0;">บันทึกหนี้สิน</div>
+        <button onclick="closeModal('modal-debt')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;flex-shrink:0;">&#x2715;</button>
+      </div>
       <div class="form-group"><label class="form-label">ชื่อหนี้ / แหล่งสินเชื่อ</label><input type="text" class="form-control" id="debt-name" placeholder="เช่น ธ.กรุงไทย, กยศ."></div>
       <div class="form-group"><label class="form-label">ยอดหนี้คงเหลือ (บาท)</label><input type="number" class="form-control" id="debt-total" placeholder="0.00" inputmode="decimal"></div>
       <div class="form-group"><label class="form-label">งวดผ่อนต่อเดือน (บาท)</label><input type="number" class="form-control" id="debt-install" placeholder="0.00" inputmode="decimal"></div>
       <div class="form-group"><label class="form-label">วันครบกำหนดงวดถัดไป</label><input type="date" class="form-control" id="debt-due"></div>
       <div class="form-group"><label class="form-label">หมายเหตุ</label><input type="text" class="form-control" id="debt-note" placeholder="ไม่บังคับ"></div>
       <button class="btn-primary" onclick="saveDebt()">บันทึกหนี้สิน</button>
-      <button class="btn-ghost" onclick="closeModal('modal-debt')">ยกเลิก</button>
     </div>
   </div>
 
