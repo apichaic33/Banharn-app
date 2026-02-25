@@ -1483,7 +1483,7 @@ textarea {
 
   <div class="app-header" style="background:#6C3212;">
     <div class="header-row">
-      <div><div class="app-title" style="color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">จัดการงบ &amp; หนี้สิน</div></div>
+      <div><div class="app-title" style="color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">จัดการงบ &amp; สินเชื่อ</div></div>
     </div>
     <div style="display:flex;gap:8px;margin-top:10px;">
       <button id="mg-btn-home" onclick="mgSetAcc('home')" style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.2);border-radius:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">ครัวเรือน</button>
@@ -1491,7 +1491,7 @@ textarea {
     </div>
     <div style="display:flex;background:rgba(0,0,0,0.18);border-radius:20px;padding:3px;gap:3px;margin-top:10px;">
       <button id="mg-tab-budget-btn" onclick="mgSwitchTab('budget')" style="flex:1;padding:7px 4px;border:none;border-radius:17px;font-family:Sarabun,sans-serif;font-size:12px;font-weight:600;cursor:pointer;background:rgba(255,255,255,0.22);color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;transition:all 0.18s;">งบประมาณ</button>
-      <button id="mg-tab-debt-btn" onclick="mgSwitchTab('debt')" style="flex:1;padding:7px 4px;border:none;border-radius:17px;font-family:Sarabun,sans-serif;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:rgba(250,240,230,0.65)!important;-webkit-text-fill-color:rgba(250,240,230,0.65)!important;transition:all 0.18s;">หนี้สิน</button>
+      <button id="mg-tab-debt-btn" onclick="mgSwitchTab('debt')" style="flex:1;padding:7px 4px;border:none;border-radius:17px;font-family:Sarabun,sans-serif;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:rgba(250,240,230,0.65)!important;-webkit-text-fill-color:rgba(250,240,230,0.65)!important;transition:all 0.18s;">สินเชื่อ</button>
     </div>
   </div>
 
@@ -1505,8 +1505,8 @@ textarea {
     </div>
     <div id="mg-tab-debt" class="tab-content">
       <div class="row-action">
-        <span>รายการหนี้สิน</span>
-        <button class="action-link debt" onclick="openDebtModal()">+ บันทึกหนี้</button>
+        <span>รายการสินเชื่อ</span>
+        <button class="action-link debt" onclick="openDebtModal()">+ บันทึกสินเชื่อ</button>
       </div>
       <div id="mg-debt-list"><div class="no-item">ยังไม่มีรายการหนี้</div></div>
     </div>
@@ -1527,20 +1527,93 @@ textarea {
     </div>
   </div>
 
-  <!-- MODAL: หนี้สิน -->
+  <!-- MODAL: สินเชื่อ -->
 
   <div class="modal-overlay" id="modal-debt">
     <div class="modal-sheet">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-        <div class="modal-title" style="margin:0;">บันทึกหนี้สิน</div>
+        <div class="modal-title" style="margin:0;">บันทึกสินเชื่อ</div>
         <button onclick="closeModal('modal-debt')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;flex-shrink:0;">&#x2715;</button>
       </div>
-      <div class="form-group"><label class="form-label">ชื่อหนี้ / แหล่งสินเชื่อ</label><input type="text" class="form-control" id="debt-name" placeholder="เช่น ธ.กรุงไทย, กยศ."></div>
-      <div class="form-group"><label class="form-label">ยอดหนี้คงเหลือ (บาท)</label><input type="number" class="form-control" id="debt-total" placeholder="0.00" inputmode="decimal"></div>
+      <div class="form-group"><label class="form-label">สถาบันการเงิน</label>
+      <select class="form-control" id="debt-institution" onchange="debtInstChange(this.value)">
+        <option value="">— เลือกสถาบัน —</option>
+        <optgroup label="ธนาคารรัฐ">
+          <option>ธนาคารกรุงไทย (KTB)</option>
+          <option>ธนาคารออมสิน (GSB)</option>
+          <option>ธนาคารเพื่อการเกษตรและสหกรณ์ (ธ.ก.ส.)</option>
+          <option>ธนาคารอาคารสงเคราะห์ (ธอส.)</option>
+          <option>ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อม (SME D Bank)</option>
+          <option>ธนาคารเพื่อการส่งออกและนำเข้า (EXIM)</option>
+          <option>กยศ. (กองทุนเงินให้กู้ยืมเพื่อการศึกษา)</option>
+        </optgroup>
+        <optgroup label="ธนาคารพาณิชย์">
+          <option>ธนาคารกสิกรไทย (KBANK)</option>
+          <option>ธนาคารไทยพาณิชย์ (SCB)</option>
+          <option>ธนาคารกรุงเทพ (BBL)</option>
+          <option>ธนาคารกรุงศรีอยุธยา (BAY)</option>
+          <option>ธนาคารทหารไทยธนชาต (TTB)</option>
+          <option>ธนาคารยูโอบี (UOB)</option>
+          <option>ธนาคารซีไอเอ็มบี (CIMB)</option>
+          <option>ธนาคารแลนด์ แอนด์ เฮ้าส์ (LH Bank)</option>
+          <option>ธนาคารทิสโก้ (TISCO)</option>
+          <option>ธนาคารเกียรตินาคินภัทร (KKP)</option>
+        </optgroup>
+        <optgroup label="บัตรเครดิต / สินเชื่อส่วนบุคคล">
+          <option>KTC (บัตรเครดิต/สินเชื่อ)</option>
+          <option>AEON (อิออน)</option>
+          <option>Central Card / Central The 1</option>
+          <option>Krungsri First Choice</option>
+          <option>SCB มันนี่</option>
+          <option>กสิกร พี่เบิ้ม</option>
+        </optgroup>
+        <optgroup label="ไฟแนนส์ / ลิสซิ่ง">
+          <option>Toyota Leasing (TLT)</option>
+          <option>Honda Leasing</option>
+          <option>Nissan Financial Services</option>
+          <option>Isuzu Leasing</option>
+          <option>Kiatnakin Phatra (KKP Leasing)</option>
+          <option>Tisco Leasing</option>
+          <option>MFC Asset Management</option>
+          <option>SCB Leasing</option>
+          <option>Ayudhya Capital (GE Money เดิม)</option>
+        </optgroup>
+        <optgroup label="สินเชื่อนาโน / ไมโครไฟแนนส์">
+          <option>Ngern Tid Lor (เงินติดล้อ)</option>
+          <option>MONEYMAN</option>
+          <option>KASIKORN Nano Finance</option>
+          <option>ศรีสวัสดิ์ (Sri Sawad)</option>
+          <option>Muangthai Capital (MTC)</option>
+          <option>SAWAD</option>
+        </optgroup>
+        <optgroup label="อื่นๆ">
+          <option value="__custom__">ระบุเอง...</option>
+        </optgroup>
+      </select>
+      </div>
+      <div class="form-group" id="debt-name-custom-wrap" style="display:none;">
+        <label class="form-label">ระบุชื่อสถาบัน</label>
+        <input type="text" class="form-control" id="debt-name-custom" placeholder="เช่น สหกรณ์ออมทรัพย์, เงินกู้นอกระบบ">
+      </div>
+      <div class="form-group"><label class="form-label">ประเภทสินเชื่อ</label>
+      <select class="form-control" id="debt-type">
+        <option value="">— เลือกประเภท —</option>
+        <option>สินเชื่อบ้าน / ที่ดิน</option>
+        <option>สินเชื่อรถยนต์ / จักรยานยนต์</option>
+        <option>สินเชื่อส่วนบุคคล (Personal Loan)</option>
+        <option>บัตรเครดิต</option>
+        <option>สินเชื่อการเกษตร</option>
+        <option>สินเชื่อธุรกิจ / SME</option>
+        <option>สินเชื่อการศึกษา (กยศ.)</option>
+        <option>สินเชื่อนาโน / ไมโครไฟแนนส์</option>
+        <option>อื่นๆ</option>
+      </select>
+      </div>
+      <div class="form-group"><label class="form-label">ยอดสินเชื่อคงเหลือ (บาท)</label><input type="number" class="form-control" id="debt-total" placeholder="0.00" inputmode="decimal"></div>
       <div class="form-group"><label class="form-label">งวดผ่อนต่อเดือน (บาท)</label><input type="number" class="form-control" id="debt-install" placeholder="0.00" inputmode="decimal"></div>
       <div class="form-group"><label class="form-label">วันครบกำหนดงวดถัดไป</label><input type="date" class="form-control" id="debt-due"></div>
       <div class="form-group"><label class="form-label">หมายเหตุ</label><input type="text" class="form-control" id="debt-note" placeholder="ไม่บังคับ"></div>
-      <button class="btn-primary" onclick="saveDebt()">บันทึกหนี้สิน</button>
+      <button class="btn-primary" onclick="saveDebt()">บันทึกสินเชื่อ</button>
     </div>
   </div>
 
@@ -1644,17 +1717,51 @@ function mgRenderDebt(){
   var el=document.getElementById('mg-debt-list');
   if(!debts.length){el.innerHTML='<div class="no-item">ยังไม่มีรายการหนี้</div>';return;}
   var today=new Date();today.setHours(0,0,0,0);
-  el.innerHTML=debts.map(function(d,i){
+  // summary header
+  var totalDebt=debts.reduce(function(s,d){return s+d.total;},0);
+  var totalPaid=debts.reduce(function(s,d){return s+(d.originalTotal||d.total)-(d.total);},0);
+  el.innerHTML='<div style="background:#F5EFE6;border-radius:14px;padding:12px 16px;margin-bottom:14px;border:1px solid #E0D5C4;">'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'
+    +'<div><div style="font-size:11px;color:#8A7A68;margin-bottom:3px;">หนี้คงเหลือทั้งหมด</div><div style="font-family:Mitr,sans-serif;font-size:17px;font-weight:600;color:#8B3020!important;-webkit-text-fill-color:#8B3020!important;">'+fmt(totalDebt)+' <span style="font-size:11px;">บาท</span></div></div>'
+    +'<div><div style="font-size:11px;color:#8A7A68;margin-bottom:3px;">ชำระไปแล้ว</div><div style="font-family:Mitr,sans-serif;font-size:17px;font-weight:600;color:#4A7A3A!important;-webkit-text-fill-color:#4A7A3A!important;">'+fmt(totalPaid)+' <span style="font-size:11px;">บาท</span></div></div>'
+    +'</div></div>'
+  +debts.map(function(d,i){
     var due=d.nextDue?new Date(d.nextDue):null;
     if(due)due.setHours(0,0,0,0);
     var diff=due?Math.round((due-today)/86400000):null;
     var st=diff===null?'ok':diff<0?'overdue':diff<=7?'soon':'ok';
     var stTxt=diff===null?'ปกติ':diff<0?'เกินกำหนด '+Math.abs(diff)+' วัน':diff===0?'ครบกำหนดวันนี้':diff<=7?'อีก '+diff+' วัน':'ปกติ';
+    var orig=d.originalTotal||d.total;
+    var paid=orig-d.total;
+    var pct=orig>0?Math.min(Math.round(paid/orig*100),100):0;
     return '<div class="debt-card">'
-      +'<div class="debt-header"><div class="debt-name">'+d.name+'</div><div class="debt-total">'+fmt(d.total)+' บาท</div></div>'
-      +'<div class="debt-detail">งวดละ '+fmt(d.installment)+' บาท'+(d.note?' · '+d.note:'')+'</div>'
-      +(d.nextDue?'<div style="margin-bottom:6px;">ครบกำหนด: '+formatDateTH(d.nextDue)+' <span class="status-tag '+st+'">'+stTxt+'</span></div>':'')
-      +'<button class="pay-btn" onclick="mgPayDebt('+i+')">บันทึกการชำระงวด</button></div>';
+      +'<div class="debt-header"><div class="debt-name">'+d.name+'</div>'
+      +(d.note?'<span style="font-size:11px;color:#8A7A68;">'+d.note+'</span>':'')
+      +'</div>'
+      // ยอด 3 ช่อง
+      +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:10px 0 8px;">'
+      +'<div style="background:#F5EFE6;border-radius:9px;padding:7px 8px;text-align:center;">'
+        +'<div style="font-size:10px;color:#8A7A68;">ยอดเดิม</div>'
+        +'<div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;">'+fmt(orig)+'</div>'
+      +'</div>'
+      +'<div style="background:#FFF0ED;border-radius:9px;padding:7px 8px;text-align:center;">'
+        +'<div style="font-size:10px;color:#8A7A68;">คงเหลือ</div>'
+        +'<div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#8B3020!important;-webkit-text-fill-color:#8B3020!important;">'+fmt(d.total)+'</div>'
+      +'</div>'
+      +'<div style="background:#F0F7EE;border-radius:9px;padding:7px 8px;text-align:center;">'
+        +'<div style="font-size:10px;color:#8A7A68;">ชำระแล้ว</div>'
+        +'<div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#4A7A3A!important;-webkit-text-fill-color:#4A7A3A!important;">'+fmt(paid)+'</div>'
+      +'</div>'
+      +'</div>'
+      // progress bar
+      +'<div style="margin-bottom:6px;">'
+        +'<div style="display:flex;justify-content:space-between;font-size:10px;color:#8A7A68;margin-bottom:3px;"><span>ชำระแล้ว '+pct+'%</span><span>งวดละ '+fmt(d.installment)+' บาท</span></div>'
+        +'<div style="background:#E8E0D4;border-radius:4px;height:6px;">'
+          +'<div style="background:#4A7A3A;border-radius:4px;height:6px;width:'+pct+'%;transition:width 0.3s;"></div>'
+        +'</div>'
+      +'</div>'
+      +(d.nextDue?'<div style="margin-bottom:10px;font-size:12px;color:#6A5848;">ครบกำหนดงวดถัดไป: '+formatDateTH(d.nextDue)+' <span class="status-tag '+st+'">'+stTxt+'</span></div>':'')
+      +'<button class="pay-btn" onclick="mgPayDebt('+i+')">&#x2713; บันทึกการชำระงวด</button></div>';
   }).join('');
 }
 
@@ -1668,12 +1775,20 @@ function openBudgetModal(){
 }
 
 function openDebtModal(){
-  document.getElementById('debt-name').value='';
+  document.getElementById('debt-institution').value='';
+  document.getElementById('debt-name-custom').value='';
+  document.getElementById('debt-name-custom-wrap').style.display='none';
+  if(document.getElementById('debt-type'))document.getElementById('debt-type').value='';
   document.getElementById('debt-total').value='';
   document.getElementById('debt-install').value='';
   document.getElementById('debt-due').value=todayStr();
   document.getElementById('debt-note').value='';
   openModal('modal-debt');
+}
+
+function debtInstChange(val){
+  var wrap=document.getElementById('debt-name-custom-wrap');
+  wrap.style.display=val==='__custom__'?'block':'none';
 }
 
 function saveBudget(){
@@ -1690,27 +1805,44 @@ function saveBudget(){
 }
 
 function saveDebt(){
-  var name=document.getElementById('debt-name').value.trim();
+  var instEl=document.getElementById('debt-institution');
+  var inst=instEl.value==='__custom__'?document.getElementById('debt-name-custom').value.trim():instEl.value;
+  var debtType=document.getElementById('debt-type')?document.getElementById('debt-type').value:'';
   var total=parseFloat(document.getElementById('debt-total').value);
   var install=parseFloat(document.getElementById('debt-install').value)||0;
   var due=document.getElementById('debt-due').value;
   var note=document.getElementById('debt-note').value.trim();
-  if(!name){alert('กรุณาระบุชื่อหนี้');return;}
-  if(!total||total<=0){alert('กรุณาระบุยอดหนี้');return;}
-  DATA[_mgAcc].debts.push({id:Date.now()+'',name:name,total:total,installment:install,nextDue:due,note:note});
-  saveData();closeModal('modal-debt');mgRenderDebt();showToast('บันทึกหนี้สินแล้ว');
+  if(!inst){alert('กรุณาเลือกหรือระบุสถาบันการเงิน');return;}
+  if(!total||total<=0){alert('กรุณาระบุยอดสินเชื่อ');return;}
+  var name=inst+(debtType?' ('+debtType+')':'');
+  DATA[_mgAcc].debts.push({id:Date.now()+'',name:name,institution:inst,debtType:debtType,total:total,originalTotal:total,installment:install,nextDue:due,note:note});
+  saveData();closeModal('modal-debt');mgRenderDebt();showToast('บันทึกสินเชื่อแล้ว');
 }
 
 function mgPayDebt(i){
   var d=DATA[_mgAcc].debts[i];
-  if(!confirm('ยืนยันการชำระ '+fmt(d.installment)+' บาท สำหรับ "'+d.name+'"?'))return;
-  d.total=Math.max(0,d.total-d.installment);
+  if(!d.originalTotal)d.originalTotal=d.total; // เก็บยอดเดิมครั้งแรก
+  var payAmt=d.installment||0;
+  if(!payAmt){payAmt=parseFloat(prompt('ระบุจำนวนที่ชำระ (บาท):',''));if(!payAmt||payAmt<=0)return;}
+  if(!confirm('ยืนยันการชำระ '+fmt(payAmt)+' บาท\nหนี้คงเหลือหลังชำระ: '+fmt(Math.max(0,d.total-payAmt))+' บาท'))return;
+  d.total=Math.max(0,d.total-payAmt);
   if(d.nextDue){
     var nd=new Date(d.nextDue);nd.setMonth(nd.getMonth()+1);
     d.nextDue=nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0');
   }
-  if(d.total<=0)DATA[_mgAcc].debts.splice(i,1);
-  saveData();mgRenderDebt();showToast('บันทึกการชำระแล้ว');
+  if(d.total<=0){
+    d.total=0;
+    showToast('ชำระหนี้ "'+d.name+'" ครบแล้ว!');
+    // เก็บ 3 วิ แล้วลบ
+    setTimeout(function(){
+      var idx=DATA[_mgAcc].debts.indexOf(d);
+      if(idx>=0)DATA[_mgAcc].debts.splice(idx,1);
+      saveData();mgRenderDebt();
+    },2500);
+  } else {
+    showToast('ชำระแล้ว คงเหลือ '+fmt(d.total)+' บาท');
+  }
+  saveData();mgRenderDebt();
 }
 
 window.addEventListener('load',function(){
