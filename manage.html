@@ -1535,6 +1535,7 @@ textarea {
   </div>
 <script>
 
+```
 var MONTHS_TH=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 var MONTHS_SHORT=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 var DAYS_TH=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
@@ -1667,8 +1668,14 @@ function openBudgetModalSetup() {
   openModal('modal-budget');
 }
 
-init();
+window.addEventListener('load', function(){
+  document.querySelectorAll('.modal-overlay').forEach(function(el){
+    el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
+  });
+  init();
+});
+```
 
-  </script>
+</script>
 </body>
 </html>
