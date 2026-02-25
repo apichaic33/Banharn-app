@@ -1402,7 +1402,11 @@ textarea {
 
 .modal-overlay {
   position: fixed;
-  top: 0; bottom: 0; left: 0; right: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
+  /* รองรับ browser toolbar บน iOS Safari */
+  height: 100vh;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background: rgba(0,0,0,0.45);
   z-index: 9000;
   display: none;
@@ -1429,19 +1433,26 @@ textarea {
   box-shadow: 0 -4px 32px rgba(61,35,20,0.18);
   box-sizing: border-box;
   flex-shrink: 0;
+      /* ชิดขอบล่าง safe area */
+  padding-bottom: max(52px, calc(32px + env(safe-area-inset-bottom)));
+  align-self: flex-end;
 }
 .modal-full-sheet {
   background: #F5EFE6;
   border-radius: 28px 28px 0 0;
   width: 100%;
-  height: 92svh;
+  /* 92% ของ dynamic viewport เพื่อไม่ให้ toolbar บัง */
   height: 92vh;
+  height: 92dvh;
   display: flex;
   flex-direction: column;
   animation: slideUp 0.25s ease;
   box-shadow: 0 -4px 32px rgba(61,35,20,0.18);
   overflow: hidden;
   flex-shrink: 0;
+  margin-bottom: 0;
+  /* ชิดขอบล่างสุดของ overlay */
+  align-self: flex-end;
 }
 .modal-full-body {
   flex: 1;
@@ -1465,7 +1476,7 @@ textarea {
   -webkit-appearance: none; box-sizing: border-box; display: block;
 }
 .form-control:focus { border-color: #6C3212; }
-
+```
 
 </style>
 </head>
@@ -1564,6 +1575,7 @@ textarea {
       </div>
       <div class="modal-full-body">
 
+```
     <!-- FORM: ครัวเรือน (ไม่มี qty/unit) -->
     <div id="form-home-fields">
       <div class="form-group"><label class="form-label">หมวดหมู่</label><select class="form-control" id="input-category"><option value="">เลือกหมวดหมู่</option></select></div>
@@ -1631,7 +1643,7 @@ textarea {
     <button class="btn-primary" id="save-trans-btn" onclick="saveTransaction()">บันทึกรายการ</button>
   </div>
 </div>
-
+```
 
   </div>
 
@@ -1658,7 +1670,7 @@ textarea {
         <button onclick="closeModal('modal-edit')" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.22);border:none;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#x2715;</button>
       </div>
 
-
+```
   <!-- รายรับ/รายจ่าย toggle (home only) -->
   <div id="edit-type-row" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;">
     <button id="edit-btn-income" onclick="editSetType('income')" style="padding:10px;border-radius:10px;border:1.5px solid #6C3212;background:#6C3212;font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">รายรับ ✓</button>
@@ -1727,7 +1739,7 @@ textarea {
   <button class="btn-primary" onclick="saveEditTransaction()">บันทึกการแก้ไข</button>
   <button onclick="deleteTransaction()" style="width:100%;margin-top:10px;padding:13px;border-radius:12px;border:1.5px solid #C84030;background:none;font-family:Sarabun,sans-serif;font-size:15px;font-weight:600;cursor:pointer;color:#C84030!important;-webkit-text-fill-color:#C84030!important;">ลบรายการนี้</button>
 </div>
-
+```
 
   </div>
 
@@ -2336,6 +2348,15 @@ function deleteTransaction(){
   viewRenderList();renderHome();
   showToast('ลบรายการแล้ว');
 }
+
+// Fix viewport height สำหรับ mobile browser toolbar
+function setVH(){
+  var vh=window.innerHeight*0.01;
+  document.documentElement.style.setProperty('--vh',''+vh+'px');
+}
+setVH();
+window.addEventListener('resize',setVH);
+window.addEventListener('orientationchange',function(){setTimeout(setVH,200);});
 
 window.addEventListener('load',function(){
   document.querySelectorAll('.modal-overlay').forEach(function(el){el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});});
