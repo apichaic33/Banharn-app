@@ -45,7 +45,7 @@
       --gold: var(--accent);
     }
 
-
+```
 * {
   box-sizing: border-box;
   margin: 0;
@@ -1622,8 +1622,10 @@ function showToast(msg){
   if(!t){t=document.createElement('div');t.id='toast-el';t.style.cssText='position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:#6C3212;color:#FAF0E6;padding:9px 18px;border-radius:8px;font-family:Sarabun,sans-serif;font-size:13px;z-index:9999;transition:opacity 0.3s;white-space:nowrap;pointer-events:none;';document.body.appendChild(t);}
   t.textContent=msg;t.style.opacity='1';clearTimeout(_toastTm);_toastTm=setTimeout(function(){t.style.opacity='0';},2500);
 }
-document.querySelectorAll('.modal-overlay').forEach(function(el){
-  el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
+window.addEventListener('load', function(){
+  document.querySelectorAll('.modal-overlay').forEach(function(el){
+    el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
+  });
 });
 
 var _currentAcc = 'home';
@@ -1687,7 +1689,7 @@ function renderAlerts() {
 }
 
 // ── modal add ──
-var TYPE_COLOR = { income: '#4A7A3A', expense: '#8B3020' };
+
 var BASE_BTN = 'border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;cursor:pointer;';
 
 function _setHdr(acc, type) {
@@ -1821,7 +1823,7 @@ function saveSettings() {
 }
 
 init();
-
+```
 
   </script>
 </body>
