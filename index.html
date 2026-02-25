@@ -95,7 +95,8 @@ body {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* ── HEADER ── */
@@ -755,10 +756,12 @@ body {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 300;
+  z-index: 9000;
   display: none;
   align-items: flex-end;
   justify-content: center;
+  width: 100vw;
+  max-width: 480px;
 }
 
 .modal-overlay.open {
@@ -777,6 +780,8 @@ body {
   -webkit-overflow-scrolling: touch;
   animation: slideUp 0.25s ease;
   flex-shrink: 0;
+  box-shadow: 0 -4px 32px rgba(61,35,20,0.18);
+  box-sizing: border-box;
 }
 
 @keyframes slideUp {
@@ -1621,7 +1626,7 @@ textarea {
 
   <!-- ═══════ MODAL: เพิ่มรายการ ═══════ -->
 
-  <div class="modal-overlay" id="modal-add">
+  <div class="modal-overlay" id="modal-add" style="padding:0;">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">เพิ่มรายการ</div>
@@ -1658,7 +1663,7 @@ textarea {
 
   <!-- ═══════ MODAL: งบประมาณ ═══════ -->
 
-  <div class="modal-overlay" id="modal-budget">
+  <div class="modal-overlay" id="modal-budget" style="padding:0;">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">ตั้งงบประมาณ</div>
@@ -1685,7 +1690,7 @@ textarea {
 
   <!-- ═══════ MODAL: หนี้สิน ═══════ -->
 
-  <div class="modal-overlay" id="modal-debt">
+  <div class="modal-overlay" id="modal-debt" style="padding:0;">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">บันทึกสินเชื่อ</div>
@@ -1716,7 +1721,7 @@ textarea {
 
   <!-- ═══════ MODAL: ตั้งค่า ═══════ -->
 
-  <div class="modal-overlay" id="modal-settings">
+  <div class="modal-overlay" id="modal-settings" style="padding:0;">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">ตั้งค่าการเชื่อมต่อ</div>
