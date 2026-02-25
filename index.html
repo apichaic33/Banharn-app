@@ -753,11 +753,12 @@ body {
 /* ── MODAL ── */
 .modal-overlay {
   position: fixed;
-  inset: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 300;
   display: none;
   align-items: flex-end;
+  justify-content: center;
 }
 
 .modal-overlay.open {
@@ -770,10 +771,12 @@ body {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  padding: 16px 20px 40px;
-  max-height: 92vh;
+  padding: 16px 20px 60px;
+  max-height: 88vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   animation: slideUp 0.25s ease;
+  flex-shrink: 0;
 }
 
 @keyframes slideUp {
