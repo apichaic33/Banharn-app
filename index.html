@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>บัญชีครัวเรือน &amp; เกษตร</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -1401,32 +1401,56 @@ textarea {
 }
 
 .modal-overlay {
-  position: fixed; top: 0; bottom: 0;
-  left: 50%; transform: translateX(-50%);
-  width: 100vw; max-width: 480px;
-  background: rgba(0,0,0,0.4); z-index: 9000;
-  display: none; align-items: flex-end;
+  position: fixed;
+  top: 0; bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 9000;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
   pointer-events: none;
+  -webkit-overflow-scrolling: touch;
 }
-.modal-overlay.open { display: flex; pointer-events: all; }
+.modal-overlay.open {
+  display: flex;
+  pointer-events: all;
+}
 .modal-sheet {
-  background: #EDE7DB; border-radius: 28px 28px 0 0;
-  width: 100%; max-width: 480px; margin: 0;
-  padding: 20px 24px 52px; max-height: 88vh;
-  overflow-y: auto; overflow-x: hidden;
+  background: #EDE7DB;
+  border-radius: 28px 28px 0 0;
+  width: 100%;
+  margin: 0;
+  padding: 20px 24px 52px;
+  max-height: 88vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   animation: slideUp 0.25s ease;
-  box-shadow: 0 -4px 32px rgba(61,35,20,0.18); box-sizing: border-box;
+  box-shadow: 0 -4px 32px rgba(61,35,20,0.18);
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 .modal-full-sheet {
-  background: #F5EFE6; border-radius: 28px 28px 0 0;
-  width: 100%; max-width: 480px; height: 92vh;
-  display: flex; flex-direction: column;
+  background: #F5EFE6;
+  border-radius: 28px 28px 0 0;
+  width: 100%;
+  height: 92svh;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
   animation: slideUp 0.25s ease;
-  box-shadow: 0 -4px 32px rgba(61,35,20,0.18); overflow: hidden;
+  box-shadow: 0 -4px 32px rgba(61,35,20,0.18);
+  overflow: hidden;
+  flex-shrink: 0;
 }
 .modal-full-body {
-  flex: 1; overflow-y: auto; overflow-x: hidden;
-  padding: 20px 24px 48px; box-sizing: border-box;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 24px env(safe-area-inset-bottom, 48px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 48px);
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 }
 .form-group { margin-bottom: 18px; }
 .form-label {
@@ -1953,18 +1977,24 @@ function openQuickAdd(acc){
   _acc=acc;_type='income';
   document.getElementById('input-date').value=todayStr();
   document.getElementById('input-note').value='';
+  // ซ่อนทุก form ก่อนเสมอ
+  ['form-home-fields','form-farm-fields','form-farm-expense-fields'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.style.display='none';
+  });
   if(acc==='home'){
     document.getElementById('form-home-fields').style.display='block';
-    document.getElementById('form-farm-fields').style.display='none';
     document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.home.income.map(function(c){return '<option>'+c+'</option>';}).join('');
     document.getElementById('input-amount').value='';
     document.getElementById('input-desc').value='';
   } else {
     document.getElementById('form-home-fields').style.display='none';
     document.getElementById('form-farm-fields').style.display='block';
+    document.getElementById('form-farm-expense-fields').style.display='none';
     var mainSel=document.getElementById('input-category-farm-main');
     mainSel.innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.farm.income.map(function(c){return '<option>'+c+'</option>';}).join('');
+    mainSel.value='';
     document.getElementById('farm-sub-wrap').style.display='none';
+    document.getElementById('farm-income-qty-block').style.display='none';
     document.getElementById('input-qty').value='';
     document.getElementById('input-unit-price').value='';
     document.getElementById('input-amount-farm').value='';
@@ -1984,13 +2014,22 @@ function setType(type){
   });
   if(_acc==='home'){
     document.getElementById('form-home-fields').style.display='block';
+    // ซ่อน farm forms
+    var fe=document.getElementById('form-farm-fields');if(fe)fe.style.display='none';
+    var fee=document.getElementById('form-farm-expense-fields');if(fee)fee.style.display='none';
     document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.home[type].map(function(c){return '<option>'+c+'</option>';}).join('');
   } else {
     if(type==='income'){
+      document.getElementById('form-home-fields').style.display='none';
       document.getElementById('form-farm-fields').style.display='block';
+      document.getElementById('form-farm-expense-fields').style.display='none';
       var mainSel=document.getElementById('input-category-farm-main');
       mainSel.innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.farm.income.map(function(c){return '<option>'+c+'</option>';}).join('');
+      mainSel.value='';
       document.getElementById('farm-sub-wrap').style.display='none';
+      document.getElementById('farm-income-qty-block').style.display='none';
+      document.getElementById('input-amount-farm').value='';
+      document.getElementById('amount-hint').textContent='';
     } else {
       showFarmExpenseForm();
     }
