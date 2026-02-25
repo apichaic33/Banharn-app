@@ -4,10 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>รายงาน — บัญชีครัวเรือน & เกษตร</title>
+  <title>รายงาน — บัญชีครัวเรือน &amp; เกษตร</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
   <style>
@@ -85,7 +83,6 @@ body {
   min-height: 100vh;
   max-width: 480px;
   margin: 0 auto;
-  overflow-x: hidden;
 }
 
 /* ทำให้พื้นหลัง beige เต็มหน้าจอเสมอ แม้ content สั้น */
@@ -741,22 +738,15 @@ body {
 /* ── MODAL ── */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
+  inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 9000;
+  z-index: 300;
   display: none;
   align-items: flex-end;
-  justify-content: center;
-  pointer-events: none;
 }
 
 .modal-overlay.open {
   display: flex;
-  pointer-events: all;
 }
 
 .modal-sheet {
@@ -765,12 +755,10 @@ body {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  padding: 16px 20px 60px;
+  padding: 16px 20px 40px;
   max-height: 92vh;
   overflow-y: auto;
-  overflow-x: hidden;
   animation: slideUp 0.25s ease;
-  box-shadow: 0 -4px 32px rgba(61,35,20,0.18);
 }
 
 @keyframes slideUp {
@@ -1469,7 +1457,7 @@ textarea {
       <div><div class="app-title" style="color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">รายงานภาพรวม</div></div>
     </div>
     <div style="display:flex;gap:8px;margin-top:10px;">
-      <button id="rp-btn-home" onclick="rpSetAcc('home')" style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.2);border-radius:10px;color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">ครัวเรือน</button>
+      <button id="rp-btn-home" onclick="rpSetAcc('home')" style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.2);border-radius:10px;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">ครัวเรือน</button>
       <button id="rp-btn-farm" onclick="rpSetAcc('farm')" style="flex:1;padding:7px;border:1.5px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.1);border-radius:10px;color:rgba(250,240,230,0.55)!important;-webkit-text-fill-color:rgba(250,240,230,0.55)!important;cursor:pointer;font-family:Sarabun,sans-serif;font-size:13px;">การเกษตร</button>
     </div>
     <div style="display:flex;background:rgba(0,0,0,0.18);border-radius:20px;padding:3px;gap:3px;margin-top:10px;">
@@ -1504,11 +1492,11 @@ textarea {
   </div>
 
   <div class="bottom-nav">
-    <button class="nav-btn " onclick="location.href='index.html'">
+    <button class="nav-btn" onclick="location.href='index.html'">
       <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
       <span class="nav-label">หน้าหลัก</span>
     </button>
-    <button class="nav-btn " onclick="location.href='manage.html'">
+    <button class="nav-btn" onclick="location.href='manage.html'">
       <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
       <span class="nav-label">จัดการ</span>
     </button>
@@ -1517,9 +1505,8 @@ textarea {
       <span class="nav-label">รายงาน</span>
     </button>
   </div>
-<script>
 
-```
+<script>
 var MONTHS_TH=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 var MONTHS_SHORT=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 var CATEGORIES={
@@ -1530,47 +1517,36 @@ var DATA=(function(){var r=localStorage.getItem('banharnData');try{return r?JSON
 function saveData(){localStorage.setItem('banharnData',JSON.stringify(DATA));}
 function fmt(n){return (parseFloat(n)||0).toLocaleString('th-TH');}
 function todayStr(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function formatDateTH(str){if(!str)return '-';var d=new Date(str);if(isNaN(d))return str;return d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);}
 function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
-var _toastTm;
-function showToast(msg){
-  var t=document.getElementById('toast-el');
-  if(!t){t=document.createElement('div');t.id='toast-el';t.style.cssText='position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:#6C3212;color:#FAF0E6;padding:9px 18px;border-radius:8px;font-family:Sarabun,sans-serif;font-size:13px;z-index:9999;transition:opacity 0.3s;white-space:nowrap;pointer-events:none;';document.body.appendChild(t);}
-  t.textContent=msg;t.style.opacity='1';clearTimeout(_toastTm);_toastTm=setTimeout(function(){t.style.opacity='0';},2500);
-}
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.modal-overlay').forEach(function(el){
-    el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
-  });
-});
 
-var _rpAcc = 'home';
-var _rpTab = 'overview';
-var rpMChart=null, rpCChart=null;
+var _rpAcc='home';
+var _rpTab='overview';
+var rpMChart=null,rpCChart=null;
+var yoyMChart=null,yoyCChart=null;
 
-function init() {
+function init(){
   rpSetAcc('home');
   yoyInitYears();
 }
 
-function rpSetAcc(acc) {
-  _rpAcc = acc;
-  var bh=document.getElementById('rp-btn-home'), bf=document.getElementById('rp-btn-farm');
-  bh.style.background=acc==='home'?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.1)';
+function rpSetAcc(acc){
+  _rpAcc=acc;
+  var bh=document.getElementById('rp-btn-home'),bf=document.getElementById('rp-btn-farm');
+  bh.style.background=acc==='home'?'rgba(255,255,255,0.22)':'rgba(255,255,255,0.1)';
   bh.style.borderColor=acc==='home'?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.35)';
   bh.style.color=acc==='home'?'#FAF0E6':'rgba(250,240,230,0.75)';
   bh.style.webkitTextFillColor=acc==='home'?'#FAF0E6':'rgba(250,240,230,0.75)';
-  bf.style.background=acc==='farm'?'rgba(255,255,255,0.2)':'rgba(255,255,255,0.1)';
+  bf.style.background=acc==='farm'?'rgba(255,255,255,0.22)':'rgba(255,255,255,0.1)';
   bf.style.borderColor=acc==='farm'?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.35)';
   bf.style.color=acc==='farm'?'#FAF0E6':'rgba(250,240,230,0.75)';
   bf.style.webkitTextFillColor=acc==='farm'?'#FAF0E6':'rgba(250,240,230,0.75)';
-  if(_rpTab==='yoy') yoyRender(); else rpRenderCharts();
+  if(_rpTab==='yoy')yoyRender();else rpRenderCharts();
 }
 
-function rpSwitchTab(tab) {
-  _rpTab = tab;
-  var ob=document.getElementById('rp-tab-overview-btn'), yb=document.getElementById('rp-tab-yoy-btn');
+function rpSwitchTab(tab){
+  _rpTab=tab;
+  var ob=document.getElementById('rp-tab-overview-btn'),yb=document.getElementById('rp-tab-yoy-btn');
   ob.style.background=tab==='overview'?'rgba(255,255,255,0.22)':'transparent';
   ob.style.color=tab==='overview'?'#FAF0E6':'rgba(250,240,230,0.65)';
   ob.style.webkitTextFillColor=tab==='overview'?'#FAF0E6':'rgba(250,240,230,0.65)';
@@ -1579,11 +1555,12 @@ function rpSwitchTab(tab) {
   yb.style.webkitTextFillColor=tab==='yoy'?'#FAF0E6':'rgba(250,240,230,0.65)';
   document.getElementById('rp-tab-overview').classList.toggle('active',tab==='overview');
   document.getElementById('rp-tab-yoy').classList.toggle('active',tab==='yoy');
-  if(tab==='overview') rpRenderCharts(); else {yoyInitYears();yoyRender();}
+  window.scrollTo(0,0);
+  if(tab==='overview')rpRenderCharts();else{yoyInitYears();yoyRender();}
 }
 
-function rpRenderCharts() {
-  var acc=_rpAcc, now=new Date(), labels=[], incs=[], exps=[];
+function rpRenderCharts(){
+  var acc=_rpAcc,now=new Date(),labels=[],incs=[],exps=[];
   for(var i=5;i>=0;i--){
     var d=new Date(now.getFullYear(),now.getMonth()-i,1);
     labels.push(MONTHS_TH[d.getMonth()].slice(0,3));
@@ -1602,190 +1579,170 @@ function rpRenderCharts() {
   var cl=Object.keys(catMap),cv=Object.values(catMap);
   var colors=['#6C3212','#9C4722','#C87629','#4A7A3A','#8B3020','#8B6E3C','#5A2A10','#7A5A30','#4A6040'];
   if(rpCChart)rpCChart.destroy();
+  if(!cl.length){
+    var ctx=document.getElementById('rp-cat-chart').getContext('2d');
+    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+    return;
+  }
   rpCChart=new Chart(document.getElementById('rp-cat-chart').getContext('2d'),{
     type:'doughnut',data:{labels:cl,datasets:[{data:cv,backgroundColor:colors.slice(0,cl.length),borderWidth:0}]},
     options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{font:{family:'Sarabun',size:11},boxWidth:10,padding:8}}}}
   });
 }
 
-init();
-```
-
-// ============================================================
-// YoY FUNCTIONS
-// ============================================================
-var yoyMChart = null, yoyCChart = null;
-
-function rpSwitchTab(tab) {
-  STATE.reportTab = tab;
-  var ob = document.getElementById('rp-tab-overview-btn');
-  var yb = document.getElementById('rp-tab-yoy-btn');
-  ob.style.background = tab === 'overview' ? 'rgba(255,255,255,0.22)' : 'transparent';
-  ob.style.color = tab === 'overview' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
-  ob.style.webkitTextFillColor = tab === 'overview' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
-  yb.style.background = tab === 'yoy' ? 'rgba(255,255,255,0.22)' : 'transparent';
-  yb.style.color = tab === 'yoy' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
-  yb.style.webkitTextFillColor = tab === 'yoy' ? '#FAF0E6' : 'rgba(250,240,230,0.65)';
-  document.getElementById('rp-tab-overview').classList.toggle('active', tab === 'overview');
-  document.getElementById('rp-tab-yoy').classList.toggle('active', tab === 'yoy');
-  window.scrollTo(0, 0);
-  if (tab === 'overview') rpRenderCharts();
-  else { yoyInitYears(); yoyRender(); }
-}
-
-function yoyInitYears() {
-  var years = new Set();
-  var now = new Date().getFullYear();
-  years.add(now); years.add(now - 1);
-  ['home', 'farm'].forEach(function (acc) {
-    DATA[acc].transactions.forEach(function (t) {
-      years.add(new Date(t.date).getFullYear());
-    });
+function yoyInitYears(){
+  var years=new Set();
+  var now=new Date().getFullYear();
+  years.add(now);years.add(now-1);
+  ['home','farm'].forEach(function(acc){
+    DATA[acc].transactions.forEach(function(t){years.add(new Date(t.date).getFullYear());});
   });
-  var sorted = Array.from(years).sort(function (a, b) { return b - a; });
-  ['yoy-year-a', 'yoy-year-b'].forEach(function (id, i) {
-    var sel = document.getElementById(id);
-    var cur = parseInt(sel.value) || 0;
-    sel.innerHTML = sorted.map(function (y) {
-      var isSelected = cur ? (y === cur) : (y === sorted[i]);
-      return '<option value="' + y + '" ' + (isSelected ? 'selected' : '') + '>' + (y + 543) + '</option>';
+  var sorted=Array.from(years).sort(function(a,b){return b-a;});
+  ['yoy-year-a','yoy-year-b'].forEach(function(id,i){
+    var sel=document.getElementById(id);
+    var cur=parseInt(sel.value)||0;
+    sel.innerHTML=sorted.map(function(y){
+      var isSel=cur?(y===cur):(y===sorted[i]);
+      return '<option value="'+y+'" '+(isSel?'selected':'')+'>'+( y+543)+'</option>';
     }).join('');
   });
 }
 
-function yoyGetYearData(acc, year) {
-  var monthly = Array.from({ length: 12 }, function () { return { inc: 0, exp: 0 }; });
-  var catMap = {};
-  DATA[acc].transactions.forEach(function (t) {
-    var d = new Date(t.date);
-    if (d.getFullYear() !== year) return;
-    var m = d.getMonth();
-    if (t.type === 'income') monthly[m].inc += t.amount;
-    else { monthly[m].exp += t.amount; var k = t.category || 'อื่นๆ'; catMap[k] = (catMap[k] || 0) + t.amount; }
+function yoyGetYearData(acc,year){
+  var monthly=Array.from({length:12},function(){return {inc:0,exp:0};});
+  var catMap={};
+  DATA[acc].transactions.forEach(function(t){
+    var d=new Date(t.date);
+    if(d.getFullYear()!==year)return;
+    var m=d.getMonth();
+    if(t.type==='income')monthly[m].inc+=t.amount;
+    else{monthly[m].exp+=t.amount;var k=t.category||'อื่นๆ';catMap[k]=(catMap[k]||0)+t.amount;}
   });
-  var totalInc = monthly.reduce(function (s, m) { return s + m.inc; }, 0);
-  var totalExp = monthly.reduce(function (s, m) { return s + m.exp; }, 0);
-  return { monthly: monthly, catMap: catMap, totalInc: totalInc, totalExp: totalExp };
+  var totalInc=monthly.reduce(function(s,m){return s+m.inc;},0);
+  var totalExp=monthly.reduce(function(s,m){return s+m.exp;},0);
+  return {monthly:monthly,catMap:catMap,totalInc:totalInc,totalExp:totalExp};
 }
 
-function yoyCalcPct(a, b) { if (!b || b === 0) return null; return ((a - b) / b) * 100; }
-
-function yoyPctColor(pct, isExpense) {
-  if (pct === null) return '#8A7060';
-  if (isExpense) return pct > 0 ? '#8B3020' : '#4A7A3A';
-  return pct > 0 ? '#4A7A3A' : '#8B3020';
+function yoyCalcPct(a,b){if(!b||b===0)return null;return((a-b)/b)*100;}
+function yoyPctColor(pct,isExpense){
+  if(pct===null)return '#8A7060';
+  if(isExpense)return pct>0?'#8B3020':'#4A7A3A';
+  return pct>0?'#4A7A3A':'#8B3020';
 }
+function yoyPctText(pct){if(pct===null)return '—';return(pct>0?'+':'')+pct.toFixed(1)+'%';}
 
-function yoyPctText(pct) {
-  if (pct === null) return '—';
-  return (pct > 0 ? '+' : '') + pct.toFixed(1) + '%';
-}
+function yoyRender(){
+  var acc=_rpAcc||'home';
+  var yearA=parseInt(document.getElementById('yoy-year-a').value);
+  var yearB=parseInt(document.getElementById('yoy-year-b').value);
+  var dA=yoyGetYearData(acc,yearA);
+  var dB=yoyGetYearData(acc,yearB);
 
-function yoyRender() {
-  var acc = _rpAcc || 'home';
-  var yearA = parseInt(document.getElementById('yoy-year-a').value);
-  var yearB = parseInt(document.getElementById('yoy-year-b').value);
-  var dA = yoyGetYearData(acc, yearA);
-  var dB = yoyGetYearData(acc, yearB);
+  document.getElementById('yoy-label-a').textContent='ปี '+(yearA+543);
+  document.getElementById('yoy-label-b').textContent='ปี '+(yearB+543);
+  document.getElementById('yoy-inc-a').textContent=fmt(dA.totalInc);
+  document.getElementById('yoy-exp-a').textContent=fmt(dA.totalExp);
+  document.getElementById('yoy-bal-a').textContent=fmt(dA.totalInc-dA.totalExp);
+  document.getElementById('yoy-inc-b').textContent=fmt(dB.totalInc);
+  document.getElementById('yoy-exp-b').textContent=fmt(dB.totalExp);
+  document.getElementById('yoy-bal-b').textContent=fmt(dB.totalInc-dB.totalExp);
 
-  document.getElementById('yoy-label-a').textContent = 'ปี ' + (yearA + 543);
-  document.getElementById('yoy-label-b').textContent = 'ปี ' + (yearB + 543);
-  document.getElementById('yoy-inc-a').textContent = fmt(dA.totalInc);
-  document.getElementById('yoy-exp-a').textContent = fmt(dA.totalExp);
-  document.getElementById('yoy-bal-a').textContent = fmt(dA.totalInc - dA.totalExp);
-  document.getElementById('yoy-inc-b').textContent = fmt(dB.totalInc);
-  document.getElementById('yoy-exp-b').textContent = fmt(dB.totalExp);
-  document.getElementById('yoy-bal-b').textContent = fmt(dB.totalInc - dB.totalExp);
-
-  var kpis = [
-    { label: 'รายรับ', pct: yoyCalcPct(dA.totalInc, dB.totalInc), isExp: false },
-    { label: 'รายจ่าย', pct: yoyCalcPct(dA.totalExp, dB.totalExp), isExp: true },
-    { label: 'คงเหลือ', pct: yoyCalcPct(dA.totalInc - dA.totalExp, dB.totalInc - dB.totalExp), isExp: false }
+  var kpis=[
+    {label:'รายรับ',pct:yoyCalcPct(dA.totalInc,dB.totalInc),isExp:false},
+    {label:'รายจ่าย',pct:yoyCalcPct(dA.totalExp,dB.totalExp),isExp:true},
+    {label:'คงเหลือ',pct:yoyCalcPct(dA.totalInc-dA.totalExp,dB.totalInc-dB.totalExp),isExp:false}
   ];
-  document.getElementById('yoy-kpi-strip').innerHTML = kpis.map(function (k) {
-    var arrow = k.pct === null ? '\u2014' : (k.pct > 0 ? '\u25b2' : '\u25bc');
-    var clr = yoyPctColor(k.pct, k.isExp);
+  document.getElementById('yoy-kpi-strip').innerHTML=kpis.map(function(k){
+    var arrow=k.pct===null?'—':(k.pct>0?'▲':'▼');
+    var clr=yoyPctColor(k.pct,k.isExp);
     return '<div class="yoy-kpi-card">'
-      + '<div style="font-size:11px;color:#8A7A68;margin-bottom:4px;">' + k.label + '</div>'
-      + '<div style="font-family:Mitr,sans-serif;font-size:18px;font-weight:600;color:' + clr + '!important;-webkit-text-fill-color:' + clr + '!important;">' + arrow + ' ' + yoyPctText(k.pct) + '</div>'
-      + '<div style="font-size:10px;color:#8A7A68;margin-top:2px;">เทียบปีก่อน</div></div>';
+      +'<div style="font-size:11px;color:#8A7A68;margin-bottom:4px;">'+k.label+'</div>'
+      +'<div style="font-family:Mitr,sans-serif;font-size:18px;font-weight:600;color:'+clr+'!important;-webkit-text-fill-color:'+clr+'!important;">'+arrow+' '+yoyPctText(k.pct)+'</div>'
+      +'<div style="font-size:10px;color:#8A7A68;margin-top:2px;">เทียบปีก่อน</div></div>';
   }).join('');
 
-  if (yoyMChart) yoyMChart.destroy();
-  yoyMChart = new Chart(document.getElementById('yoy-month-chart').getContext('2d'), {
-    type: 'line',
-    data: {
-      labels: MONTHS_SHORT,
-      datasets: [
-        { label: 'รายรับ ' + (yearA + 543), data: dA.monthly.map(function (m) { return m.inc; }), borderColor: '#4A7A3A', backgroundColor: 'rgba(74,122,58,0.08)', borderWidth: 2, pointRadius: 3, tension: 0.3, yAxisID: 'yInc' },
-        { label: 'รายรับ ' + (yearB + 543), data: dB.monthly.map(function (m) { return m.inc; }), borderColor: '#4A7A3A', backgroundColor: 'transparent', borderWidth: 2, borderDash: [5, 4], pointRadius: 3, tension: 0.3, yAxisID: 'yInc' },
-        { label: 'รายจ่าย ' + (yearA + 543), data: dA.monthly.map(function (m) { return m.exp; }), borderColor: '#8B3020', backgroundColor: 'rgba(139,48,32,0.08)', borderWidth: 2, pointRadius: 3, tension: 0.3, yAxisID: 'yExp' },
-        { label: 'รายจ่าย ' + (yearB + 543), data: dB.monthly.map(function (m) { return m.exp; }), borderColor: '#8B3020', backgroundColor: 'transparent', borderWidth: 2, borderDash: [5, 4], pointRadius: 3, tension: 0.3, yAxisID: 'yExp' }
+  if(yoyMChart)yoyMChart.destroy();
+  yoyMChart=new Chart(document.getElementById('yoy-month-chart').getContext('2d'),{
+    type:'line',
+    data:{
+      labels:MONTHS_SHORT,
+      datasets:[
+        {label:'รายรับ '+(yearA+543),data:dA.monthly.map(function(m){return m.inc;}),borderColor:'#4A7A3A',backgroundColor:'rgba(74,122,58,0.08)',borderWidth:2,pointRadius:3,tension:0.3,yAxisID:'yInc'},
+        {label:'รายรับ '+(yearB+543),data:dB.monthly.map(function(m){return m.inc;}),borderColor:'#4A7A3A',backgroundColor:'transparent',borderWidth:2,borderDash:[5,4],pointRadius:3,tension:0.3,yAxisID:'yInc'},
+        {label:'รายจ่าย '+(yearA+543),data:dA.monthly.map(function(m){return m.exp;}),borderColor:'#8B3020',backgroundColor:'rgba(139,48,32,0.08)',borderWidth:2,pointRadius:3,tension:0.3,yAxisID:'yExp'},
+        {label:'รายจ่าย '+(yearB+543),data:dB.monthly.map(function(m){return m.exp;}),borderColor:'#8B3020',backgroundColor:'transparent',borderWidth:2,borderDash:[5,4],pointRadius:3,tension:0.3,yAxisID:'yExp'}
       ]
     },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 10, padding: 6, useBorderRadius: false }, maxWidth: 160 } },
-      scales: {
-        x: { grid: { display: false } },
-        yInc: { position: 'left', grid: { color: '#C8C0B0' }, ticks: { callback: function (v) { return v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v; } }, title: { display: true, text: 'รายรับ', font: { family: 'Sarabun', size: 10 }, color: '#4A7A3A' } },
-        yExp: { position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: function (v) { return v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v; } }, title: { display: true, text: 'รายจ่าย', font: { family: 'Sarabun', size: 10 }, color: '#8B3020' } }
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{font:{family:'Sarabun',size:11},boxWidth:10,padding:6}}},
+      scales:{
+        x:{grid:{display:false}},
+        yInc:{position:'left',grid:{color:'#C8C0B0'},ticks:{callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}},title:{display:true,text:'รายรับ',font:{family:'Sarabun',size:10},color:'#4A7A3A'}},
+        yExp:{position:'right',grid:{drawOnChartArea:false},ticks:{callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}},title:{display:true,text:'รายจ่าย',font:{family:'Sarabun',size:10},color:'#8B3020'}}
       }
     }
   });
 
-  var allCats = Array.from(new Set(Object.keys(dA.catMap).concat(Object.keys(dB.catMap))));
-  if (yoyCChart) yoyCChart.destroy();
-  yoyCChart = new Chart(document.getElementById('yoy-cat-chart').getContext('2d'), {
-    type: 'bar',
-    data: {
-      labels: allCats,
-      datasets: [
-        { label: (yearA + 543) + '', data: allCats.map(function (c) { return dA.catMap[c] || 0; }), backgroundColor: 'rgba(139,48,32,0.80)', borderRadius: 4 },
-        { label: (yearB + 543) + '', data: allCats.map(function (c) { return dB.catMap[c] || 0; }), backgroundColor: 'rgba(200,118,41,0.70)', borderRadius: 4 }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true,
-      plugins: { legend: { labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 12, padding: 8, boxHeight: 12 }, maxWidth: 180 } },
-      scales: { x: { grid: { display: false }, ticks: { font: { family: 'Sarabun', size: 10 } } }, y: { grid: { color: '#C8C0B0' }, ticks: { callback: function (v) { return v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v; } } } }
-    }
+  var allCats=Array.from(new Set(Object.keys(dA.catMap).concat(Object.keys(dB.catMap))));
+  if(yoyCChart)yoyCChart.destroy();
+  if(allCats.length){
+    yoyCChart=new Chart(document.getElementById('yoy-cat-chart').getContext('2d'),{
+      type:'bar',
+      data:{
+        labels:allCats,
+        datasets:[
+          {label:(yearA+543)+'',data:allCats.map(function(c){return dA.catMap[c]||0;}),backgroundColor:'rgba(139,48,32,0.80)',borderRadius:4},
+          {label:(yearB+543)+'',data:allCats.map(function(c){return dB.catMap[c]||0;}),backgroundColor:'rgba(200,118,41,0.70)',borderRadius:4}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:true,
+        plugins:{legend:{labels:{font:{family:'Sarabun',size:11},boxWidth:12,padding:8}}},
+        scales:{x:{grid:{display:false},ticks:{font:{family:'Sarabun',size:10}}},y:{grid:{color:'#C8C0B0'},ticks:{callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}}}}
+      }
+    });
+  }
+
+  var rows='<div class="yoy-table-header">'
+    +'<div class="yoy-col-label">เดือน</div>'
+    +'<div class="yoy-col-inc" style="font-size:10px;">รายรับ '+(yearA+543)+'</div>'
+    +'<div class="yoy-col-inc" style="font-size:10px;opacity:0.7;">รายรับ '+(yearB+543)+'</div>'
+    +'<div class="yoy-col-exp" style="font-size:10px;">Δ รายรับ</div>'
+    +'</div>';
+
+  MONTHS_SHORT.forEach(function(mn,i){
+    var mA=dA.monthly[i],mB=dB.monthly[i];
+    var bg=i%2===0?'#FDFAF6':'#F5EFE6';
+    var delta=mA.inc-mB.inc;
+    var deltaClr=delta>=0?'#4A5E38':'#7A3020';
+    rows+='<div class="yoy-table-row" style="background:'+bg+';">'
+      +'<div style="font-size:12px;font-family:Sarabun,sans-serif;color:#2A1A0E;font-weight:500;">'+mn+'</div>'
+      +'<div style="font-size:12px;font-family:Mitr,sans-serif;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;text-align:right;">'+(mA.inc?fmt(mA.inc):'—')+'</div>'
+      +'<div style="font-size:12px;font-family:Mitr,sans-serif;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;text-align:right;opacity:0.6;">'+(mB.inc?fmt(mB.inc):'—')+'</div>'
+      +'<div style="font-size:12px;font-family:Mitr,sans-serif;color:'+deltaClr+'!important;-webkit-text-fill-color:'+deltaClr+'!important;text-align:right;">'+(mA.inc||mB.inc?(delta>=0?'+':'')+fmt(delta):'—')+'</div>'
+      +'</div>';
   });
 
-  var rows = '<div class="yoy-table-header">'
-    + '<div class="yoy-col-label">เดือน</div>'
-    + '<div class="yoy-col-inc" style="font-size:10px;">รายรับ ' + (yearA + 543) + '</div>'
-    + '<div class="yoy-col-inc" style="font-size:10px;opacity:0.7;">รายรับ ' + (yearB + 543) + '</div>'
-    + '<div class="yoy-col-exp" style="font-size:10px;">\u0394 รายรับ</div>'
-    + '</div>';
+  var totalDelta=dA.totalInc-dB.totalInc;
+  var totalDeltaClr=totalDelta>=0?'#4A5E38':'#7A3020';
+  rows+='<div class="yoy-table-footer">'
+    +'<div class="yoy-col-label">รวม</div>'
+    +'<div class="yoy-col-inc">'+fmt(dA.totalInc)+'</div>'
+    +'<div class="yoy-col-inc" style="opacity:0.7;">'+fmt(dB.totalInc)+'</div>'
+    +'<div style="font-size:12px;font-family:Mitr,sans-serif;font-weight:600;color:'+totalDeltaClr+'!important;-webkit-text-fill-color:'+totalDeltaClr+'!important;text-align:right;">'+(totalDelta>=0?'+':'')+fmt(totalDelta)+'</div>'
+    +'</div>';
 
-  MONTHS_SHORT.forEach(function (mn, i) {
-    var mA = dA.monthly[i], mB = dB.monthly[i];
-    var bg = i % 2 === 0 ? '#FDFAF6' : '#F5EFE6';
-    var delta = mA.inc - mB.inc;
-    var deltaClr = delta >= 0 ? '#4A5E38' : '#7A3020';
-    rows += '<div class="yoy-table-row" style="background:' + bg + ';">'
-      + '<div style="font-size:12px;font-family:Sarabun,sans-serif;color:#2A1A0E;font-weight:500;">' + mn + '</div>'
-      + '<div style="font-size:12px;font-family:Mitr,sans-serif;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;text-align:right;">' + (mA.inc ? fmt(mA.inc) : '\u2014') + '</div>'
-      + '<div style="font-size:12px;font-family:Mitr,sans-serif;color:#4A5E38!important;-webkit-text-fill-color:#4A5E38!important;text-align:right;opacity:0.6;">' + (mB.inc ? fmt(mB.inc) : '\u2014') + '</div>'
-      + '<div style="font-size:12px;font-family:Mitr,sans-serif;color:' + deltaClr + '!important;-webkit-text-fill-color:' + deltaClr + '!important;text-align:right;">' + (mA.inc || mB.inc ? (delta >= 0 ? '+' : '') + fmt(delta) : '\u2014') + '</div>'
-      + '</div>';
-  });
-
-  var totalDelta = dA.totalInc - dB.totalInc;
-  var totalDeltaClr = totalDelta >= 0 ? '#4A5E38' : '#7A3020';
-  rows += '<div class="yoy-table-footer">'
-    + '<div class="yoy-col-label">รวม</div>'
-    + '<div class="yoy-col-inc">' + fmt(dA.totalInc) + '</div>'
-    + '<div class="yoy-col-inc" style="opacity:0.7;">' + fmt(dB.totalInc) + '</div>'
-    + '<div style="font-size:12px;font-family:Mitr,sans-serif;font-weight:600;color:' + totalDeltaClr + '!important;-webkit-text-fill-color:' + totalDeltaClr + '!important;text-align:right;">' + (totalDelta >= 0 ? '+' : '') + fmt(totalDelta) + '</div>'
-    + '</div>';
-
-  document.getElementById('yoy-table').innerHTML = rows;
+  document.getElementById('yoy-table').innerHTML=rows;
 }
 
-init();
+window.addEventListener('load',function(){
+  document.querySelectorAll('.modal-overlay').forEach(function(el){
+    el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
+  });
+  init();
+});
+</script>
 
-  </script>
 </body>
 </html>
