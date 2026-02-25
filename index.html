@@ -1403,10 +1403,6 @@ textarea {
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  /* รองรับ browser toolbar บน iOS Safari */
-  height: 100vh;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
   background: rgba(0,0,0,0.45);
   z-index: 9000;
   display: none;
@@ -1414,7 +1410,6 @@ textarea {
   justify-content: flex-end;
   align-items: center;
   pointer-events: none;
-  -webkit-overflow-scrolling: touch;
 }
 .modal-overlay.open {
   display: flex;
@@ -1441,18 +1436,15 @@ textarea {
   background: #F5EFE6;
   border-radius: 28px 28px 0 0;
   width: 100%;
-  /* 92% ของ dynamic viewport เพื่อไม่ให้ toolbar บัง */
-  height: 92vh;
-  height: 92dvh;
+  /* ใช้ calc(var(--real-vh)*92) จาก JS เพื่อรองรับ browser toolbar */
+  height: calc(var(--real-vh, 1vh) * 92);
+  max-height: calc(var(--real-vh, 1vh) * 92);
   display: flex;
   flex-direction: column;
   animation: slideUp 0.25s ease;
   box-shadow: 0 -4px 32px rgba(61,35,20,0.18);
   overflow: hidden;
   flex-shrink: 0;
-  margin-bottom: 0;
-  /* ชิดขอบล่างสุดของ overlay */
-  align-self: flex-end;
 }
 .modal-full-body {
   flex: 1;
@@ -1524,8 +1516,6 @@ textarea {
     <div class="alert-list" id="alert-list"><div class="no-item">ไม่มีรายการแจ้งเตือน</div></div>
   </div>
 
-  <!-- MODAL: ดูรายการ -->
-
   <div class="modal-overlay" id="modal-view-acc">
     <div class="modal-full-sheet">
       <div id="view-acc-hdr" style="background:#9C4722;border-radius:28px 28px 0 0;padding:16px 24px;flex-shrink:0;">
@@ -1559,8 +1549,6 @@ textarea {
     </div>
   </div>
 
-  <!-- MODAL: เพิ่มรายการ -->
-
   <div class="modal-overlay" id="modal-add">
     <div class="modal-full-sheet">
       <div id="modal-add-hdr" style="background:#4A7A3A;border-radius:28px 28px 0 0;padding:16px 24px;flex-shrink:0;">
@@ -1576,14 +1564,13 @@ textarea {
       <div class="modal-full-body">
 
 ```
-    <!-- FORM: ครัวเรือน (ไม่มี qty/unit) -->
     <div id="form-home-fields">
       <div class="form-group"><label class="form-label">หมวดหมู่</label><select class="form-control" id="input-category"><option value="">เลือกหมวดหมู่</option></select></div>
       <div class="form-group"><label class="form-label">รายการ / คำอธิบาย</label><input type="text" class="form-control" id="input-desc" placeholder="เช่น ค่าไฟ, ค่าอาหาร"></div>
       <div class="form-group"><label class="form-label">จำนวนเงิน (บาท)</label><input type="number" class="form-control" id="input-amount" placeholder="0.00" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;"></div>
     </div>
 
-    <!-- FORM: เกษตร รายรับ (หมวดหมู่ 2 ชั้น + qty + unit) -->
+    
     <div id="form-farm-fields" style="display:none;">
       <div class="form-group">
         <label class="form-label">หมวดหมู่หลัก</label>
@@ -1597,7 +1584,7 @@ textarea {
           <option value="">เลือกหมวดย่อย</option>
         </select>
       </div>
-      <!-- qty/unit/price — ซ่อนเมื่อเลือกหมวดที่ไม่ใช่ขายพืชผล -->
+      
       <div id="farm-income-qty-block" style="display:none;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
           <div class="form-group"><label class="form-label">จำนวน / ปริมาณ</label><input type="number" class="form-control" id="input-qty" placeholder="0" inputmode="decimal" oninput="calcAmount()"></div>
@@ -1612,7 +1599,7 @@ textarea {
       </div>
     </div>
 
-    <!-- FORM: เกษตร รายจ่าย -->
+    
     <div id="form-farm-expense-fields" style="display:none;">
       <div class="form-group">
         <label class="form-label">หมวดหมู่</label>
@@ -1637,7 +1624,7 @@ textarea {
       </div>
     </div>
 
-    <!-- SHARED -->
+    
     <div class="form-group"><label class="form-label">วันที่</label><input type="date" class="form-control" id="input-date"></div>
     <div class="form-group"><label class="form-label">หมายเหตุ</label><input type="text" class="form-control" id="input-note" placeholder="ไม่บังคับ"></div>
     <button class="btn-primary" id="save-trans-btn" onclick="saveTransaction()">บันทึกรายการ</button>
@@ -1646,8 +1633,6 @@ textarea {
 ```
 
   </div>
-
-  <!-- MODAL: ตั้งค่า -->
 
   <div class="modal-overlay" id="modal-settings">
     <div class="modal-sheet">
@@ -1661,8 +1646,6 @@ textarea {
     </div>
   </div>
 
-  <!-- MODAL: แก้ไขรายการ -->
-
   <div class="modal-overlay" id="modal-edit">
     <div class="modal-sheet" style="max-height:92vh;">
       <div id="modal-edit-hdr" style="background:#6C3212;border-radius:16px;padding:14px 16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
@@ -1671,13 +1654,12 @@ textarea {
       </div>
 
 ```
-  <!-- รายรับ/รายจ่าย toggle (home only) -->
   <div id="edit-type-row" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;">
     <button id="edit-btn-income" onclick="editSetType('income')" style="padding:10px;border-radius:10px;border:1.5px solid #6C3212;background:#6C3212;font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">รายรับ ✓</button>
     <button id="edit-btn-expense" onclick="editSetType('expense')" style="padding:10px;border-radius:10px;border:1.5px solid #E0D5C4;background:#FDFAF6;font-family:Sarabun,sans-serif;font-size:14px;cursor:pointer;color:#6A5848!important;-webkit-text-fill-color:#6A5848!important;">รายจ่าย</button>
   </div>
 
-  <!-- farm income: หมวดหมู่ 2 ชั้น -->
+  
   <div id="edit-farm-income-cats" style="display:none;">
     <div class="form-group">
       <label class="form-label">หมวดหมู่หลัก</label>
@@ -1698,13 +1680,13 @@ textarea {
     </div>
   </div>
 
-  <!-- home/farm expense: หมวดหมู่ธรรมดา -->
+  
   <div id="edit-simple-cat" style="display:none;">
     <div class="form-group">
       <label class="form-label">หมวดหมู่</label>
       <select class="form-control" id="edit-category-simple" onchange="editFarmExpChange(this.value)"></select>
     </div>
-    <!-- farm expense qty block -->
+    
     <div id="edit-farm-exp-qty-block" style="display:none;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div class="form-group"><label class="form-label">จำนวน / ปริมาณ</label><input type="number" class="form-control" id="edit-exp-qty" placeholder="0" inputmode="decimal" oninput="editCalcExpAmount()"></div>
@@ -1719,12 +1701,12 @@ textarea {
     </div>
   </div>
 
-  <!-- home: คำอธิบาย -->
+  
   <div id="edit-desc-wrap" style="display:none;">
     <div class="form-group"><label class="form-label">รายการ / คำอธิบาย</label><input type="text" class="form-control" id="edit-desc" placeholder="เช่น ค่าไฟ, ค่าอาหาร"></div>
   </div>
 
-  <!-- ยอดรวม (home & farm income) -->
+  
   <div id="edit-amount-wrap">
     <div class="form-group">
       <label class="form-label">จำนวนเงิน (บาท)</label>
@@ -2352,11 +2334,13 @@ function deleteTransaction(){
 // Fix viewport height สำหรับ mobile browser toolbar
 function setVH(){
   var vh=window.innerHeight*0.01;
-  document.documentElement.style.setProperty('--vh',''+vh+'px');
+  document.documentElement.style.setProperty('--real-vh',''+vh+'px');
 }
 setVH();
 window.addEventListener('resize',setVH);
-window.addEventListener('orientationchange',function(){setTimeout(setVH,200);});
+window.addEventListener('orientationchange',function(){setTimeout(setVH,300);});
+// อัปเดตเมื่อ scroll (Safari toolbar hide/show)
+window.addEventListener('scroll',setVH,{passive:true});
 
 window.addEventListener('load',function(){
   document.querySelectorAll('.modal-overlay').forEach(function(el){el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});});
