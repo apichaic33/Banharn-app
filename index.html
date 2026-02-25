@@ -49,7 +49,7 @@
       --gold: var(--accent);
     }
 
-
+```
 * {
   box-sizing: border-box;
   margin: 0;
@@ -1628,8 +1628,8 @@ textarea {
           <button onclick="closeModal('modal-add')" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.22);border:none;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <button id="btn-income" onclick="setType('income')" style="background:rgba(255,255,255,0.25);border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;">รายรับ ✓</button>
-          <button id="btn-expense" onclick="setType('expense')" style="background:rgba(0,0,0,0.12);border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:rgba(250,240,230,0.50)!important;-webkit-text-fill-color:rgba(250,240,230,0.50)!important;">รายจ่าย</button>
+          <button id="btn-income" onclick="setType('income')" style="background:rgba(255,255,255,0.25);border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:#FAF0E6;-webkit-text-fill-color:#FAF0E6;">รายรับ ✓</button>
+          <button id="btn-expense" onclick="setType('expense')" style="background:rgba(0,0,0,0.12);border-radius:10px;border:none;padding:10px 8px;font-family:Sarabun,sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:rgba(250,240,230,0.50);-webkit-text-fill-color:rgba(250,240,230,0.50);">รายจ่าย</button>
         </div>
       </div>
       <!-- body -->
@@ -1876,6 +1876,7 @@ textarea {
 </div>
 
 <!-- ไม่มี FAB -->
+```
 
   </div>
 
@@ -2342,19 +2343,7 @@ textarea {
     // ============================================================
     // QUICK ADD (กดการ์ดบัญชีหน้าหลัก)
     // ============================================================
-    function openQuickAdd(acc) {
-      STATE.currentAccount = acc;
-      var cats = CATEGORIES[acc][STATE.transType];
-      document.getElementById('input-category').innerHTML = '<option value="">เลือกหมวดหมู่</option>' + cats.map(function (c) { return '<option>' + c + '</option>'; }).join('');
-      document.getElementById('input-date').value = todayStr();
-      var saveBtn = document.getElementById('save-trans-btn');
-      saveBtn.className = 'btn-primary' + (acc === 'farm' ? ' farm' : '');
-      document.querySelector('#modal-add .modal-title').textContent = acc === 'home' ? 'เพิ่มรายการ — ครัวเรือน' : 'เพิ่มรายการ — เกษตร';
-      STATE.transType = 'income';
-      document.getElementById('btn-income').className = 'type-btn active-income';
-      document.getElementById('btn-expense').className = 'type-btn';
-      openModal('modal-add');
-    }
+
 
     function viewAccount_link(acc, e) { viewAccount(acc, e); }
 
@@ -2379,21 +2368,33 @@ textarea {
       var title = document.getElementById('modal-add-title');
       var bi = document.getElementById('btn-income');
       var be = document.getElementById('btn-expense');
-      if (hdr) hdr.style.background = type === 'income' ? TYPE_COLOR.income : TYPE_COLOR.expense;
+      var isIncome = type === 'income';
+
+      if (hdr) hdr.style.background = isIncome ? TYPE_COLOR.income : TYPE_COLOR.expense;
       if (title) title.textContent = acc === 'home' ? 'ครัวเรือน' : 'การเกษตร';
+
+      // ใช้ setAttribute เพื่อ override inline style ได้แน่นอน
       if (bi) {
-        bi.textContent = type === 'income' ? 'รายรับ ✓' : 'รายรับ';
-        bi.style.background = type === 'income' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.12)';
-        bi.style.color = type === 'income' ? '#FAF0E6' : 'rgba(250,240,230,0.50)';
-        bi.style.webkitTextFillColor = bi.style.color;
-        bi.style.fontWeight = type === 'income' ? '600' : '400';
+        bi.textContent = isIncome ? 'รายรับ ✓' : 'รายรับ';
+        bi.setAttribute('style',
+          'background:' + (isIncome ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.12)') + ';' +
+          'border-radius:10px;border:none;padding:10px 8px;' +
+          'font-family:Sarabun,sans-serif;font-size:14px;cursor:pointer;' +
+          'font-weight:' + (isIncome ? '600' : '400') + ';' +
+          'color:' + (isIncome ? '#FAF0E6' : 'rgba(250,240,230,0.50)') + ';' +
+          '-webkit-text-fill-color:' + (isIncome ? '#FAF0E6' : 'rgba(250,240,230,0.50)') + ';'
+        );
       }
       if (be) {
-        be.textContent = type === 'expense' ? 'รายจ่าย ✓' : 'รายจ่าย';
-        be.style.background = type === 'expense' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.12)';
-        be.style.color = type === 'expense' ? '#FAF0E6' : 'rgba(250,240,230,0.50)';
-        be.style.webkitTextFillColor = be.style.color;
-        be.style.fontWeight = type === 'expense' ? '600' : '400';
+        be.textContent = !isIncome ? 'รายจ่าย ✓' : 'รายจ่าย';
+        be.setAttribute('style',
+          'background:' + (!isIncome ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.12)') + ';' +
+          'border-radius:10px;border:none;padding:10px 8px;' +
+          'font-family:Sarabun,sans-serif;font-size:14px;cursor:pointer;' +
+          'font-weight:' + (!isIncome ? '600' : '400') + ';' +
+          'color:' + (!isIncome ? '#FAF0E6' : 'rgba(250,240,230,0.50)') + ';' +
+          '-webkit-text-fill-color:' + (!isIncome ? '#FAF0E6' : 'rgba(250,240,230,0.50)') + ';'
+        );
       }
       var saveBtn = document.getElementById('save-trans-btn');
       if (saveBtn) saveBtn.className = 'btn-primary' + (acc === 'farm' ? ' farm' : '');
@@ -2463,15 +2464,8 @@ textarea {
     });
 
     // ============================================================
-    // TYPE TOGGLE
+    // TYPE TOGGLE — handled by setType() defined above
     // ============================================================
-    function setType(type) {
-      STATE.transType = type;
-      var cats = CATEGORIES[STATE.currentAccount][type];
-      document.getElementById('input-category').innerHTML = '<option value="">เลือกหมวดหมู่</option>' + cats.map(function (c) { return '<option>' + c + '</option>'; }).join('');
-      document.getElementById('btn-income').className = type === 'income' ? 'type-btn active-income' : 'type-btn';
-      document.getElementById('btn-expense').className = type === 'expense' ? 'type-btn active-expense' : 'type-btn';
-    }
 
     // ============================================================
     // SAVE TRANSACTION
