@@ -2,341 +2,313 @@
 
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>จัดการ — บัญชีครัวเรือน &amp; เกษตร</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #6C3212; --primary2: #9C4722; --accent: #C87629;
-      --income: #4A7A3A; --expense: #8B3020;
-      --bg: #F5EFE6; --surface: #FDFAF6; --surface2: #F0E8DB;
-      --border: #E0D5C4; --text: #2A1A0E; --text-sub: #8A7060;
-      --shadow-sm: 0 1px 6px rgba(61,35,20,0.10);
-      --shadow: 0 4px 20px rgba(61,35,20,0.13);
-      --r: 16px;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body { background: #F5EFE6 !important; }
-    body { font-family: 'Sarabun', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; max-width: 480px; margin: 0 auto; }
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>จัดการ — บัญชีครัวเรือน &amp; เกษตร</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:#6C3212;--accent:#C87629;--bg:#F5EFE6;--surface:#FDFAF6;
+  --border:#E0D5C4;--text:#2A1A0E;--text-sub:#8A7060;
+  --shadow-sm:0 1px 6px rgba(61,35,20,0.10);--shadow:0 4px 20px rgba(61,35,20,0.13);--r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{background:#F5EFE6!important;}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;max-width:480px;margin:0 auto;}
 
-```
 /* HEADER */
-.app-header { background: #6C3212; color: #FAF0E6; padding: 18px 20px 20px; position: sticky; top: 0; z-index: 100; border-radius: 0 0 28px 28px; box-shadow: 0 6px 24px rgba(61,35,20,0.22); }
-.header-row { display: flex; justify-content: space-between; align-items: center; }
-.app-title { font-family: 'Mitr', sans-serif; font-size: 17px; font-weight: 600; color: #FAF0E6; }
-
-/* MAIN */
-.main-content { padding: 16px 15px 100px; }
-
-/* SEC LABEL */
-.sec-label { font-family: 'Mitr', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: #8A7A68; margin: 18px 0 8px; display: flex; justify-content: space-between; align-items: center; }
-
-/* TAB BAR — inside header */
-.tab-bar { display: flex; background: rgba(0,0,0,0.20); border-radius: 24px; padding: 4px; gap: 4px; border: 1px solid rgba(255,255,255,0.12); }
-.tab-btn { flex: 1; padding: 9px 4px; border: none; background: none; border-radius: 20px; font-family: 'Sarabun', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; color: rgba(250,240,230,0.65) !important; -webkit-text-fill-color: rgba(250,240,230,0.65) !important; transition: all 0.18s; }
-.tab-btn.active { background: rgba(255,255,255,0.18); color: #FAF0E6 !important; -webkit-text-fill-color: #FAF0E6 !important; font-weight: 600; }
+.app-header{background:#6C3212;color:#FAF0E6;padding:18px 20px 20px;position:sticky;top:0;z-index:100;border-radius:0 0 28px 28px;box-shadow:0 6px 24px rgba(61,35,20,0.22);}
+.header-row{display:flex;justify-content:space-between;align-items:center;}
+.app-title{font-family:‘Mitr’,sans-serif;font-size:17px;font-weight:600;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;}
 
 /* ACC TOGGLE — inside header */
-.acc-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.acc-toggle-btn { padding: 10px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.10); font-family: 'Sarabun', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; color: rgba(250,240,230,0.6) !important; -webkit-text-fill-color: rgba(250,240,230,0.6) !important; transition: all 0.18s; }
-.acc-toggle-btn.active.home { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); color: #FAF0E6 !important; -webkit-text-fill-color: #FAF0E6 !important; font-weight: 600; }
-.acc-toggle-btn.active.farm { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); color: #FAF0E6 !important; -webkit-text-fill-color: #FAF0E6 !important; font-weight: 600; }
+.acc-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;}
+.acc-toggle-btn{padding:10px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.22);background:rgba(255,255,255,0.10);font-family:‘Sarabun’,sans-serif;font-size:14px;font-weight:500;cursor:pointer;color:rgba(250,240,230,0.6)!important;-webkit-text-fill-color:rgba(250,240,230,0.6)!important;transition:all 0.18s;}
+.acc-toggle-btn.active{background:rgba(255,255,255,0.22);border-color:rgba(255,255,255,0.5);color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-weight:600;}
 
-/* BUDGET */
-.budget-card { background: var(--surface); border-radius: var(--r); padding: 15px; margin-bottom: 10px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.12s; }
-.budget-card:active { transform: scale(0.98); }
-.budget-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.budget-name { font-size: 14px; font-weight: 600; color: #1A1208 !important; -webkit-text-fill-color: #1A1208 !important; }
-.budget-amounts { font-family: 'Mitr', sans-serif; font-size: 12px; color: #8A7060 !important; -webkit-text-fill-color: #8A7060 !important; }
-.budget-bar { height: 8px; background: #E8DDD0; border-radius: 4px; overflow: hidden; margin-bottom: 6px; }
-.budget-fill { height: 100%; border-radius: 3px; background: #6C3212; transition: width 0.5s ease; }
-.budget-fill.warn { background: #C87629; }
-.budget-fill.over { background: #7A3020; }
-.budget-foot { display: flex; justify-content: space-between; align-items: center; }
-.budget-pct { font-size: 11px; color: #8A7A68 !important; -webkit-text-fill-color: #8A7A68 !important; }
+/* TAB BAR — inside header */
+.tab-bar{display:flex;background:rgba(0,0,0,0.20);border-radius:24px;padding:4px;gap:4px;border:1px solid rgba(255,255,255,0.12);margin-top:10px;}
+.tab-btn{flex:1;padding:9px 4px;border:none;background:none;border-radius:20px;font-family:‘Sarabun’,sans-serif;font-size:13px;font-weight:500;cursor:pointer;color:rgba(250,240,230,0.65)!important;-webkit-text-fill-color:rgba(250,240,230,0.65)!important;transition:all 0.18s;}
+.tab-btn.active{background:rgba(255,255,255,0.18);color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-weight:600;}
 
-/* DEBT CARD */
-.debt-card { background: var(--surface); border-radius: var(--r); padding: 15px 16px; margin-bottom: 10px; border: 1px solid var(--border); border-left: 4px solid #9C4722; box-shadow: var(--shadow-sm); }
-.debt-card.farm-debt { border-left-color: #C87629; }
-.debt-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-.debt-name { font-size: 14px; font-weight: 600; color: #1A1208 !important; -webkit-text-fill-color: #1A1208 !important; }
-.debt-badge { font-size: 10px; padding: 2px 8px; border-radius: 8px; white-space: nowrap; }
-.debt-badge.home { background: #F0E4D8; color: #7A3020 !important; -webkit-text-fill-color: #7A3020 !important; }
-.debt-badge.farm { background: #E8F0D8; color: #3A6020 !important; -webkit-text-fill-color: #3A6020 !important; }
-.debt-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-.debt-stat { text-align: center; background: #F5EFE6; border-radius: 8px; padding: 7px 4px; }
-.debt-stat-label { font-size: 10px; color: #8A7A68 !important; -webkit-text-fill-color: #8A7A68 !important; margin-bottom: 2px; }
-.debt-stat-value { font-family: 'Mitr', sans-serif; font-size: 13px; font-weight: 600; color: #2A1A0E !important; -webkit-text-fill-color: #2A1A0E !important; }
-.debt-stat-value.red { color: #8B3020 !important; -webkit-text-fill-color: #8B3020 !important; }
-.debt-stat-value.green { color: #4A7A3A !important; -webkit-text-fill-color: #4A7A3A !important; }
-.debt-progress-wrap { margin-bottom: 8px; }
-.debt-progress-labels { display: flex; justify-content: space-between; font-size: 10px; color: #8A7A68; margin-bottom: 3px; }
-.debt-progress-bar { height: 6px; background: #E8E0D4; border-radius: 3px; overflow: hidden; }
-.debt-progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg,#4A7A3A,#7AC06A); transition: width 0.4s; }
-.debt-due { font-size: 11px; margin-top: 4px; }
-.debt-due.ok { color: #8A7A68 !important; -webkit-text-fill-color: #8A7A68 !important; }
-.debt-due.soon { color: #C87629 !important; -webkit-text-fill-color: #C87629 !important; }
-.debt-due.overdue { color: #C84030 !important; -webkit-text-fill-color: #C84030 !important; }
+/* MAIN */
+.main-content{padding:16px 15px 100px;}
 
-/* INFO BOX for debt payment hint */
-.debt-pay-hint { display: flex; align-items: center; gap: 8px; background: #EDE7DB; border: 1px solid #C8B898; border-radius: 10px; padding: 10px 12px; margin-top: 8px; font-size: 12px; color: #6A5848 !important; -webkit-text-fill-color: #6A5848 !important; }
-.debt-pay-hint svg { width: 14px; height: 14px; flex-shrink: 0; stroke: #9C4722; }
+/* CARDS */
+.budget-card{background:var(–surface);border-radius:var(–r);padding:15px;margin-bottom:10px;border:1px solid var(–border);box-shadow:var(–shadow-sm);cursor:pointer;transition:transform 0.12s;}
+.budget-card:active{transform:scale(0.98);}
+.budget-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.budget-name{font-size:14px;font-weight:600;color:#1A1208!important;-webkit-text-fill-color:#1A1208!important;}
+.budget-amounts{font-family:‘Mitr’,sans-serif;font-size:12px;color:#8A7060!important;-webkit-text-fill-color:#8A7060!important;}
+.budget-bar{height:8px;background:#E8DDD0;border-radius:4px;overflow:hidden;margin-bottom:6px;}
+.budget-fill{height:100%;border-radius:3px;background:#6C3212;transition:width 0.5s ease;}
+.budget-fill.warn{background:#C87629;}
+.budget-fill.over{background:#7A3020;}
+.budget-foot{display:flex;justify-content:space-between;align-items:center;}
+.budget-pct{font-size:11px;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;}
+
+.debt-card{background:var(–surface);border-radius:var(–r);padding:15px 16px;margin-bottom:10px;border:1px solid var(–border);border-left:4px solid #9C4722;box-shadow:var(–shadow-sm);cursor:pointer;}
+.debt-card.farm-debt{border-left-color:#C87629;}
+.debt-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.debt-name{font-size:14px;font-weight:600;color:#1A1208!important;-webkit-text-fill-color:#1A1208!important;}
+.debt-badge{font-size:10px;padding:2px 8px;border-radius:8px;white-space:nowrap;}
+.debt-badge.home{background:#F0E4D8;color:#7A3020!important;-webkit-text-fill-color:#7A3020!important;}
+.debt-badge.farm{background:#E8F0D8;color:#3A6020!important;-webkit-text-fill-color:#3A6020!important;}
+.debt-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;}
+.debt-stat{text-align:center;background:#F5EFE6;border-radius:8px;padding:7px 4px;}
+.debt-stat-label{font-size:10px;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;margin-bottom:2px;}
+.debt-stat-value{font-family:‘Mitr’,sans-serif;font-size:13px;font-weight:600;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;}
+.debt-stat-value.red{color:#8B3020!important;-webkit-text-fill-color:#8B3020!important;}
+.debt-progress-wrap{margin-bottom:8px;}
+.debt-progress-labels{display:flex;justify-content:space-between;font-size:10px;color:#8A7A68;margin-bottom:3px;}
+.debt-progress-bar{height:6px;background:#E8E0D4;border-radius:3px;overflow:hidden;}
+.debt-progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#4A7A3A,#7AC06A);transition:width 0.4s;}
+.debt-due{font-size:11px;margin-top:4px;}
+.debt-due.ok{color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;}
+.debt-due.soon{color:#C87629!important;-webkit-text-fill-color:#C87629!important;}
+.debt-due.overdue{color:#C84030!important;-webkit-text-fill-color:#C84030!important;}
 
 /* BOTTOM NAV */
-.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: #FDFAF6; border-top: 1px solid #E0D5C4; display: flex; z-index: 200; box-shadow: 0 -4px 24px rgba(61,35,20,0.12); padding-bottom: env(safe-area-inset-bottom, 0px); }
-.nav-btn { flex: 1; padding: 10px 4px 14px; border: none; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; color: #8A7A68 !important; -webkit-text-fill-color: #8A7A68 !important; transition: color 0.2s; font-family: 'Sarabun', sans-serif; -webkit-appearance: none; outline: none; }
-.nav-btn.active { color: #6C3212 !important; -webkit-text-fill-color: #6C3212 !important; }
-.nav-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
-.nav-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.nav-label { font-size: 10px; font-weight: 500; }
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#FDFAF6;border-top:1px solid #E0D5C4;display:flex;z-index:200;box-shadow:0 -4px 24px rgba(61,35,20,0.12);padding-bottom:env(safe-area-inset-bottom,0px);}
+.nav-btn{flex:1;padding:10px 4px 14px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;font-family:‘Sarabun’,sans-serif;}
+.nav-btn.active{color:#6C3212!important;-webkit-text-fill-color:#6C3212!important;}
+.nav-icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center;}
+.nav-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.nav-label{font-size:10px;font-weight:500;}
 
 /* MODAL */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 9000; display: none; flex-direction: column; justify-content: flex-end; align-items: center; pointer-events: none; }
-.modal-overlay.open { display: flex; pointer-events: all; }
-.modal-sheet { background: #EDE7DB; border-radius: 28px 28px 0 0; width: 100%; max-width: 480px; max-height: 90vh; padding: 20px 24px; padding-bottom: max(52px, calc(32px + env(safe-area-inset-bottom, 0px))); overflow-y: auto; overflow-x: hidden; animation: slideUp 0.25s ease; box-shadow: 0 -4px 32px rgba(61,35,20,0.18); box-sizing: border-box; flex-shrink: 0; }
-@keyframes slideUp { from { transform: translateY(100%); opacity: 0.5; } to { transform: translateY(0); opacity: 1; } }
-.modal-handle { width: 36px; height: 3px; background: var(--border); border-radius: 2px; margin: 0 auto 14px; }
-.modal-title { font-family: 'Mitr', sans-serif; font-size: 17px; font-weight: 600; margin-bottom: 18px; text-align: center; color: var(--text); }
-.form-group { margin-bottom: 16px; }
-.form-label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.4px; color: #6A5848 !important; -webkit-text-fill-color: #6A5848 !important; margin-bottom: 6px; text-transform: uppercase; }
-.form-control { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 12px; font-family: 'Sarabun', sans-serif; font-size: 16px; color: var(--text) !important; -webkit-text-fill-color: var(--text) !important; background: #F8F4EE; outline: none; -webkit-appearance: none; box-sizing: border-box; display: block; }
-.form-control:focus { border-color: #6C3212; }
-.btn-primary { width: 100%; padding: 14px; border: none; border-radius: 14px; background: #6C3212; color: #FAF0E6 !important; -webkit-text-fill-color: #FAF0E6 !important; font-family: 'Mitr', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; transition: transform 0.15s; box-shadow: 0 4px 16px rgba(61,35,20,0.30); }
-.btn-primary:active { transform: scale(0.97); }
-.btn-ghost { width: 100%; padding: 12px; border: none; background: none; color: #6A5E4E !important; -webkit-text-fill-color: #6A5E4E !important; font-family: 'Sarabun', sans-serif; font-size: 14px; cursor: pointer; margin-top: 4px; }
-.btn-danger { width: 100%; padding: 13px; border-radius: 12px; border: 1.5px solid #C84030; background: none; font-family: 'Sarabun', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; color: #C84030 !important; -webkit-text-fill-color: #C84030 !important; margin-top: 8px; }
-.no-item { background: #E5DFD2; border-radius: var(--r); padding: 14px 16px; text-align: center; color: #8A7A68 !important; -webkit-text-fill-color: #8A7A68 !important; font-size: 13px; border: 1px solid var(--border); }
-.action-btn { font-size: 13px; font-weight: 500; color: #3D2314 !important; -webkit-text-fill-color: #3D2314 !important; background: #E8E3D8; border: 1px solid #D2C9B8; border-radius: 8px; padding: 5px 12px; cursor: pointer; font-family: 'Sarabun', sans-serif; }
-.info-box { background: #EDE7DB; border: 1.5px solid #B8A888; border-radius: 10px; padding: 12px 14px; font-size: 13px; line-height: 1.7; margin-bottom: 14px; color: #2C2010; }
-select option { background: #EDE7DB; color: #1A1208; }
-input, select, textarea { color: #1A1208 !important; -webkit-text-fill-color: #1A1208 !important; }
-::placeholder { color: #A89070 !important; }
-::-webkit-input-placeholder { color: #A89070 !important; -webkit-text-fill-color: #A89070 !important; }
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9000;display:none;flex-direction:column;justify-content:flex-end;align-items:center;pointer-events:none;}
+.modal-overlay.open{display:flex;pointer-events:all;}
+.modal-sheet{background:#EDE7DB;border-radius:28px 28px 0 0;width:100%;max-width:480px;max-height:90vh;padding:20px 24px;padding-bottom:max(52px,calc(32px + env(safe-area-inset-bottom,0px)));overflow-y:auto;animation:slideUp 0.25s ease;box-shadow:0 -4px 32px rgba(61,35,20,0.18);flex-shrink:0;}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0.5;}to{transform:translateY(0);opacity:1;}}
+.modal-handle{width:36px;height:3px;background:var(–border);border-radius:2px;margin:0 auto 14px;}
+.modal-title{font-family:‘Mitr’,sans-serif;font-size:17px;font-weight:600;margin-bottom:18px;text-align:center;color:var(–text);}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:12px;font-weight:600;letter-spacing:0.4px;color:#6A5848!important;-webkit-text-fill-color:#6A5848!important;margin-bottom:6px;text-transform:uppercase;}
+.form-control{width:100%;padding:14px 16px;border:1.5px solid var(–border);border-radius:12px;font-family:‘Sarabun’,sans-serif;font-size:16px;color:var(–text)!important;-webkit-text-fill-color:var(–text)!important;background:#F8F4EE;outline:none;-webkit-appearance:none;box-sizing:border-box;}
+.form-control:focus{border-color:#6C3212;}
+.btn-primary{width:100%;padding:14px;border:none;border-radius:14px;background:#6C3212;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-family:‘Mitr’,sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px;transition:transform 0.15s;box-shadow:0 4px 16px rgba(61,35,20,0.30);}
+.btn-primary:active{transform:scale(0.97);}
+.btn-ghost{width:100%;padding:12px;border:none;background:none;color:#6A5E4E!important;-webkit-text-fill-color:#6A5E4E!important;font-family:‘Sarabun’,sans-serif;font-size:14px;cursor:pointer;margin-top:4px;}
+.btn-danger{width:100%;padding:13px;border-radius:12px;border:1.5px solid #C84030;background:none;font-family:‘Sarabun’,sans-serif;font-size:15px;font-weight:600;cursor:pointer;color:#C84030!important;-webkit-text-fill-color:#C84030!important;margin-top:8px;}
+.no-item{background:#E5DFD2;border-radius:var(–r);padding:14px 16px;text-align:center;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;font-size:13px;border:1px solid var(–border);}
+.action-btn{font-size:13px;font-weight:500;color:#3D2314!important;-webkit-text-fill-color:#3D2314!important;background:#E8E3D8;border:1px solid #D2C9B8;border-radius:8px;padding:5px 12px;cursor:pointer;font-family:‘Sarabun’,sans-serif;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+select option{background:#EDE7DB;color:#1A1208;}
+input,select,textarea{color:#1A1208!important;-webkit-text-fill-color:#1A1208!important;}
+::placeholder{color:#A89070!important;}
+::-webkit-input-placeholder{color:#A89070!important;-webkit-text-fill-color:#A89070!important;}
+</style>
 
-/* GRID 2 col for financial institution */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-```
-
-  </style>
 </head>
 <body>
 
-  <div class="app-header">
-    <div class="header-row">
-      <div class="app-title">จัดการงบ &amp; สินเชื่อ</div>
-    </div>
-    <!-- Acc Toggle อยู่ใน header -->
-    <div class="acc-toggle" style="margin-top:14px;">
-      <button class="acc-toggle-btn active home" id="btoggle-home" onclick="setBudgetAcc('home')">ครัวเรือน</button>
-      <button class="acc-toggle-btn farm" id="btoggle-farm" onclick="setBudgetAcc('farm')">การเกษตร</button>
-    </div>
-    <!-- Tab Bar อยู่ใน header -->
-    <div class="tab-bar" style="margin-top:10px;margin-bottom:0;">
-      <button class="tab-btn active" id="tab-budget" onclick="switchTab('budget')">งบประมาณ</button>
-      <button class="tab-btn" id="tab-debt" onclick="switchTab('debt')">สินเชื่อ</button>
-    </div>
+<div class="app-header">
+  <div class="header-row">
+    <div class="app-title">จัดการงบ &amp; สินเชื่อ</div>
   </div>
-
-  <div class="main-content">
-
-```
-<!-- TAB: งบประมาณ -->
-<div id="panel-budget">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;margin-bottom:8px;">
-    <span id="budget-month-label" style="font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;color:#4A3020;"></span>
-    <button class="action-btn" onclick="openAddBudget()">+ เพิ่มงบ</button>
+  <div class="acc-toggle">
+    <button class="acc-toggle-btn active" id="btoggle-home" onclick="setBudgetAcc('home')">ครัวเรือน</button>
+    <button class="acc-toggle-btn" id="btoggle-farm" onclick="setBudgetAcc('farm')">การเกษตร</button>
   </div>
-  <div id="budget-list"></div>
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-budget" onclick="switchTab('budget')">งบประมาณ</button>
+    <button class="tab-btn" id="tab-debt" onclick="switchTab('debt')">สินเชื่อ</button>
+  </div>
 </div>
 
-<!-- TAB: สินเชื่อ -->
-<div id="panel-debt" style="display:none;">
-  <div id="debt-summary" style="background:#FFF8F4;border:1px solid #E8D8CC;border-radius:16px;padding:14px 16px;margin-bottom:14px;"></div>
-  <div class="sec-label">
-    <span>รายการสินเชื่อ</span>
-    <button class="action-btn" onclick="openAddDebt()">+ เพิ่ม</button>
+<div class="main-content">
+
+  <div id="panel-budget">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;margin-top:4px;">
+      <span id="budget-month-label" style="font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;color:#4A3020!important;-webkit-text-fill-color:#4A3020!important;"></span>
+      <button class="action-btn" onclick="openAddBudget()">+ เพิ่มงบ</button>
+    </div>
+    <div id="budget-list"></div>
   </div>
-  <div id="debt-list"></div>
+
+  <div id="panel-debt" style="display:none;">
+    <div id="debt-summary" style="background:#FFF8F4;border:1px solid #E8D8CC;border-radius:16px;padding:14px 16px;margin-bottom:14px;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span style="font-family:'Mitr',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.8px;text-transform:uppercase;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;">รายการสินเชื่อ</span>
+      <button class="action-btn" onclick="openAddDebt()">+ เพิ่ม</button>
+    </div>
+    <div id="debt-list"></div>
+  </div>
+
 </div>
-```
 
-  </div>
+<!-- MODAL: งบประมาณ -->
 
-  <!-- MODAL: เพิ่มงบประมาณ -->
-
-  <div class="modal-overlay" id="modal-budget">
-    <div class="modal-sheet">
-      <div class="modal-handle"></div>
-      <div class="modal-title" id="budget-modal-title">ตั้งงบประมาณ</div>
-      <div class="form-group">
-        <label class="form-label">หมวดหมู่รายจ่าย</label>
-        <select class="form-control" id="budget-category"></select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">วงเงินงบประมาณ (บาท/เดือน)</label>
-        <input type="number" class="form-control" id="budget-amount" placeholder="0.00" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;">
-      </div>
-      <div class="form-group">
-        <label class="form-label">เดือน</label>
-        <input type="month" class="form-control" id="budget-month">
-      </div>
-      <button class="btn-primary" onclick="saveBudget()">บันทึกงบประมาณ</button>
-      <button class="btn-ghost" onclick="closeModal('modal-budget')">ยกเลิก</button>
+<div class="modal-overlay" id="modal-budget">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="budget-modal-title">ตั้งงบประมาณ</div>
+    <div class="form-group">
+      <label class="form-label">หมวดหมู่รายจ่าย</label>
+      <select class="form-control" id="budget-category"></select>
     </div>
-  </div>
-
-  <!-- MODAL: เพิ่มสินเชื่อ -->
-
-  <div class="modal-overlay" id="modal-debt">
-    <div class="modal-sheet">
-      <div class="modal-handle"></div>
-      <div class="modal-title" id="debt-modal-title">เพิ่มสินเชื่อ</div>
-      <div class="form-group">
-        <label class="form-label">บัญชี</label>
-        <select class="form-control" id="debt-acc">
-          <option value="home">ครัวเรือน</option>
-          <option value="farm">การเกษตร</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">ชื่อสินเชื่อ / ชื่อเจ้าหนี้</label>
-        <input type="text" class="form-control" id="debt-name" placeholder="เช่น สินเชื่อบ้าน ธ.ก.ส.">
-      </div>
-      <div class="form-group">
-        <label class="form-label">ประเภทสินเชื่อ</label>
-        <select class="form-control" id="debt-type">
-          <optgroup label="ธนาคารรัฐ">
-            <option>ธ.ก.ส.</option><option>ออมสิน</option><option>ธนาคารอาคารสงเคราะห์ (ธอส.)</option><option>ธนาคารพัฒนาวิสาหกิจขนาดกลาง (SME Bank)</option>
-          </optgroup>
-          <optgroup label="ธนาคารพาณิชย์">
-            <option>กรุงเทพ (BBL)</option><option>กสิกรไทย (KBANK)</option><option>ไทยพาณิชย์ (SCB)</option><option>กรุงไทย (KTB)</option><option>กรุงศรีอยุธยา (BAY)</option><option>ทหารไทยธนชาต (TTB)</option><option>ยูโอบี (UOB)</option>
-          </optgroup>
-          <optgroup label="บัตรเครดิต / สินเชื่อส่วนบุคคล">
-            <option>บัตรเครดิต</option><option>สินเชื่อส่วนบุคคล</option><option>ผ่อนสินค้า</option>
-          </optgroup>
-          <optgroup label="การเงิน / ลีสซิ่ง">
-            <option>ลีสซิ่งรถยนต์</option><option>ลีสซิ่งรถไถ</option><option>ไฟแนนซ์อุปกรณ์</option>
-          </optgroup>
-          <optgroup label="นาโนไฟแนนซ์ / สินเชื่อชุมชน">
-            <option>นาโนไฟแนนซ์</option><option>กองทุนหมู่บ้าน</option><option>สหกรณ์</option>
-          </optgroup>
-          <optgroup label="อื่นๆ">
-            <option>กู้นอกระบบ</option><option>อื่นๆ</option>
-          </optgroup>
-        </select>
-      </div>
-      <div class="two-col">
-        <div class="form-group">
-          <label class="form-label">ยอดหนี้คงเหลือ (฿)</label>
-          <input type="number" class="form-control" id="debt-total" placeholder="0" inputmode="decimal">
-        </div>
-        <div class="form-group">
-          <label class="form-label">ยอดหนี้เดิม (฿)</label>
-          <input type="number" class="form-control" id="debt-original" placeholder="0" inputmode="decimal">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">ค่างวด / เดือน (฿)</label>
-        <input type="number" class="form-control" id="debt-installment" placeholder="0" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;">
-      </div>
-      <div class="form-group">
-        <label class="form-label">วันครบกำหนดงวดถัดไป</label>
-        <input type="date" class="form-control" id="debt-nextdue">
-      </div>
-      <div class="form-group">
-        <label class="form-label">หมายเหตุ</label>
-        <input type="text" class="form-control" id="debt-note" placeholder="ไม่บังคับ">
-      </div>
-      <button class="btn-primary" onclick="saveDebt()">บันทึกสินเชื่อ</button>
-      <button id="btn-delete-debt" class="btn-danger" style="display:none;" onclick="deleteDebt()">ลบรายการสินเชื่อนี้</button>
-      <button class="btn-ghost" onclick="closeModal('modal-debt')">ยกเลิก</button>
+    <div class="form-group">
+      <label class="form-label">วงเงินงบประมาณ (บาท/เดือน)</label>
+      <input type="number" class="form-control" id="budget-amount" placeholder="0.00" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;">
     </div>
+    <div class="form-group">
+      <label class="form-label">เดือน</label>
+      <input type="month" class="form-control" id="budget-month">
+    </div>
+    <button class="btn-primary" onclick="saveBudget()">บันทึกงบประมาณ</button>
+    <button class="btn-ghost" onclick="closeModal('modal-budget')">ยกเลิก</button>
   </div>
+</div>
 
-  <div class="bottom-nav">
-    <button class="nav-btn" onclick="location.href='index.html'"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="nav-label">หน้าหลัก</span></button>
-    <button class="nav-btn active" onclick="location.href='manage.html'"><div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><span class="nav-label">จัดการ</span></button>
-    <button class="nav-btn" onclick="location.href='report.html'"><div class="nav-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><span class="nav-label">รายงาน</span></button>
+<!-- MODAL: สินเชื่อ -->
+
+<div class="modal-overlay" id="modal-debt">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="debt-modal-title">เพิ่มสินเชื่อ</div>
+    <div class="form-group">
+      <label class="form-label">บัญชี</label>
+      <select class="form-control" id="debt-acc">
+        <option value="home">ครัวเรือน</option>
+        <option value="farm">การเกษตร</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">ชื่อสินเชื่อ / ชื่อเจ้าหนี้</label>
+      <input type="text" class="form-control" id="debt-name" placeholder="เช่น สินเชื่อบ้าน ธ.ก.ส.">
+    </div>
+    <div class="form-group">
+      <label class="form-label">ประเภทสินเชื่อ</label>
+      <select class="form-control" id="debt-type">
+        <optgroup label="ธนาคารรัฐ">
+          <option>ธ.ก.ส.</option><option>ออมสิน</option><option>ธนาคารอาคารสงเคราะห์ (ธอส.)</option><option>ธนาคารพัฒนาวิสาหกิจขนาดกลาง (SME Bank)</option>
+        </optgroup>
+        <optgroup label="ธนาคารพาณิชย์">
+          <option>กรุงเทพ (BBL)</option><option>กสิกรไทย (KBANK)</option><option>ไทยพาณิชย์ (SCB)</option><option>กรุงไทย (KTB)</option><option>กรุงศรีอยุธยา (BAY)</option><option>ทหารไทยธนชาต (TTB)</option><option>ยูโอบี (UOB)</option>
+        </optgroup>
+        <optgroup label="บัตรเครดิต / สินเชื่อส่วนบุคคล">
+          <option>บัตรเครดิต</option><option>สินเชื่อส่วนบุคคล</option><option>ผ่อนสินค้า</option>
+        </optgroup>
+        <optgroup label="ลีสซิ่ง / ไฟแนนซ์">
+          <option>ลีสซิ่งรถยนต์</option><option>ลีสซิ่งรถไถ</option><option>ไฟแนนซ์อุปกรณ์</option>
+        </optgroup>
+        <optgroup label="สินเชื่อชุมชน">
+          <option>นาโนไฟแนนซ์</option><option>กองทุนหมู่บ้าน</option><option>สหกรณ์</option>
+        </optgroup>
+        <optgroup label="อื่นๆ">
+          <option>กู้นอกระบบ</option><option>อื่นๆ</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="two-col">
+      <div class="form-group">
+        <label class="form-label">ยอดหนี้คงเหลือ (฿)</label>
+        <input type="number" class="form-control" id="debt-total" placeholder="0" inputmode="decimal">
+      </div>
+      <div class="form-group">
+        <label class="form-label">ยอดหนี้เดิม (฿)</label>
+        <input type="number" class="form-control" id="debt-original" placeholder="0" inputmode="decimal">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">ค่างวด / เดือน (฿)</label>
+      <input type="number" class="form-control" id="debt-installment" placeholder="0" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;">
+    </div>
+    <div class="form-group">
+      <label class="form-label">วันครบกำหนดงวดถัดไป</label>
+      <input type="date" class="form-control" id="debt-nextdue">
+    </div>
+    <div class="form-group">
+      <label class="form-label">หมายเหตุ</label>
+      <input type="text" class="form-control" id="debt-note" placeholder="ไม่บังคับ">
+    </div>
+    <button class="btn-primary" onclick="saveDebt()">บันทึกสินเชื่อ</button>
+    <button id="btn-delete-debt" class="btn-danger" style="display:none;" onclick="deleteDebt()">ลบรายการสินเชื่อนี้</button>
+    <button class="btn-ghost" onclick="closeModal('modal-debt')">ยกเลิก</button>
   </div>
+</div>
+
+<div class="bottom-nav">
+  <button class="nav-btn" onclick="location.href='index.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+    <span class="nav-label">หน้าหลัก</span>
+  </button>
+  <button class="nav-btn active" onclick="location.href='manage.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+    <span class="nav-label">จัดการ</span>
+  </button>
+  <button class="nav-btn" onclick="location.href='report.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+    <span class="nav-label">รายงาน</span>
+  </button>
+</div>
 
 <script>
 var MONTHS_TH=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-var CATEGORIES={
-  home:{
-    income:['เงินเดือน','โบนัส / ค่าตอบแทนพิเศษ','ค่าเช่า / รายได้จากทรัพย์สิน','ดอกเบี้ย / ปันผล','รายได้อิสระ / ฟรีแลนซ์','อื่นๆ'],
-    expense:['อาหาร / เครื่องดื่ม','เดินทาง / น้ำมันรถ','สาธารณูปโภค (ไฟ/น้ำ/อินเทอร์เน็ต)','ช้อปปิ้ง / ของใช้','สุขภาพ / ยา / พยาบาล','บันเทิง / ท่องเที่ยว','การศึกษา','ซ่อมบำรุงบ้าน / รถ','ผ่อนชำระสินเชื่อ','อื่นๆ']
-  },
-  farm:{
-    income:['ขายพืชผล','เงินอุดหนุนจากรัฐ','รายได้อื่นๆ'],
-    expense:['เมล็ดพันธุ์','กล้าไม้','ปุ๋ยเคมี','ปุ๋ยอินทรีย์','ปุ๋ยชีวภาพ','ยาฆ่าแมลง','สารกำจัดศัตรูพืช','ยาฆ่าหญ้า','สารเคมีทางการเกษตร','น้ำมันเชื้อเพลิง','ค่าไฟสูบน้ำ','ค่าแรงงาน','จ้างเก็บเกี่ยว','อุปกรณ์การเกษตร','เครื่องมือการเกษตร','ซ่อมบำรุงเครื่องจักร','ซ่อมบำรุงรถไถ','ค่าเช่าที่ดิน','ค่าเช่าเครื่องจักร','ค่าน้ำ','ระบบชลประทาน','ค่าขนส่ง','บรรจุภัณฑ์','ค่าประกันภัยพืชผล','อื่นๆ']
-  }
-};
+var CATS_HOME_EXP=['อาหาร / เครื่องดื่ม','เดินทาง / น้ำมันรถ','สาธารณูปโภค (ไฟ/น้ำ/อินเทอร์เน็ต)','ช้อปปิ้ง / ของใช้','สุขภาพ / ยา / พยาบาล','บันเทิง / ท่องเที่ยว','การศึกษา','ซ่อมบำรุงบ้าน / รถ','ผ่อนชำระสินเชื่อ','อื่นๆ'];
+var CATS_FARM_EXP=['เมล็ดพันธุ์','กล้าไม้','ปุ๋ยเคมี','ปุ๋ยอินทรีย์','ปุ๋ยชีวภาพ','ยาฆ่าแมลง','สารกำจัดศัตรูพืช','ยาฆ่าหญ้า','สารเคมีทางการเกษตร','น้ำมันเชื้อเพลิง','ค่าไฟสูบน้ำ','ค่าแรงงาน','จ้างเก็บเกี่ยว','อุปกรณ์การเกษตร','เครื่องมือการเกษตร','ซ่อมบำรุงเครื่องจักร','ซ่อมบำรุงรถไถ','ค่าเช่าที่ดิน','ค่าเช่าเครื่องจักร','ค่าน้ำ','ระบบชลประทาน','ค่าขนส่ง','บรรจุภัณฑ์','ค่าประกันภัยพืชผล','อื่นๆ'];
 
 var DATA=(function(){
-  var r=localStorage.getItem('banharnData');
-  try{return r?JSON.parse(r):{home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
+  try{var r=localStorage.getItem('banharnData');return r?JSON.parse(r):{home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
   catch(e){return {home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
 })();
 function saveData(){localStorage.setItem('banharnData',JSON.stringify(DATA));}
 function fmt(n){return (parseFloat(n)||0).toLocaleString('th-TH');}
 function todayStr(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function formatDateTH(str){if(!str)return '-';var d=new Date(str);if(isNaN(d))return str;return d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);}
+function formatDateTH(str){if(!str)return '-';var p=str.split('-');return parseInt(p[2])+' '+MONTHS_TH[parseInt(p[1])-1]+' '+(parseInt(p[0])+543);}
 function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
-function showToast(msg){var t=document.getElementById('toast-el');if(!t){t=document.createElement('div');t.id='toast-el';t.style.cssText='position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:#6C3212;color:#FAF0E6;padding:9px 18px;border-radius:8px;font-family:Sarabun,sans-serif;font-size:13px;z-index:9999;transition:opacity 0.3s;white-space:nowrap;pointer-events:none;';document.body.appendChild(t);}t.textContent=msg;t.style.opacity='1';setTimeout(function(){t.style.opacity='0';},2500);}
+function showToast(msg){
+  var t=document.getElementById('_toast');
+  if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:#6C3212;color:#FAF0E6;padding:9px 18px;border-radius:8px;font-family:Sarabun,sans-serif;font-size:13px;z-index:9999;transition:opacity 0.3s;white-space:nowrap;pointer-events:none;';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(t._tid);t._tid=setTimeout(function(){t.style.opacity='0';},2500);
+}
 
-var _currentTab='budget', _budgetAcc='home', _editDebtAcc='', _editDebtId='';
+var _tab='budget',_acc='home',_editDebtAcc='',_editDebtId='';
 
 function switchTab(tab){
-  _currentTab=tab;
+  _tab=tab;
   document.getElementById('tab-budget').className='tab-btn'+(tab==='budget'?' active':'');
   document.getElementById('tab-debt').className='tab-btn'+(tab==='debt'?' active':'');
   document.getElementById('panel-budget').style.display=tab==='budget'?'block':'none';
   document.getElementById('panel-debt').style.display=tab==='debt'?'block':'none';
-  if(tab==='debt')renderDebt();
-  else renderBudget();
+  if(tab==='budget')renderBudget();else renderDebt();
 }
 
 function setBudgetAcc(acc){
-  _budgetAcc=acc;
-  document.getElementById('btoggle-home').className='acc-toggle-btn'+(acc==='home'?' active home':'');
-  document.getElementById('btoggle-farm').className='acc-toggle-btn'+(acc==='farm'?' active farm':'');
-  renderBudget();
+  _acc=acc;
+  document.getElementById('btoggle-home').className='acc-toggle-btn'+(acc==='home'?' active':'');
+  document.getElementById('btoggle-farm').className='acc-toggle-btn'+(acc==='farm'?' active':'');
+  if(_tab==='budget')renderBudget();
 }
 
 /* ===== BUDGET ===== */
 function renderBudget(){
   var now=new Date(),m=now.getMonth(),y=now.getFullYear();
   var monthStr=y+'-'+String(m+1).padStart(2,'0');
-  var budgets=DATA[_budgetAcc].budgets.filter(function(b){return b.month===monthStr;});
+  document.getElementById('budget-month-label').textContent=MONTHS_TH[m]+' '+(y+543);
+  var budgets=DATA[_acc].budgets.filter(function(b){return b.month===monthStr;});
   var el=document.getElementById('budget-list');
-
-  // อัปเดต month label ใน HTML
-  var lbl=document.getElementById('budget-month-label');
-  if(lbl)lbl.textContent=MONTHS_TH[m]+' '+(y+543);
-
-  if(!budgets.length){
-    el.innerHTML='<div class="no-item">ยังไม่มีงบประมาณเดือนนี้</div>';
-    return;
-  }
-  var txList=DATA[_budgetAcc].transactions.filter(function(t){var d=new Date(t.date);return d.getMonth()===m&&d.getFullYear()===y&&t.type==='expense';});
+  if(!budgets.length){el.innerHTML='<div class="no-item">ยังไม่มีงบประมาณเดือนนี้<br><small>กด + เพิ่มงบ เพื่อตั้งงบประมาณ</small></div>';return;}
+  var txList=DATA[_acc].transactions.filter(function(t){var d=new Date(t.date);return d.getMonth()===m&&d.getFullYear()===y&&t.type==='expense';});
   var spent={};txList.forEach(function(t){spent[t.category]=(spent[t.category]||0)+t.amount;});
   el.innerHTML=budgets.map(function(b){
     var s=spent[b.category]||0,pct=b.amount>0?Math.min(Math.round(s/b.amount*100),100):0;
     var fillCls=pct>=100?'over':pct>=75?'warn':'';
-    return '<div class="budget-card" onclick="openEditBudget(\''+b.id+'\')">'+
-      '<div class="budget-header"><span class="budget-name">'+b.category+'</span><span class="budget-amounts">'+fmt(s)+' / '+fmt(b.amount)+' ฿</span></div>'+
-      '<div class="budget-bar"><div class="budget-fill '+fillCls+'" style="width:'+pct+'%"></div></div>'+
-      '<div class="budget-foot"><span class="budget-pct">ใช้ไปแล้ว '+pct+'%</span>'+(b.locked?'<span style="font-size:10px;background:#E8E3D8;border:1px solid #D0C4B0;border-radius:4px;padding:1px 6px;color:#8A7A68;">ล็อค</span>':'')+'</div>'+
-      '</div>';
+    return '<div class="budget-card" onclick="openEditBudget(\''+b.id+'\')">'
+      +'<div class="budget-header"><span class="budget-name">'+b.category+'</span><span class="budget-amounts">'+fmt(s)+' / '+fmt(b.amount)+' ฿</span></div>'
+      +'<div class="budget-bar"><div class="budget-fill '+fillCls+'" style="width:'+pct+'%"></div></div>'
+      +'<div class="budget-foot"><span class="budget-pct">ใช้ไปแล้ว '+pct+'%</span></div>'
+      +'</div>';
   }).join('');
 }
 
 function openAddBudget(){
-  document.getElementById('budget-modal-title').textContent='ตั้งงบประมาณ — '+((_budgetAcc==='home')?'ครัวเรือน':'เกษตร');
-  var cats=CATEGORIES[_budgetAcc].expense;
+  document.getElementById('budget-modal-title').textContent='ตั้งงบประมาณ — '+(_acc==='home'?'ครัวเรือน':'เกษตร');
+  var cats=_acc==='home'?CATS_HOME_EXP:CATS_FARM_EXP;
   document.getElementById('budget-category').innerHTML=cats.map(function(c){return '<option>'+c+'</option>';}).join('');
   var now=new Date();document.getElementById('budget-month').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
   document.getElementById('budget-amount').value='';
@@ -344,10 +316,9 @@ function openAddBudget(){
 }
 
 function openEditBudget(id){
-  var b=null;DATA[_budgetAcc].budgets.forEach(function(x){if(x.id===id)b=x;});
-  if(!b)return;
+  var b=null;DATA[_acc].budgets.forEach(function(x){if(x.id===id)b=x;});if(!b)return;
   document.getElementById('budget-modal-title').textContent='แก้ไขงบประมาณ';
-  var cats=CATEGORIES[_budgetAcc].expense;
+  var cats=_acc==='home'?CATS_HOME_EXP:CATS_FARM_EXP;
   document.getElementById('budget-category').innerHTML=cats.map(function(c){return '<option'+(c===b.category?' selected':'')+'>'+c+'</option>';}).join('');
   document.getElementById('budget-amount').value=b.amount;
   document.getElementById('budget-month').value=b.month;
@@ -359,9 +330,8 @@ function saveBudget(){
   var amt=parseFloat(document.getElementById('budget-amount').value);
   var month=document.getElementById('budget-month').value;
   if(!amt||amt<=0){alert('กรุณาระบุวงเงิน');return;}
-  var existing=null;
-  DATA[_budgetAcc].budgets.forEach(function(b){if(b.category===cat&&b.month===month)existing=b;});
-  if(existing){existing.amount=amt;}else{DATA[_budgetAcc].budgets.push({id:Date.now()+'',category:cat,amount:amt,month:month,locked:false});}
+  var existing=null;DATA[_acc].budgets.forEach(function(b){if(b.category===cat&&b.month===month)existing=b;});
+  if(existing){existing.amount=amt;}else{DATA[_acc].budgets.push({id:Date.now()+'',category:cat,amount:amt,month:month});}
   saveData();closeModal('modal-budget');renderBudget();showToast('บันทึกงบประมาณแล้ว');
 }
 
@@ -369,48 +339,49 @@ function saveBudget(){
 function renderDebt(){
   var allDebts=[];
   ['home','farm'].forEach(function(a){DATA[a].debts.forEach(function(d){allDebts.push({acc:a,data:d});});});
-  var el=document.getElementById('debt-list');
   var sumEl=document.getElementById('debt-summary');
-
+  var el=document.getElementById('debt-list');
   if(!allDebts.length){
-    sumEl.innerHTML='<div style="text-align:center;color:#8A7A68;font-size:13px;">ยังไม่มีสินเชื่อ</div>';
+    sumEl.innerHTML='<div style="text-align:center;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;font-size:13px;">ยังไม่มีสินเชื่อ</div>';
     el.innerHTML='<div class="no-item">ยังไม่มีรายการสินเชื่อ<br><small>กด + เพิ่ม เพื่อเพิ่มสินเชื่อ</small></div>';
     return;
   }
-
-  var totalOrig=allDebts.reduce(function(s,x){return s+(x.data.originalTotal||x.data.total);},0);
-  var totalRemain=allDebts.reduce(function(s,x){return s+x.data.total;},0);
-  var totalPaid=totalOrig-totalRemain;
-  var pct=totalOrig>0?Math.min(Math.round(totalPaid/totalOrig*100),100):0;
-  var totalInstall=allDebts.reduce(function(s,x){return s+(x.data.installment||0);},0);
-
+  var totOrig=allDebts.reduce(function(s,x){return s+(x.data.originalTotal||x.data.total);},0);
+  var totRem=allDebts.reduce(function(s,x){return s+x.data.total;},0);
+  var totPaid=totOrig-totRem;
+  var pct=totOrig>0?Math.min(Math.round(totPaid/totOrig*100),100):0;
+  var totInst=allDebts.reduce(function(s,x){return s+(x.data.installment||0);},0);
   sumEl.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">'
-    +'<div style="text-align:center;"><div style="font-size:10px;color:#8A7A68;margin-bottom:2px;">ยอดสินเชื่อรวม</div><div style="font-family:Mitr,sans-serif;font-size:14px;font-weight:600;color:#2A1A0E;">'+fmt(totalOrig)+'</div></div>'
-    +'<div style="text-align:center;"><div style="font-size:10px;color:#8A7A68;margin-bottom:2px;">คงเหลือ</div><div style="font-family:Mitr,sans-serif;font-size:14px;font-weight:600;color:#8B3020;">'+fmt(totalRemain)+'</div></div>'
-    +'<div style="text-align:center;"><div style="font-size:10px;color:#8A7A68;margin-bottom:2px;">งวด/เดือน</div><div style="font-family:Mitr,sans-serif;font-size:14px;font-weight:600;color:#4A7A3A;">'+fmt(totalInstall)+'</div></div>'
+    +'<div style="text-align:center;"><div style="font-size:10px;color:#8A7A68;margin-bottom:2px;">ยอดสินเชื่อรวม</div><div style="font-family:Mitr,sans-serif;font-size:14px;font-weight:600;color:#2A1A0E;">'+fmt(totOrig)+'</div></div>'
+    +'<div style="text-align:center;"><div style="font-size:10px;color:#8A7A68;margin-bottom:2px;">คงเหลือ</div><div style="font-family:Mitr,sans-serif;font-size:14px;font-weight:600;color:#8B3020;">'+fmt(totRem)+'</div></div>'
+    +'<div style="text-align:center;"><div style="font-size:10px;color:#8A7A68;margin-bottom:2px;">งวด/เดือน</div><div style="font-family:Mitr,sans-serif;font-size:14px;font-weight:600;color:#4A7A3A;">'+fmt(totInst)+'</div></div>'
     +'</div>'
     +'<div style="font-size:10px;color:#8A7A68;margin-bottom:4px;">ชำระแล้ว '+pct+'%</div>'
     +'<div style="background:#E8E0D4;border-radius:4px;height:6px;"><div style="background:linear-gradient(90deg,#4A7A3A,#7AC06A);border-radius:4px;height:6px;width:'+pct+'%;transition:width 0.4s;"></div></div>';
-
   var today=new Date();today.setHours(0,0,0,0);
   el.innerHTML=allDebts.map(function(x){
     var d=x.data;
     var due=d.nextDue?new Date(d.nextDue):null;if(due)due.setHours(0,0,0,0);
     var diff=due?Math.round((due-today)/86400000):null;
-    var overdue=diff!==null&&diff<0, urgent=diff!==null&&diff<=7&&diff>=0;
-    var orig=d.originalTotal||d.total, ppct=orig>0?Math.min(Math.round((orig-d.total)/orig*100),100):0;
+    var overdue=diff!==null&&diff<0,urgent=diff!==null&&diff<=7&&diff>=0;
+    var orig=d.originalTotal||d.total,ppct=orig>0?Math.min(Math.round((orig-d.total)/orig*100),100):0;
     var dueCls=overdue?'overdue':urgent?'soon':'ok';
     var dueTxt=diff===null?'':overdue?'⚠ เกินกำหนด '+Math.abs(diff)+' วัน':diff===0?'⏰ ครบกำหนดวันนี้':urgent?'⏰ อีก '+diff+' วัน':'งวดถัดไป: '+formatDateTH(d.nextDue);
-    var accBadge=x.acc==='home'?'home':'farm';
-    var cardBorder=x.acc==='farm'?' farm-debt':'';
-    return '<div class="debt-card'+cardBorder+'" onclick="openEditDebt(\''+x.acc+'\',\''+d.id+'\')">'
-      +'<div class="debt-header"><div class="debt-name">'+d.name+(d.debtType?' <small style="font-weight:400;font-size:11px;color:#8A7A68;">'+d.debtType+'</small>':'')+'</div><span class="debt-badge '+accBadge+'">'+(x.acc==='home'?'ครัวเรือน':'เกษตร')+'</span></div>'
+    var cardCls='debt-card'+(x.acc==='farm'?' farm-debt':'');
+    return '<div class="'+cardCls+'" onclick="openEditDebt(\''+x.acc+'\',\''+d.id+'\')">'
+      +'<div class="debt-header">'
+        +'<div class="debt-name">'+d.name+(d.debtType?' <small style="font-weight:400;font-size:11px;color:#8A7A68;">'+d.debtType+'</small>':'')+'</div>'
+        +'<span class="debt-badge '+(x.acc==='home'?'home':'farm')+'">'+(x.acc==='home'?'ครัวเรือน':'เกษตร')+'</span>'
+      +'</div>'
       +'<div class="debt-grid">'
         +'<div class="debt-stat"><div class="debt-stat-label">ยอดเดิม</div><div class="debt-stat-value">'+fmt(orig)+'</div></div>'
         +'<div class="debt-stat"><div class="debt-stat-label">คงเหลือ</div><div class="debt-stat-value red">'+fmt(d.total)+'</div></div>'
         +'<div class="debt-stat"><div class="debt-stat-label">งวด/เดือน</div><div class="debt-stat-value">'+fmt(d.installment||0)+'</div></div>'
       +'</div>'
-      +'<div class="debt-progress-wrap"><div class="debt-progress-labels"><span>ชำระแล้ว '+ppct+'%</span><span>'+fmt(orig-d.total)+' ฿</span></div><div class="debt-progress-bar"><div class="debt-progress-fill" style="width:'+ppct+'%"></div></div></div>'
+      +'<div class="debt-progress-wrap">'
+        +'<div class="debt-progress-labels"><span>ชำระแล้ว '+ppct+'%</span><span>'+fmt(orig-d.total)+' ฿</span></div>'
+        +'<div class="debt-progress-bar"><div class="debt-progress-fill" style="width:'+ppct+'%"></div></div>'
+      +'</div>'
       +(d.nextDue?'<div class="debt-due '+dueCls+'">'+dueTxt+'</div>':'')
       +'</div>';
   }).join('');
@@ -432,8 +403,7 @@ function openAddDebt(){
 }
 
 function openEditDebt(acc,id){
-  var d=null;DATA[acc].debts.forEach(function(x){if(x.id===id)d=x;});
-  if(!d)return;
+  var d=null;DATA[acc].debts.forEach(function(x){if(x.id===id)d=x;});if(!d)return;
   _editDebtAcc=acc;_editDebtId=id;
   document.getElementById('debt-modal-title').textContent='แก้ไขสินเชื่อ';
   document.getElementById('debt-acc').value=acc;
@@ -458,17 +428,10 @@ function saveDebt(){
   var nextDue=document.getElementById('debt-nextdue').value;
   var debtType=document.getElementById('debt-type').value;
   var note=document.getElementById('debt-note').value.trim();
-
   if(_editDebtId){
-    // แก้ไข
     var oldAcc=_editDebtAcc;
-    if(oldAcc!==acc){
-      // ย้ายบัญชี
-      DATA[oldAcc].debts=DATA[oldAcc].debts.filter(function(d){return d.id!==_editDebtId;});
-      DATA[acc].debts.push({id:_editDebtId,name:name,debtType:debtType,total:total,originalTotal:orig,installment:install,nextDue:nextDue,note:note});
-    } else {
-      DATA[acc].debts.forEach(function(d){if(d.id===_editDebtId){d.name=name;d.debtType=debtType;d.total=total;d.originalTotal=orig;d.installment=install;d.nextDue=nextDue;d.note=note;}});
-    }
+    if(oldAcc!==acc){DATA[oldAcc].debts=DATA[oldAcc].debts.filter(function(d){return d.id!==_editDebtId;});DATA[acc].debts.push({id:_editDebtId,name:name,debtType:debtType,total:total,originalTotal:orig,installment:install,nextDue:nextDue,note:note});}
+    else{DATA[acc].debts.forEach(function(d){if(d.id===_editDebtId){d.name=name;d.debtType=debtType;d.total=total;d.originalTotal=orig;d.installment=install;d.nextDue=nextDue;d.note=note;}});}
   } else {
     DATA[acc].debts.push({id:Date.now()+'',name:name,debtType:debtType,total:total,originalTotal:orig,installment:install,nextDue:nextDue,note:note});
   }
@@ -481,9 +444,10 @@ function deleteDebt(){
   saveData();closeModal('modal-debt');renderDebt();showToast('ลบสินเชื่อแล้ว');
 }
 
-// Init
 window.addEventListener('load',function(){
-  document.querySelectorAll('.modal-overlay').forEach(function(el){el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});});
+  document.querySelectorAll('.modal-overlay').forEach(function(el){
+    el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
+  });
   renderBudget();
 });
 </script>
