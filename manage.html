@@ -143,11 +143,13 @@ input,select,textarea{color:#1A1208!important;-webkit-text-fill-color:#1A1208!im
 
 <div class="modal-overlay" id="modal-budget">
   <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="budget-modal-title">ตั้งงบประมาณ</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <div class="modal-title" id="budget-modal-title" style="margin:0;">ตั้งงบประมาณ</div>
+      <button onclick="closeModal('modal-budget')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;flex-shrink:0;">&#x2715;</button>
+    </div>
     <div class="form-group">
       <label class="form-label">หมวดหมู่รายจ่าย</label>
-      <select class="form-control" id="budget-category"></select>
+      <select class="form-control" id="budget-category"><option value="">— เลือกหมวดหมู่ —</option></select>
     </div>
     <div class="form-group">
       <label class="form-label">วงเงินงบประมาณ (บาท/เดือน)</label>
@@ -158,7 +160,6 @@ input,select,textarea{color:#1A1208!important;-webkit-text-fill-color:#1A1208!im
       <input type="month" class="form-control" id="budget-month">
     </div>
     <button class="btn-primary" onclick="saveBudget()">บันทึกงบประมาณ</button>
-    <button class="btn-ghost" onclick="closeModal('modal-budget')">ยกเลิก</button>
   </div>
 </div>
 
@@ -166,67 +167,165 @@ input,select,textarea{color:#1A1208!important;-webkit-text-fill-color:#1A1208!im
 
 <div class="modal-overlay" id="modal-debt">
   <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="debt-modal-title">เพิ่มสินเชื่อ</div>
-    <div class="form-group">
-      <label class="form-label">บัญชี</label>
-      <select class="form-control" id="debt-acc">
-        <option value="home">ครัวเรือน</option>
-        <option value="farm">การเกษตร</option>
-      </select>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <div class="modal-title" id="debt-modal-title" style="margin:0;">เพิ่มสินเชื่อ</div>
+      <button onclick="closeModal('modal-debt')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;flex-shrink:0;">&#x2715;</button>
     </div>
-    <div class="form-group">
-      <label class="form-label">ชื่อสินเชื่อ / ชื่อเจ้าหนี้</label>
-      <input type="text" class="form-control" id="debt-name" placeholder="เช่น สินเชื่อบ้าน ธ.ก.ส.">
-    </div>
-    <div class="form-group">
-      <label class="form-label">ประเภทสินเชื่อ</label>
-      <select class="form-control" id="debt-type">
-        <optgroup label="ธนาคารรัฐ">
-          <option>ธ.ก.ส.</option><option>ออมสิน</option><option>ธนาคารอาคารสงเคราะห์ (ธอส.)</option><option>ธนาคารพัฒนาวิสาหกิจขนาดกลาง (SME Bank)</option>
-        </optgroup>
-        <optgroup label="ธนาคารพาณิชย์">
-          <option>กรุงเทพ (BBL)</option><option>กสิกรไทย (KBANK)</option><option>ไทยพาณิชย์ (SCB)</option><option>กรุงไทย (KTB)</option><option>กรุงศรีอยุธยา (BAY)</option><option>ทหารไทยธนชาต (TTB)</option><option>ยูโอบี (UOB)</option>
-        </optgroup>
-        <optgroup label="บัตรเครดิต / สินเชื่อส่วนบุคคล">
-          <option>บัตรเครดิต</option><option>สินเชื่อส่วนบุคคล</option><option>ผ่อนสินค้า</option>
-        </optgroup>
-        <optgroup label="ลีสซิ่ง / ไฟแนนซ์">
-          <option>ลีสซิ่งรถยนต์</option><option>ลีสซิ่งรถไถ</option><option>ไฟแนนซ์อุปกรณ์</option>
-        </optgroup>
-        <optgroup label="สินเชื่อชุมชน">
-          <option>นาโนไฟแนนซ์</option><option>กองทุนหมู่บ้าน</option><option>สหกรณ์</option>
-        </optgroup>
-        <optgroup label="อื่นๆ">
-          <option>กู้นอกระบบ</option><option>อื่นๆ</option>
-        </optgroup>
-      </select>
-    </div>
-    <div class="two-col">
-      <div class="form-group">
-        <label class="form-label">ยอดหนี้คงเหลือ (฿)</label>
-        <input type="number" class="form-control" id="debt-total" placeholder="0" inputmode="decimal">
-      </div>
-      <div class="form-group">
-        <label class="form-label">ยอดหนี้เดิม (฿)</label>
-        <input type="number" class="form-control" id="debt-original" placeholder="0" inputmode="decimal">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">ค่างวด / เดือน (฿)</label>
-      <input type="number" class="form-control" id="debt-installment" placeholder="0" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;">
-    </div>
-    <div class="form-group">
-      <label class="form-label">วันครบกำหนดงวดถัดไป</label>
-      <input type="date" class="form-control" id="debt-nextdue">
-    </div>
-    <div class="form-group">
-      <label class="form-label">หมายเหตุ</label>
-      <input type="text" class="form-control" id="debt-note" placeholder="ไม่บังคับ">
-    </div>
-    <button class="btn-primary" onclick="saveDebt()">บันทึกสินเชื่อ</button>
-    <button id="btn-delete-debt" class="btn-danger" style="display:none;" onclick="deleteDebt()">ลบรายการสินเชื่อนี้</button>
-    <button class="btn-ghost" onclick="closeModal('modal-debt')">ยกเลิก</button>
+
+```
+<!-- สถาบันการเงิน -->
+<div class="form-group">
+  <label class="form-label">สถาบันการเงิน / เจ้าหนี้</label>
+  <select class="form-control" id="debt-institution" onchange="debtInstChange(this.value)">
+    <option value="">— เลือกสถาบัน —</option>
+    <optgroup label="ธนาคารรัฐ">
+      <option>ธนาคารกรุงไทย (KTB)</option>
+      <option>ธนาคารออมสิน (GSB)</option>
+      <option>ธนาคารเพื่อการเกษตรและสหกรณ์ (ธ.ก.ส.)</option>
+      <option>ธนาคารอาคารสงเคราะห์ (ธอส.)</option>
+      <option>ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อม (SME D Bank)</option>
+      <option>ธนาคารเพื่อการส่งออกและนำเข้า (EXIM)</option>
+      <option>กยศ. (กองทุนเงินให้กู้ยืมเพื่อการศึกษา)</option>
+    </optgroup>
+    <optgroup label="ธนาคารพาณิชย์">
+      <option>ธนาคารกสิกรไทย (KBANK)</option>
+      <option>ธนาคารไทยพาณิชย์ (SCB)</option>
+      <option>ธนาคารกรุงเทพ (BBL)</option>
+      <option>ธนาคารกรุงศรีอยุธยา (BAY)</option>
+      <option>ธนาคารทหารไทยธนชาต (TTB)</option>
+      <option>ธนาคารยูโอบี (UOB)</option>
+      <option>ธนาคารซีไอเอ็มบี (CIMB)</option>
+      <option>ธนาคารแลนด์ แอนด์ เฮ้าส์ (LH Bank)</option>
+      <option>ธนาคารทิสโก้ (TISCO)</option>
+      <option>ธนาคารเกียรตินาคินภัทร (KKP)</option>
+    </optgroup>
+    <optgroup label="บัตรเครดิต / สินเชื่อส่วนบุคคล">
+      <option>KTC (บัตรเครดิต/สินเชื่อ)</option>
+      <option>AEON (อิออน)</option>
+      <option>Central Card / Central The 1</option>
+      <option>Krungsri First Choice</option>
+      <option>SCB มันนี่</option>
+      <option>กสิกร พี่เบิ้ม</option>
+    </optgroup>
+    <optgroup label="ไฟแนนซ์ / ลิสซิ่ง">
+      <option>Toyota Leasing (TLT)</option>
+      <option>Honda Leasing</option>
+      <option>Nissan Financial Services</option>
+      <option>Isuzu Leasing</option>
+      <option>Kiatnakin Phatra (KKP Leasing)</option>
+      <option>Tisco Leasing</option>
+      <option>SCB Leasing</option>
+      <option>Ayudhya Capital</option>
+      <option>ลิสซิ่งรถไถ / เครื่องจักรเกษตร</option>
+    </optgroup>
+    <optgroup label="สินเชื่อนาโน / ไมโครไฟแนนซ์">
+      <option>Ngern Tid Lor (เงินติดล้อ)</option>
+      <option>MONEYMAN</option>
+      <option>ศรีสวัสดิ์ (Sri Sawad)</option>
+      <option>Muangthai Capital (MTC)</option>
+      <option>SAWAD</option>
+    </optgroup>
+    <optgroup label="สถาบันชุมชน">
+      <option>กองทุนหมู่บ้าน</option>
+      <option>สหกรณ์การเกษตร</option>
+      <option>สหกรณ์ออมทรัพย์</option>
+      <option>กลุ่มออมทรัพย์ชุมชน</option>
+    </optgroup>
+    <optgroup label="กู้นอกระบบ / ส่วนตัว">
+      <option>กู้พี่น้อง / ครอบครัว (ไม่มีดอกเบี้ย)</option>
+      <option>กู้พี่น้อง / ครอบครัว (มีดอกเบี้ย)</option>
+      <option>กู้เพื่อน / คนรู้จัก</option>
+      <option>เจ้าหนี้นอกระบบ</option>
+    </optgroup>
+    <optgroup label="อื่นๆ">
+      <option value="__custom__">ระบุเอง...</option>
+    </optgroup>
+  </select>
+</div>
+<div class="form-group" id="debt-inst-custom-wrap" style="display:none;">
+  <label class="form-label">ระบุชื่อสถาบัน / เจ้าหนี้</label>
+  <input type="text" class="form-control" id="debt-inst-custom" placeholder="เช่น สหกรณ์ XXX, นายสมชาย">
+</div>
+
+<!-- ประเภทสินเชื่อ -->
+<div class="form-group">
+  <label class="form-label">ประเภทสินเชื่อ</label>
+  <select class="form-control" id="debt-type">
+    <option value="">— เลือกประเภท —</option>
+    <option>สินเชื่อบ้าน / ที่ดิน</option>
+    <option>สินเชื่อรถยนต์ / จักรยานยนต์</option>
+    <option>สินเชื่อรถไถ / เครื่องจักรเกษตร</option>
+    <option>สินเชื่อส่วนบุคคล (Personal Loan)</option>
+    <option>บัตรเครดิต</option>
+    <option>สินเชื่อการเกษตร (ธ.ก.ส.)</option>
+    <option>สินเชื่อธุรกิจ / SME</option>
+    <option>สินเชื่อการศึกษา (กยศ.)</option>
+    <option>สินเชื่อนาโน / ไมโครไฟแนนซ์</option>
+    <option>กู้ส่วนตัว (ไม่มีดอกเบี้ย)</option>
+    <option>กู้ส่วนตัว (มีดอกเบี้ย)</option>
+    <option>อื่นๆ</option>
+  </select>
+</div>
+
+<!-- ยอดสินเชื่อทั้งหมด (มาก่อน) -->
+<div class="form-group">
+  <label class="form-label">ยอดสินเชื่อทั้งหมด (฿)</label>
+  <input type="number" class="form-control" id="debt-original" placeholder="0" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;">
+</div>
+<!-- ยอดสินเชื่อคงเหลือ -->
+<div class="form-group">
+  <label class="form-label">ยอดสินเชื่อคงเหลือ (฿)</label>
+  <input type="number" class="form-control" id="debt-total" placeholder="0" inputmode="decimal">
+</div>
+
+<!-- ดอกเบี้ย -->
+<div class="two-col">
+  <div class="form-group">
+    <label class="form-label">ดอกเบี้ย (% ต่อปี)</label>
+    <input type="number" class="form-control" id="debt-interest-rate" placeholder="0.00" inputmode="decimal" step="0.01">
+  </div>
+  <div class="form-group">
+    <label class="form-label">ประเภทดอกเบี้ย</label>
+    <select class="form-control" id="debt-interest-type">
+      <option value="">— เลือก —</option>
+      <option>ดอกเบี้ยคงที่ (Flat Rate)</option>
+      <option>ดอกเบี้ยลดต้นลดดอก (Effective Rate)</option>
+      <option>ดอกเบี้ยรายวัน</option>
+      <option>ไม่มีดอกเบี้ย</option>
+    </select>
+  </div>
+</div>
+
+<!-- งวด -->
+<div class="two-col">
+  <div class="form-group">
+    <label class="form-label">ค่างวด / เดือน (฿)</label>
+    <input type="number" class="form-control" id="debt-installment" placeholder="0" inputmode="decimal">
+  </div>
+  <div class="form-group">
+    <label class="form-label">จ่ายไปแล้ว (งวด)</label>
+    <input type="number" class="form-control" id="debt-paid-count" placeholder="0" inputmode="numeric" min="0">
+  </div>
+</div>
+
+<!-- โปะเงินต้นพิเศษ -->
+<div class="form-group">
+  <label class="form-label">โปะเงินต้นพิเศษ (฿) <span style="font-weight:400;text-transform:none;font-size:11px;color:#8A7A68;">(ถ้ามี)</span></label>
+  <input type="number" class="form-control" id="debt-extra-paid" placeholder="0" inputmode="decimal">
+</div>
+
+<div class="form-group">
+  <label class="form-label">วันครบกำหนดงวดถัดไป</label>
+  <input type="date" class="form-control" id="debt-nextdue">
+</div>
+<div class="form-group">
+  <label class="form-label">หมายเหตุ</label>
+  <input type="text" class="form-control" id="debt-note" placeholder="ไม่บังคับ">
+</div>
+<button class="btn-primary" onclick="saveDebt()">บันทึกสินเชื่อ</button>
+<button id="btn-delete-debt" class="btn-danger" style="display:none;" onclick="deleteDebt()">ลบรายการสินเชื่อนี้</button>
+```
+
   </div>
 </div>
 
@@ -247,8 +346,31 @@ input,select,textarea{color:#1A1208!important;-webkit-text-fill-color:#1A1208!im
 
 <script>
 var MONTHS_TH=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-var CATS_HOME_EXP=['อาหาร / เครื่องดื่ม','เดินทาง / น้ำมันรถ','สาธารณูปโภค (ไฟ/น้ำ/อินเทอร์เน็ต)','ช้อปปิ้ง / ของใช้','สุขภาพ / ยา / พยาบาล','บันเทิง / ท่องเที่ยว','การศึกษา','ซ่อมบำรุงบ้าน / รถ','ผ่อนชำระสินเชื่อ','อื่นๆ'];
-var CATS_FARM_EXP=['เมล็ดพันธุ์','กล้าไม้','ปุ๋ยเคมี','ปุ๋ยอินทรีย์','ปุ๋ยชีวภาพ','ยาฆ่าแมลง','สารกำจัดศัตรูพืช','ยาฆ่าหญ้า','สารเคมีทางการเกษตร','น้ำมันเชื้อเพลิง','ค่าไฟสูบน้ำ','ค่าแรงงาน','จ้างเก็บเกี่ยว','อุปกรณ์การเกษตร','เครื่องมือการเกษตร','ซ่อมบำรุงเครื่องจักร','ซ่อมบำรุงรถไถ','ค่าเช่าที่ดิน','ค่าเช่าเครื่องจักร','ค่าน้ำ','ระบบชลประทาน','ค่าขนส่ง','บรรจุภัณฑ์','ค่าประกันภัยพืชผล','อื่นๆ'];
+var CATEGORIES={
+  home:{
+    income:['เงินเดือน','โบนัส','ค่าตอบแทนพิเศษ','ค่าเช่า','รายได้จากทรัพย์สิน','ดอกเบี้ย','เงินปันผล','รายได้อิสระ / ฟรีแลนซ์','ขายสินค้า','อื่นๆ'],
+    expense:['อาหาร','เครื่องดื่ม','เดินทาง','น้ำมันรถ','ค่าไฟฟ้า','ค่าน้ำประปา','อินเทอร์เน็ต / โทรศัพท์','ช้อปปิ้ง','ของใช้ในบ้าน','สุขภาพ','ยา','ค่าพยาบาล','บันเทิง','ท่องเที่ยว','การศึกษา','ซ่อมบำรุงบ้าน','ซ่อมบำรุงรถ','ผ่อนชำระสินเชื่อ','อื่นๆ']
+  },
+  farm:{
+    income:['ขายพืชผล','เงินอุดหนุนจากรัฐ','รายได้อื่นๆ'],
+    expense:['เมล็ดพันธุ์','กล้าไม้','ปุ๋ยเคมี','ปุ๋ยอินทรีย์','ปุ๋ยชีวภาพ','ยาฆ่าแมลง','สารกำจัดศัตรูพืช','ยาฆ่าหญ้า','สารเคมีทางการเกษตร','น้ำมันเชื้อเพลิง','ค่าไฟสูบน้ำ','ค่าแรงงาน','จ้างเก็บเกี่ยว','อุปกรณ์การเกษตร','เครื่องมือการเกษตร','ซ่อมบำรุงเครื่องจักร','ซ่อมบำรุงรถไถ','ค่าเช่าที่ดิน','ค่าเช่าเครื่องจักร','ค่าน้ำ','ระบบชลประทาน','ค่าขนส่ง','บรรจุภัณฑ์','ค่าประกันภัยพืชผล','อื่นๆ']
+  }
+};
+var FARM_EXPENSE_GROUPS=[
+  {group:'เมล็ด / กล้า', items:['เมล็ดพันธุ์','กล้าไม้']},
+  {group:'ปุ๋ย', items:['ปุ๋ยเคมี','ปุ๋ยอินทรีย์','ปุ๋ยชีวภาพ']},
+  {group:'ยา / สารเคมี', items:['ยาฆ่าแมลง','สารกำจัดศัตรูพืช','ยาฆ่าหญ้า','สารเคมีทางการเกษตร']},
+  {group:'เชื้อเพลิง / ไฟฟ้า', items:['น้ำมันเชื้อเพลิง','ค่าไฟสูบน้ำ']},
+  {group:'แรงงาน', items:['ค่าแรงงาน','จ้างเก็บเกี่ยว']},
+  {group:'อุปกรณ์ / เครื่องจักร', items:['อุปกรณ์การเกษตร','เครื่องมือการเกษตร','ซ่อมบำรุงเครื่องจักร','ซ่อมบำรุงรถไถ']},
+  {group:'ค่าเช่า', items:['ค่าเช่าที่ดิน','ค่าเช่าเครื่องจักร']},
+  {group:'น้ำ / ชลประทาน', items:['ค่าน้ำ','ระบบชลประทาน']},
+  {group:'ขนส่ง / บรรจุภัณฑ์', items:['ค่าขนส่ง','บรรจุภัณฑ์']},
+  {group:'อื่นๆ', items:['ค่าประกันภัยพืชผล','อื่นๆ']}
+];
+// aliases สำหรับ backward compat
+var CATS_HOME_EXP=CATEGORIES.home.expense;
+var CATS_FARM_EXP=CATEGORIES.farm.expense;
 
 var DATA=(function(){
   try{var r=localStorage.getItem('banharnData');return r?JSON.parse(r):{home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
@@ -306,10 +428,24 @@ function renderBudget(){
   }).join('');
 }
 
+function _buildBudgetCatOptions(selectedCat){
+  var def='<option value="">— เลือกหมวดหมู่ —</option>';
+  if(_acc==='home'){
+    return def+CATEGORIES.home.expense.map(function(c){
+      return '<option'+(c===selectedCat?' selected':'')+'>'+c+'</option>';
+    }).join('');
+  } else {
+    return def+FARM_EXPENSE_GROUPS.map(function(g){
+      return '<optgroup label="'+g.group+'">'
+        +g.items.map(function(c){return '<option'+(c===selectedCat?' selected':'')+'>'+c+'</option>';}).join('')
+        +'</optgroup>';
+    }).join('');
+  }
+}
+
 function openAddBudget(){
   document.getElementById('budget-modal-title').textContent='ตั้งงบประมาณ — '+(_acc==='home'?'ครัวเรือน':'เกษตร');
-  var cats=_acc==='home'?CATS_HOME_EXP:CATS_FARM_EXP;
-  document.getElementById('budget-category').innerHTML=cats.map(function(c){return '<option>'+c+'</option>';}).join('');
+  document.getElementById('budget-category').innerHTML=_buildBudgetCatOptions('');
   var now=new Date();document.getElementById('budget-month').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
   document.getElementById('budget-amount').value='';
   openModal('modal-budget');
@@ -318,8 +454,7 @@ function openAddBudget(){
 function openEditBudget(id){
   var b=null;DATA[_acc].budgets.forEach(function(x){if(x.id===id)b=x;});if(!b)return;
   document.getElementById('budget-modal-title').textContent='แก้ไขงบประมาณ';
-  var cats=_acc==='home'?CATS_HOME_EXP:CATS_FARM_EXP;
-  document.getElementById('budget-category').innerHTML=cats.map(function(c){return '<option'+(c===b.category?' selected':'')+'>'+c+'</option>';}).join('');
+  document.getElementById('budget-category').innerHTML=_buildBudgetCatOptions(b.category);
   document.getElementById('budget-amount').value=b.amount;
   document.getElementById('budget-month').value=b.month;
   openModal('modal-budget');
@@ -368,13 +503,22 @@ function renderDebt(){
     var dueCls=overdue?'overdue':urgent?'soon':'ok';
     var dueTxt=diff===null?'':overdue?'⚠ เกินกำหนด '+Math.abs(diff)+' วัน':diff===0?'⏰ ครบกำหนดวันนี้':urgent?'⏰ อีก '+diff+' วัน':'งวดถัดไป: '+formatDateTH(d.nextDue);
     var cardCls='debt-card'+(x.acc==='farm'?' farm-debt':'');
+    // interest info
+    var intTxt='';
+    if(d.interestRate){intTxt=d.interestRate+'%/ปี'+(d.interestType?' · '+d.interestType:'');}
+    else if(d.interestType){intTxt=d.interestType;}
+    // paid count
+    var paidTxt='';
+    if(d.paidCount){paidTxt='จ่ายแล้ว '+d.paidCount+' งวด'+(d.installment?' ('+fmt(d.paidCount*d.installment)+' ฿)':'');}
+    if(d.extraPaid&&d.extraPaid>0){paidTxt+=(paidTxt?' · ':'')+'โปะเพิ่ม '+fmt(d.extraPaid)+' ฿';}
     return '<div class="'+cardCls+'" onclick="openEditDebt(\''+x.acc+'\',\''+d.id+'\')">'
       +'<div class="debt-header">'
-        +'<div class="debt-name">'+d.name+(d.debtType?' <small style="font-weight:400;font-size:11px;color:#8A7A68;">'+d.debtType+'</small>':'')+'</div>'
+        +'<div class="debt-name">'+d.name+(d.debtType?'<br><small style="font-weight:400;font-size:11px;color:#8A7A68;">'+d.debtType+'</small>':'')+'</div>'
         +'<span class="debt-badge '+(x.acc==='home'?'home':'farm')+'">'+(x.acc==='home'?'ครัวเรือน':'เกษตร')+'</span>'
       +'</div>'
+      +(intTxt?'<div style="font-size:11px;color:#6A5848;margin-bottom:6px;">💰 ดอกเบี้ย: '+intTxt+'</div>':'')
       +'<div class="debt-grid">'
-        +'<div class="debt-stat"><div class="debt-stat-label">ยอดเดิม</div><div class="debt-stat-value">'+fmt(orig)+'</div></div>'
+        +'<div class="debt-stat"><div class="debt-stat-label">ยอดสินเชื่อ</div><div class="debt-stat-value">'+fmt(orig)+'</div></div>'
         +'<div class="debt-stat"><div class="debt-stat-label">คงเหลือ</div><div class="debt-stat-value red">'+fmt(d.total)+'</div></div>'
         +'<div class="debt-stat"><div class="debt-stat-label">งวด/เดือน</div><div class="debt-stat-value">'+fmt(d.installment||0)+'</div></div>'
       +'</div>'
@@ -382,20 +526,39 @@ function renderDebt(){
         +'<div class="debt-progress-labels"><span>ชำระแล้ว '+ppct+'%</span><span>'+fmt(orig-d.total)+' ฿</span></div>'
         +'<div class="debt-progress-bar"><div class="debt-progress-fill" style="width:'+ppct+'%"></div></div>'
       +'</div>'
+      +(paidTxt?'<div style="font-size:11px;color:#6A5848;margin-top:4px;">'+paidTxt+'</div>':'')
       +(d.nextDue?'<div class="debt-due '+dueCls+'">'+dueTxt+'</div>':'')
       +'</div>';
   }).join('');
 }
 
+function debtInstChange(val){
+  document.getElementById('debt-inst-custom-wrap').style.display=val==='__custom__'?'block':'none';
+}
+
+function _debtName(){
+  var inst=document.getElementById('debt-institution').value;
+  var custom=document.getElementById('debt-inst-custom').value.trim();
+  var typeEl=document.getElementById('debt-type');
+  var debtType=typeEl&&typeEl.value?typeEl.options[typeEl.selectedIndex].text:'';
+  var base=inst==='__custom__'?(custom||'ระบุเอง'):inst;
+  return {base:base,debtType:debtType,name:base+(debtType?' ('+debtType+')':'')};
+}
+
 function openAddDebt(){
   _editDebtAcc='';_editDebtId='';
   document.getElementById('debt-modal-title').textContent='เพิ่มสินเชื่อ';
-  document.getElementById('debt-acc').value='home';
-  document.getElementById('debt-name').value='';
-  document.getElementById('debt-type').value='ธ.ก.ส.';
-  document.getElementById('debt-total').value='';
+  document.getElementById('debt-institution').value='';
+  document.getElementById('debt-inst-custom').value='';
+  document.getElementById('debt-inst-custom-wrap').style.display='none';
+  document.getElementById('debt-type').selectedIndex=0;
   document.getElementById('debt-original').value='';
+  document.getElementById('debt-total').value='';
+  document.getElementById('debt-interest-rate').value='';
+  document.getElementById('debt-interest-type').value='';
   document.getElementById('debt-installment').value='';
+  document.getElementById('debt-paid-count').value='';
+  document.getElementById('debt-extra-paid').value='';
   document.getElementById('debt-nextdue').value=todayStr();
   document.getElementById('debt-note').value='';
   document.getElementById('btn-delete-debt').style.display='none';
@@ -406,12 +569,27 @@ function openEditDebt(acc,id){
   var d=null;DATA[acc].debts.forEach(function(x){if(x.id===id)d=x;});if(!d)return;
   _editDebtAcc=acc;_editDebtId=id;
   document.getElementById('debt-modal-title').textContent='แก้ไขสินเชื่อ';
-  document.getElementById('debt-acc').value=acc;
-  document.getElementById('debt-name').value=d.name||'';
-  document.getElementById('debt-type').value=d.debtType||'อื่นๆ';
+  // institution
+  var instEl=document.getElementById('debt-institution');
+  var instVal=d.institution||'';
+  var found=false;
+  for(var i=0;i<instEl.options.length;i++){
+    if(instEl.options[i].text===instVal||instEl.options[i].value===instVal){instEl.selectedIndex=i;found=true;break;}
+  }
+  if(!found&&instVal){instEl.value='__custom__';document.getElementById('debt-inst-custom').value=instVal;document.getElementById('debt-inst-custom-wrap').style.display='block';}
+  else{document.getElementById('debt-inst-custom-wrap').style.display='none';}
+  // type
+  var typeEl=document.getElementById('debt-type');
+  var typeVal=d.debtType||'';
+  typeEl.value='';
+  for(var j=0;j<typeEl.options.length;j++){if(typeEl.options[j].text===typeVal){typeEl.selectedIndex=j;break;}}
+  document.getElementById('debt-original').value=d.originalTotal||d.total||'';
   document.getElementById('debt-total').value=d.total||'';
-  document.getElementById('debt-original').value=d.originalTotal||'';
+  document.getElementById('debt-interest-rate').value=d.interestRate||'';
+  document.getElementById('debt-interest-type').value=d.interestType||'';
   document.getElementById('debt-installment').value=d.installment||'';
+  document.getElementById('debt-paid-count').value=d.paidCount||'';
+  document.getElementById('debt-extra-paid').value=d.extraPaid||'';
   document.getElementById('debt-nextdue').value=d.nextDue||'';
   document.getElementById('debt-note').value=d.note||'';
   document.getElementById('btn-delete-debt').style.display='block';
@@ -419,21 +597,41 @@ function openEditDebt(acc,id){
 }
 
 function saveDebt(){
-  var name=document.getElementById('debt-name').value.trim();
-  if(!name){alert('กรุณาระบุชื่อสินเชื่อ');return;}
-  var acc=document.getElementById('debt-acc').value;
-  var total=parseFloat(document.getElementById('debt-total').value)||0;
-  var orig=parseFloat(document.getElementById('debt-original').value)||total;
+  var inst=document.getElementById('debt-institution').value;
+  if(inst==='__custom__')inst=document.getElementById('debt-inst-custom').value.trim();
+  if(!inst){alert('กรุณาเลือกหรือระบุสถาบัน / เจ้าหนี้');return;}
+  var typeEl=document.getElementById('debt-type');
+  var debtType=typeEl&&typeEl.value?typeEl.value:'';
+  var orig=parseFloat(document.getElementById('debt-original').value)||0;
+  var total=parseFloat(document.getElementById('debt-total').value)||orig;
+  var interestRate=parseFloat(document.getElementById('debt-interest-rate').value)||0;
+  var interestType=document.getElementById('debt-interest-type').value||'';
   var install=parseFloat(document.getElementById('debt-installment').value)||0;
+  var paidCount=parseInt(document.getElementById('debt-paid-count').value)||0;
+  var extraPaid=parseFloat(document.getElementById('debt-extra-paid').value)||0;
   var nextDue=document.getElementById('debt-nextdue').value;
-  var debtType=document.getElementById('debt-type').value;
   var note=document.getElementById('debt-note').value.trim();
+  var name=inst+(debtType?' ('+debtType+')':'');
+  // acc: ถ้าแก้ไขใช้ acc เดิม, ถ้าเพิ่มใหม่ให้เลือกตาม tab ปัจจุบัน
+  var acc=_editDebtAcc||_acc;
+  var debtObj={name:name,institution:inst,debtType:debtType,
+    total:total,originalTotal:orig||total,
+    interestRate:interestRate,interestType:interestType,
+    installment:install,paidCount:paidCount,extraPaid:extraPaid,
+    nextDue:nextDue,note:note};
   if(_editDebtId){
-    var oldAcc=_editDebtAcc;
-    if(oldAcc!==acc){DATA[oldAcc].debts=DATA[oldAcc].debts.filter(function(d){return d.id!==_editDebtId;});DATA[acc].debts.push({id:_editDebtId,name:name,debtType:debtType,total:total,originalTotal:orig,installment:install,nextDue:nextDue,note:note});}
-    else{DATA[acc].debts.forEach(function(d){if(d.id===_editDebtId){d.name=name;d.debtType=debtType;d.total=total;d.originalTotal=orig;d.installment=install;d.nextDue=nextDue;d.note=note;}});}
+    DATA[acc].debts.forEach(function(d){
+      if(d.id===_editDebtId){
+        d.name=debtObj.name;d.institution=debtObj.institution;d.debtType=debtObj.debtType;
+        d.total=debtObj.total;d.originalTotal=debtObj.originalTotal;
+        d.interestRate=debtObj.interestRate;d.interestType=debtObj.interestType;
+        d.installment=debtObj.installment;d.paidCount=debtObj.paidCount;d.extraPaid=debtObj.extraPaid;
+        d.nextDue=debtObj.nextDue;d.note=debtObj.note;
+      }
+    });
   } else {
-    DATA[acc].debts.push({id:Date.now()+'',name:name,debtType:debtType,total:total,originalTotal:orig,installment:install,nextDue:nextDue,note:note});
+    debtObj.id=Date.now()+'';
+    DATA[acc].debts.push(debtObj);
   }
   saveData();closeModal('modal-debt');renderDebt();showToast('บันทึกสินเชื่อแล้ว');
 }
