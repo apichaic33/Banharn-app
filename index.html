@@ -59,7 +59,7 @@
     .app-header {
       background: #6C3212;
       color: #FAF0E6;
-      padding: 38px 20px 22px;
+      padding: max(38px, calc(env(safe-area-inset-top, 20px) + 16px)) 20px 22px;
       position: sticky;
       top: 0;
       z-index: 100;
