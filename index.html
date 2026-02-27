@@ -816,10 +816,10 @@ function _doPush() {
     return;
   }
   _setSyncStatus('syncing', 'กำลัง Sync...');
-  _gasPost('sync', DATA)
+  _gasPost('push', DATA)
     .then(function(d) {
-      if (d.status === 'ok' && d.home && d.farm) {
-        _applyRemoteData(d);
+      if (d.status === 'ok') {
+        // push สำเร็จ — ข้อมูลใน local ถูกต้องแล้ว (local = master)
         _setSyncStatus('ok', 'Sync แล้ว ' + _timeTH());
       } else {
         _setSyncStatus('error', d.message || 'Sync ผิดพลาด');
@@ -827,7 +827,6 @@ function _doPush() {
     })
     .catch(function() {
       _setSyncStatus('offline', 'ออฟไลน์ — รอเชื่อมต่อ');
-      // เมื่อกลับออนไลน์จะ push อีกครั้งผ่าน online event
     });
 }
 

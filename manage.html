@@ -388,16 +388,11 @@ function _doPush(){
   fetch(_gasUrl,{
     method:'POST',redirect:'follow',
     headers:{'Content-Type':'text/plain'},
-    body:JSON.stringify({action:'sync',data:JSON.stringify(DATA)})
+    body:JSON.stringify({action:'push',data:JSON.stringify(DATA)})
   })
   .then(function(r){return r.json();})
   .then(function(d){
-    if(d.status==='ok'&&d.home&&d.farm){
-      DATA.home=d.home;DATA.farm=d.farm;
-      localStorage.setItem('banharnData',JSON.stringify(DATA));
-      renderBudget();renderDebt();
-      showToast('Sync แล้ว ✓');
-    }
+    if(d.status==='ok'){showToast('Sync แล้ว ✓');}
   })
   .catch(function(){/* ออฟไลน์ */});
 }
