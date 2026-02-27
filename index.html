@@ -514,7 +514,7 @@
 
           <!-- คำอธิบาย: ซ่อนเมื่อเลือกผ่อนสินเชื่อ -->
           <div class="form-group" id="desc-wrap">
-            <label class="form-label">รายการ / คำอธิบาย</label>
+            <label class="form-label" id="desc-label">รายการ / คำอธิบาย</label>
             <input type="text" class="form-control" id="input-desc" placeholder="เช่น ค่าไฟ, ค่าอาหาร">
           </div>
           <div class="form-group"><label class="form-label">จำนวนเงิน (บาท)</label><input type="number" class="form-control" id="input-amount" placeholder="0.00" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;"></div>
@@ -642,7 +642,7 @@
       </div>
 
       <div id="edit-desc-wrap" style="display:none;">
-        <div class="form-group"><label class="form-label">รายการ / คำอธิบาย</label><input type="text" class="form-control" id="edit-desc" placeholder="เช่น ค่าไฟ, ค่าอาหาร"></div>
+        <div class="form-group"><label class="form-label" id="edit-desc-label">รายการ / คำอธิบาย</label><input type="text" class="form-control" id="edit-desc" placeholder="เช่น ค่าไฟ, ค่าอาหาร"></div>
       </div>
 
       <div id="edit-amount-wrap">
@@ -1181,6 +1181,9 @@ function openQuickAdd(acc){
     document.getElementById('debt-select-wrap').style.display='none';
     document.getElementById('debt-info-box').style.display='none';
     document.getElementById('desc-wrap').style.display='block';
+    // ตั้งต้น income → placeholder ชื่อบริษัท (label คงเป็น รายการ / คำอธิบาย)
+    var di=document.getElementById('input-desc');
+    if(di)di.placeholder='เช่น ชื่อบริษัท / นายจ้าง';
   } else {
     document.getElementById('form-home-fields').style.display='none';
     document.getElementById('form-farm-fields').style.display='block';
@@ -1216,6 +1219,13 @@ function setType(type){
     document.getElementById('debt-info-box').style.display='none';
     document.getElementById('desc-wrap').style.display='block';
     document.getElementById('input-desc').value='';
+    // label คงที่ เปลี่ยนแค่ placeholder ตาม type
+    var descInput=document.getElementById('input-desc');
+    if(type==='income'){
+      if(descInput)descInput.placeholder='เช่น ชื่อบริษัท / นายจ้าง';
+    } else {
+      if(descInput)descInput.placeholder='เช่น ค่าไฟ, ค่าอาหาร';
+    }
   } else {
     if(type==='income'){
       document.getElementById('form-home-fields').style.display='none';
@@ -1434,6 +1444,16 @@ function openEditModal(acc,id){
     document.getElementById('edit-desc').value=t.desc||'';
     document.getElementById('edit-amount').value=t.amount;
     document.getElementById('edit-farm-exp-qty-block').style.display='none';
+    // เปลี่ยน label/placeholder ตาม type
+    var edLabel=document.getElementById('edit-desc-label');
+    var edInput=document.getElementById('edit-desc');
+    if(t.type==='income'){
+      if(edLabel)edLabel.textContent='ชื่อบริษัท / นายจ้าง';
+      if(edInput)edInput.placeholder='เช่น บริษัท ABC, ร้านค้า XYZ';
+    } else {
+      if(edLabel)edLabel.textContent='รายการ / คำอธิบาย';
+      if(edInput)edInput.placeholder='เช่น ค่าไฟ, ค่าอาหาร';
+    }
   }
 
   document.getElementById('edit-date').value=t.date||'';
