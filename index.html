@@ -806,7 +806,10 @@ var DATA = (function(){
   } catch(e){ return _EMPTY_DATA(); }
 })();
 
-var _gasUrl       = localStorage.getItem('gasUrl') || '';
+// ★ วาง GAS URL ของคุณตรงนี้ — ทุก Device ใช้อัตโนมัติ ไม่ต้องตั้งค่าใหม่
+var GAS_URL = 'YOUR_GAS_URL_HERE';
+
+var _gasUrl = GAS_URL || localStorage.getItem('gasUrl') || '';
 var _syncStatus   = 'idle';
 var _pushTimer    = null;
 var _offlineQueue = [];  // รายการที่รอ push เมื่อออฟไลน์
@@ -981,11 +984,11 @@ function init(){
   var d=new Date();
   document.getElementById('header-date').textContent=DAYS_TH[d.getDay()]+' '+d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);
   document.getElementById('input-date').value=todayStr();
-  var savedUrl=localStorage.getItem('gasUrl')||'';
-  document.getElementById('gas-url').value=savedUrl;
-  _gasUrl=savedUrl;
+  _gasUrl = GAS_URL || localStorage.getItem('gasUrl') || '';
+  var displayUrl = document.getElementById('gas-url');
+  if(displayUrl) displayUrl.value = _gasUrl;
   renderHome(); // แสดง cache ก่อน
-  _doInitialLoad(); // แล้ว pull จาก GAS (อัปเดตใหม่เมื่อได้รับ)
+  _doInitialLoad(); // pull จาก GAS (GAS = master)
 }
 
 function renderHome(){
@@ -1577,6 +1580,8 @@ function saveSettings(){
   var url=document.getElementById('gas-url').value.trim();
   localStorage.setItem('gasUrl',url);
   _gasUrl=url;
+  // อัปเดต GAS_URL runtime (override ค่าที่ฝังไว้)
+  window.GAS_URL=url;
   var res=document.getElementById('connection-result');
   res.textContent='กำลังทดสอบ...';res.style.color='#C87629';
   if(!url){res.textContent='กรุณาใส่ URL';res.style.color='#C84030';return;}

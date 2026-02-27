@@ -365,11 +365,58 @@ var FARM_EXPENSE_GROUPS=[
 var CATS_HOME_EXP=CATEGORIES.home.expense;
 var CATS_FARM_EXP=CATEGORIES.farm.expense;
 
+var _EMPTY_DATA=function(){return{home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};};
 var DATA=(function(){
-  try{var r=localStorage.getItem('banharnData');return r?JSON.parse(r):{home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
-  catch(e){return {home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
+  try{var r=localStorage.getItem('banharnData');return r?JSON.parse(r):_EMPTY_DATA();}catch(e){return _EMPTY_DATA();}
 })();
-function saveData(){localStorage.setItem('banharnData',JSON.stringify(DATA));}
+
+var GAS_URL = 'YOUR_GAS_URL_HERE';
+var _gasUrl = GAS_URL || localStorage.getItem('gasUrl') || '';
+var _syncStatus='idle';
+var _pushTimer=null;
+var _isOnline=navigator.onLine;
+
+function saveData(){
+  localStorage.setItem('banharnData',JSON.stringify(DATA));
+  clearTimeout(_pushTimer);
+  _pushTimer=setTimeout(_doPush,800);
+}
+
+function _doPush(){
+  if(!_gasUrl||!_isOnline)return;
+  fetch(_gasUrl,{
+    method:'POST',redirect:'follow',
+    headers:{'Content-Type':'text/plain'},
+    body:JSON.stringify({action:'sync',data:JSON.stringify(DATA)})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.status==='ok'&&d.home&&d.farm){
+      DATA.home=d.home;DATA.farm=d.farm;
+      localStorage.setItem('banharnData',JSON.stringify(DATA));
+      renderBudget();renderDebt();
+      showToast('Sync แล้ว ✓');
+    }
+  })
+  .catch(function(){/* ออฟไลน์ */});
+}
+
+function _doInitialLoad(){
+  if(!_gasUrl)return;
+  fetch(_gasUrl+'?action=pull',{redirect:'follow'})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.status==='ok'&&d.home&&d.farm){
+      DATA.home=d.home;DATA.farm=d.farm;
+      localStorage.setItem('banharnData',JSON.stringify(DATA));
+      renderBudget();renderDebt();
+    }
+  })
+  .catch(function(){});
+}
+
+window.addEventListener('online',function(){_isOnline=true;_doPush();});
+window.addEventListener('offline',function(){_isOnline=false;});
 function fmt(n){return (parseFloat(n)||0).toLocaleString('th-TH');}
 function todayStr(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function formatDateTH(str){if(!str)return '-';var p=str.split('-');return parseInt(p[2])+' '+MONTHS_TH[parseInt(p[1])-1]+' '+(parseInt(p[0])+543);}
@@ -636,9 +683,8 @@ function deleteDebt(){
 }
 
 window.addEventListener('load',function(){
-  // ถ้าเปิดแอพครั้งแรก (ไม่ได้มาจากการ navigate ภายใน) ให้ redirect ไป index.html
+  // redirect ไป index ถ้าเปิดโดยตรง (ไม่ได้มาจาก nav)
   if(!sessionStorage.getItem('appStarted')){
-    // ตรวจว่ามี hash debt อยู่ไหม ถ้ามีค่อยเซ็ต flag แล้วไม่ redirect
     var hash=window.location.hash;
     if(!hash||hash.indexOf('#debt-')!==0){
       sessionStorage.setItem('appStarted','1');
@@ -651,23 +697,21 @@ window.addEventListener('load',function(){
   document.querySelectorAll('.modal-overlay').forEach(function(el){
     el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
   });
+
+  // Pull จาก GAS ก่อนเสมอ (GAS = master)
+  _doInitialLoad();
   renderBudget();
 
-  // hash navigation: #debt-acc-id → เปิดแท็บสินเชื่อและ edit modal นั้นทันที
+  // hash navigation → เปิด debt modal
   var hash=window.location.hash;
   if(hash&&hash.indexOf('#debt-')===0){
     var parts=hash.replace('#debt-','').split('-');
-    // format: debt-{acc}-{id} — id อาจมี - ข้างใน ต้องรวม parts ที่ 2+ เป็น id
     var hAcc=parts[0];
     var hId=parts.slice(1).join('-');
     if(hAcc&&hId){
       switchTab('debt');
-      setTimeout(function(){
-        renderDebt();
-        openEditDebt(hAcc,hId);
-      },100);
+      setTimeout(function(){renderDebt();openEditDebt(hAcc,hId);},400);
     }
-    // ล้าง hash
     history.replaceState(null,'',window.location.pathname);
   }
 });
