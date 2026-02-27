@@ -399,9 +399,7 @@
         <div class="header-date" id="header-date"></div>
         <div class="sync-row"><div class="sync-dot"></div><span>พร้อมใช้งาน</span></div>
       </div>
-      <button class="icon-btn" onclick="openModal('modal-settings')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </button>
+
     </div>
   </div>
 
@@ -578,51 +576,6 @@
     </div>
   </div>
 
-  <!-- MODAL: ตั้งค่า -->
-  <div class="modal-overlay" id="modal-settings">
-    <div class="modal-sheet">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
-        <div class="modal-title" style="margin:0;">ตั้งค่าการเชื่อมต่อ</div>
-        <button onclick="closeModal('modal-settings')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;">&#x2715;</button>
-      </div>
-
-      <!-- Sync Status -->
-      <div id="sync-status-card" style="background:#F8F4EE;border:1px solid #E0D5C4;border-radius:12px;padding:12px 14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
-        <div>
-          <div style="font-size:11px;font-weight:600;color:#6A5848;letter-spacing:0.5px;margin-bottom:4px;">สถานะการ Sync</div>
-          <div id="sync-status-text" style="font-size:13px;color:#2A1A0E;">รอการตั้งค่า URL</div>
-        </div>
-        <button onclick="manualSync()" style="background:#6C3212;border:none;color:#FAF0E6;border-radius:10px;padding:8px 14px;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;cursor:pointer;">Sync ตอนนี้</button>
-      </div>
-
-      <!-- How to -->
-      <div class="info-box" style="margin-bottom:16px;font-size:12px;line-height:1.8;">
-        <strong style="font-size:13px;">📋 วิธีตั้งค่า (ทำครั้งเดียว)</strong><br>
-        1. เปิด Google Sheets ใหม่ แล้วไปที่ <strong>Extensions → Apps Script</strong><br>
-        2. วางโค้ดจากไฟล์ <strong>Code.gs</strong> ลงในหน้าต่าง Script<br>
-        3. ใส่ Spreadsheet ID ของคุณในบรรทัด <code style="background:#E8E0D0;padding:1px 5px;border-radius:4px;">SPREADSHEET_ID</code><br>
-        4. รัน function <strong>setupSheets()</strong> หนึ่งครั้ง<br>
-        5. คลิก <strong>Deploy → New deployment</strong> เลือกประเภท <strong>Web app</strong><br>
-        &nbsp;&nbsp;&nbsp;• Execute as: <strong>Me</strong><br>
-        &nbsp;&nbsp;&nbsp;• Who has access: <strong>Anyone</strong><br>
-        6. คัดลอก URL ที่ได้มาใส่ด้านล่าง
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Google Apps Script URL</label>
-        <input type="url" class="form-control" id="gas-url" placeholder="https://script.google.com/macros/s/...">
-      </div>
-      <button class="btn-primary" onclick="saveSettings()">บันทึกและทดสอบการเชื่อมต่อ</button>
-      <div id="connection-result" style="margin-top:10px;text-align:center;font-size:13px;"></div>
-
-      <!-- Import / Export raw -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;">
-        <button onclick="exportJSON()" style="padding:11px;border:1.5px solid #6C3212;background:none;border-radius:12px;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;color:#6C3212!important;-webkit-text-fill-color:#6C3212!important;cursor:pointer;">⬇️ Export JSON</button>
-        <button onclick="importJSON()" style="padding:11px;border:1.5px solid #6C3212;background:none;border-radius:12px;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;color:#6C3212!important;-webkit-text-fill-color:#6C3212!important;cursor:pointer;">⬆️ Import JSON</button>
-      </div>
-      <input type="file" id="import-file-input" accept=".json" style="display:none;" onchange="handleImportFile(this)">
-    </div>
-  </div>
 
   <!-- MODAL: แก้ไขรายการ -->
   <div class="modal-overlay" id="modal-edit">
@@ -798,13 +751,16 @@ var FARM_UNITS=['กิโลกรัม (กก.)','ตัน','ถัง','�
 
 var _EMPTY_DATA = function(){ return {home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}}; };
 
-// โหลด cache จาก localStorage (ใช้แสดงผลขณะรอ pull)
+// GAS = Master → ล้าง localStorage เก่าทิ้ง ใช้ข้อมูลจาก GAS เสมอ
+// เก็บ cache ไว้แค่ขณะออฟไลน์
 var DATA = (function(){
   try{
     var r = localStorage.getItem('banharnData');
     return r ? JSON.parse(r) : _EMPTY_DATA();
   } catch(e){ return _EMPTY_DATA(); }
 })();
+// ล้าง gasUrl เก่าออก (ไม่ต้องการแล้ว)
+localStorage.removeItem('gasUrl');
 
 // ★ วาง GAS URL ของคุณตรงนี้ — ทุก Device ใช้อัตโนมัติ ไม่ต้องตั้งค่าใหม่
 var GAS_URL = 'https://script.google.com/macros/s/AKfycbzmVePBscvTiDxZVyh6Ba4ovAo-t-UFw5HkyU9HNn3qfmf_t3RrtKmCvmZ4DD9KjjOs/exec';
@@ -929,9 +885,6 @@ function _setSyncStatus(status, msg) {
   var dot = document.querySelector('.sync-dot');
   var txt = document.querySelector('.sync-row span');
   // อัปเดต settings card ด้วย
-  var card = document.getElementById('sync-status-text');
-  if (card) card.textContent = msg || '';
-
   var colors = {
     syncing : '#C87629',
     ok      : '#4A7A3A',
@@ -985,8 +938,7 @@ function init(){
   document.getElementById('header-date').textContent=DAYS_TH[d.getDay()]+' '+d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);
   document.getElementById('input-date').value=todayStr();
   _gasUrl = GAS_URL || localStorage.getItem('gasUrl') || '';
-  var displayUrl = document.getElementById('gas-url');
-  if(displayUrl) displayUrl.value = _gasUrl;
+
   renderHome(); // แสดง cache ก่อน
   _doInitialLoad(); // pull จาก GAS (GAS = master)
 }
@@ -1576,68 +1528,9 @@ function viewRenderList(){
   }).join('');
 }
 
-function saveSettings(){
-  var url=document.getElementById('gas-url').value.trim();
-  localStorage.setItem('gasUrl',url);
-  _gasUrl=url;
-  // อัปเดต GAS_URL runtime (override ค่าที่ฝังไว้)
-  window.GAS_URL=url;
-  var res=document.getElementById('connection-result');
-  res.textContent='กำลังทดสอบ...';res.style.color='#C87629';
-  if(!url){res.textContent='กรุณาใส่ URL';res.style.color='#C84030';return;}
-  _gasGet('ping')
-    .then(function(d){
-      if(d.status==='ok'){
-        res.textContent='✅ เชื่อมต่อสำเร็จ';res.style.color='#4A7A3A';
-        // Pull ข้อมูลจาก GAS ทันที (GAS = master)
-        setTimeout(function(){
-          closeModal('modal-settings');
-          _doInitialLoad();
-        }, 800);
-      } else {
-        res.textContent='❌ เชื่อมต่อไม่สำเร็จ: '+(d.message||'');res.style.color='#C84030';
-      }
-    })
-    .catch(function(){
-      res.textContent='❌ เชื่อมต่อไม่ได้ — ตรวจสอบ URL และ Deploy settings';res.style.color='#C84030';
-    });
-}
 
-function exportJSON(){
-  var json=JSON.stringify(DATA,null,2);
-  var blob=new Blob([json],{type:'application/json'});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement('a');
-  var d=new Date();
-  a.href=url;
-  a.download='banhan_data_'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'.json';
-  a.click();URL.revokeObjectURL(url);
-  showToast('Export JSON แล้ว');
-}
 
-function importJSON(){
-  document.getElementById('import-file-input').click();
-}
 
-function handleImportFile(input){
-  var file=input.files[0];if(!file)return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    try{
-      var imported=JSON.parse(e.target.result);
-      if(!imported.home||!imported.farm){alert('ไฟล์ JSON ไม่ถูกต้อง');return;}
-      if(!confirm('นำเข้าข้อมูลจะ แทนที่ข้อมูลปัจจุบัน ยืนยัน?'))return;
-      DATA.home=imported.home;
-      DATA.farm=imported.farm;
-      saveData();
-      renderHome();
-      closeModal('modal-settings');
-      showToast('Import ข้อมูลแล้ว');
-    }catch(ex){alert('ไม่สามารถอ่านไฟล์ได้: '+ex);}
-  };
-  reader.readAsText(file);
-  input.value='';
-}
 
 var _editAcc='home',_editId='',_editType='income';
 

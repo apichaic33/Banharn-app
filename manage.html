@@ -369,6 +369,7 @@ var _EMPTY_DATA=function(){return{home:{transactions:[],budgets:[],debts:[]},far
 var DATA=(function(){
   try{var r=localStorage.getItem('banharnData');return r?JSON.parse(r):_EMPTY_DATA();}catch(e){return _EMPTY_DATA();}
 })();
+localStorage.removeItem('gasUrl'); // ล้างค่าเก่า ไม่ต้องการแล้ว
 
 var GAS_URL = 'https://script.google.com/macros/s/AKfycbzmVePBscvTiDxZVyh6Ba4ovAo-t-UFw5HkyU9HNn3qfmf_t3RrtKmCvmZ4DD9KjjOs/exec';
 var _gasUrl = GAS_URL || localStorage.getItem('gasUrl') || '';
