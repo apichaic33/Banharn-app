@@ -3,14 +3,14 @@
 
 var CACHE_NAME = 'baanhuen-v1';
 var CACHE_FILES = [
-  '/',
-  '/index.html',
-  '/manage.html',
-  '/report.html',
-  '/manifest.json',
-  '/icon-192x192.png',
-  '/icon-512x512.png',
-  '/apple-touch-icon.png'
+  '/Banharn-app/',
+  '/Banharn-app/index.html',
+  '/Banharn-app/manage.html',
+  '/Banharn-app/report.html',
+  '/Banharn-app/manifest.json',
+  '/Banharn-app/icon-192x192.png',
+  '/Banharn-app/icon-512x512.png',
+  '/Banharn-app/apple-touch-icon.png'
 ];
 
 // ติดตั้ง: cache ไฟล์หลัก
