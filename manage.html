@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -20,27 +19,27 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min
 /* HEADER */
 .app-header{background:#6C3212;color:#FAF0E6;padding:18px 20px 20px;position:sticky;top:0;z-index:100;border-radius:0 0 28px 28px;box-shadow:0 6px 24px rgba(61,35,20,0.22);}
 .header-row{display:flex;justify-content:space-between;align-items:center;}
-.app-title{font-family:‘Mitr’,sans-serif;font-size:17px;font-weight:600;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;}
+.app-title{font-family:'Mitr',sans-serif;font-size:17px;font-weight:600;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;}
 
 /* ACC TOGGLE — inside header */
 .acc-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;}
-.acc-toggle-btn{padding:10px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.22);background:rgba(255,255,255,0.10);font-family:‘Sarabun’,sans-serif;font-size:14px;font-weight:500;cursor:pointer;color:rgba(250,240,230,0.6)!important;-webkit-text-fill-color:rgba(250,240,230,0.6)!important;transition:all 0.18s;}
+.acc-toggle-btn{padding:10px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.22);background:rgba(255,255,255,0.10);font-family:'Sarabun',sans-serif;font-size:14px;font-weight:500;cursor:pointer;color:rgba(250,240,230,0.6)!important;-webkit-text-fill-color:rgba(250,240,230,0.6)!important;transition:all 0.18s;}
 .acc-toggle-btn.active{background:rgba(255,255,255,0.22);border-color:rgba(255,255,255,0.5);color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-weight:600;}
 
 /* TAB BAR — inside header */
 .tab-bar{display:flex;background:rgba(0,0,0,0.20);border-radius:24px;padding:4px;gap:4px;border:1px solid rgba(255,255,255,0.12);margin-top:10px;}
-.tab-btn{flex:1;padding:9px 4px;border:none;background:none;border-radius:20px;font-family:‘Sarabun’,sans-serif;font-size:13px;font-weight:500;cursor:pointer;color:rgba(250,240,230,0.65)!important;-webkit-text-fill-color:rgba(250,240,230,0.65)!important;transition:all 0.18s;}
+.tab-btn{flex:1;padding:9px 4px;border:none;background:none;border-radius:20px;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:500;cursor:pointer;color:rgba(250,240,230,0.65)!important;-webkit-text-fill-color:rgba(250,240,230,0.65)!important;transition:all 0.18s;}
 .tab-btn.active{background:rgba(255,255,255,0.18);color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-weight:600;}
 
 /* MAIN */
 .main-content{padding:16px 15px 100px;}
 
 /* CARDS */
-.budget-card{background:var(–surface);border-radius:var(–r);padding:15px;margin-bottom:10px;border:1px solid var(–border);box-shadow:var(–shadow-sm);cursor:pointer;transition:transform 0.12s;}
+.budget-card{background:var(--surface);border-radius:var(--r);padding:15px;margin-bottom:10px;border:1px solid var(--border);box-shadow:var(--shadow-sm);cursor:pointer;transition:transform 0.12s;}
 .budget-card:active{transform:scale(0.98);}
 .budget-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
 .budget-name{font-size:14px;font-weight:600;color:#1A1208!important;-webkit-text-fill-color:#1A1208!important;}
-.budget-amounts{font-family:‘Mitr’,sans-serif;font-size:12px;color:#8A7060!important;-webkit-text-fill-color:#8A7060!important;}
+.budget-amounts{font-family:'Mitr',sans-serif;font-size:12px;color:#8A7060!important;-webkit-text-fill-color:#8A7060!important;}
 .budget-bar{height:8px;background:#E8DDD0;border-radius:4px;overflow:hidden;margin-bottom:6px;}
 .budget-fill{height:100%;border-radius:3px;background:#6C3212;transition:width 0.5s ease;}
 .budget-fill.warn{background:#C87629;}
@@ -48,7 +47,7 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min
 .budget-foot{display:flex;justify-content:space-between;align-items:center;}
 .budget-pct{font-size:11px;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;}
 
-.debt-card{background:var(–surface);border-radius:var(–r);padding:15px 16px;margin-bottom:10px;border:1px solid var(–border);border-left:4px solid #9C4722;box-shadow:var(–shadow-sm);cursor:pointer;}
+.debt-card{background:var(--surface);border-radius:var(--r);padding:15px 16px;margin-bottom:10px;border:1px solid var(--border);border-left:4px solid #9C4722;box-shadow:var(--shadow-sm);cursor:pointer;}
 .debt-card.farm-debt{border-left-color:#C87629;}
 .debt-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
 .debt-name{font-size:14px;font-weight:600;color:#1A1208!important;-webkit-text-fill-color:#1A1208!important;}
@@ -58,7 +57,7 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min
 .debt-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;}
 .debt-stat{text-align:center;background:#F5EFE6;border-radius:8px;padding:7px 4px;}
 .debt-stat-label{font-size:10px;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;margin-bottom:2px;}
-.debt-stat-value{font-family:‘Mitr’,sans-serif;font-size:13px;font-weight:600;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;}
+.debt-stat-value{font-family:'Mitr',sans-serif;font-size:13px;font-weight:600;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;}
 .debt-stat-value.red{color:#8B3020!important;-webkit-text-fill-color:#8B3020!important;}
 .debt-progress-wrap{margin-bottom:8px;}
 .debt-progress-labels{display:flex;justify-content:space-between;font-size:10px;color:#8A7A68;margin-bottom:3px;}
@@ -71,7 +70,7 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min
 
 /* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#FDFAF6;border-top:1px solid #E0D5C4;display:flex;z-index:200;box-shadow:0 -4px 24px rgba(61,35,20,0.12);padding-bottom:env(safe-area-inset-bottom,0px);}
-.nav-btn{flex:1;padding:10px 4px 14px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;font-family:‘Sarabun’,sans-serif;}
+.nav-btn{flex:1;padding:10px 4px 14px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;font-family:'Sarabun',sans-serif;}
 .nav-btn.active{color:#6C3212!important;-webkit-text-fill-color:#6C3212!important;}
 .nav-icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center;}
 .nav-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
@@ -82,25 +81,24 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min
 .modal-overlay.open{display:flex;pointer-events:all;}
 .modal-sheet{background:#EDE7DB;border-radius:28px 28px 0 0;width:100%;max-width:480px;max-height:90vh;padding:20px 24px;padding-bottom:max(52px,calc(32px + env(safe-area-inset-bottom,0px)));overflow-y:auto;animation:slideUp 0.25s ease;box-shadow:0 -4px 32px rgba(61,35,20,0.18);flex-shrink:0;}
 @keyframes slideUp{from{transform:translateY(100%);opacity:0.5;}to{transform:translateY(0);opacity:1;}}
-.modal-handle{width:36px;height:3px;background:var(–border);border-radius:2px;margin:0 auto 14px;}
-.modal-title{font-family:‘Mitr’,sans-serif;font-size:17px;font-weight:600;margin-bottom:18px;text-align:center;color:var(–text);}
+.modal-handle{width:36px;height:3px;background:var(--border);border-radius:2px;margin:0 auto 14px;}
+.modal-title{font-family:'Mitr',sans-serif;font-size:17px;font-weight:600;margin-bottom:18px;text-align:center;color:var(--text);}
 .form-group{margin-bottom:16px;}
 .form-label{display:block;font-size:12px;font-weight:600;letter-spacing:0.4px;color:#6A5848!important;-webkit-text-fill-color:#6A5848!important;margin-bottom:6px;text-transform:uppercase;}
-.form-control{width:100%;padding:14px 16px;border:1.5px solid var(–border);border-radius:12px;font-family:‘Sarabun’,sans-serif;font-size:16px;color:var(–text)!important;-webkit-text-fill-color:var(–text)!important;background:#F8F4EE;outline:none;-webkit-appearance:none;box-sizing:border-box;}
+.form-control{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;font-family:'Sarabun',sans-serif;font-size:16px;color:var(--text)!important;-webkit-text-fill-color:var(--text)!important;background:#F8F4EE;outline:none;-webkit-appearance:none;box-sizing:border-box;}
 .form-control:focus{border-color:#6C3212;}
-.btn-primary{width:100%;padding:14px;border:none;border-radius:14px;background:#6C3212;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-family:‘Mitr’,sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px;transition:transform 0.15s;box-shadow:0 4px 16px rgba(61,35,20,0.30);}
+.btn-primary{width:100%;padding:14px;border:none;border-radius:14px;background:#6C3212;color:#FAF0E6!important;-webkit-text-fill-color:#FAF0E6!important;font-family:'Mitr',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px;transition:transform 0.15s;box-shadow:0 4px 16px rgba(61,35,20,0.30);}
 .btn-primary:active{transform:scale(0.97);}
-.btn-ghost{width:100%;padding:12px;border:none;background:none;color:#6A5E4E!important;-webkit-text-fill-color:#6A5E4E!important;font-family:‘Sarabun’,sans-serif;font-size:14px;cursor:pointer;margin-top:4px;}
-.btn-danger{width:100%;padding:13px;border-radius:12px;border:1.5px solid #C84030;background:none;font-family:‘Sarabun’,sans-serif;font-size:15px;font-weight:600;cursor:pointer;color:#C84030!important;-webkit-text-fill-color:#C84030!important;margin-top:8px;}
-.no-item{background:#E5DFD2;border-radius:var(–r);padding:14px 16px;text-align:center;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;font-size:13px;border:1px solid var(–border);}
-.action-btn{font-size:13px;font-weight:500;color:#3D2314!important;-webkit-text-fill-color:#3D2314!important;background:#E8E3D8;border:1px solid #D2C9B8;border-radius:8px;padding:5px 12px;cursor:pointer;font-family:‘Sarabun’,sans-serif;}
+.btn-ghost{width:100%;padding:12px;border:none;background:none;color:#6A5E4E!important;-webkit-text-fill-color:#6A5E4E!important;font-family:'Sarabun',sans-serif;font-size:14px;cursor:pointer;margin-top:4px;}
+.btn-danger{width:100%;padding:13px;border-radius:12px;border:1.5px solid #C84030;background:none;font-family:'Sarabun',sans-serif;font-size:15px;font-weight:600;cursor:pointer;color:#C84030!important;-webkit-text-fill-color:#C84030!important;margin-top:8px;}
+.no-item{background:#E5DFD2;border-radius:var(--r);padding:14px 16px;text-align:center;color:#8A7A68!important;-webkit-text-fill-color:#8A7A68!important;font-size:13px;border:1px solid var(--border);}
+.action-btn{font-size:13px;font-weight:500;color:#3D2314!important;-webkit-text-fill-color:#3D2314!important;background:#E8E3D8;border:1px solid #D2C9B8;border-radius:8px;padding:5px 12px;cursor:pointer;font-family:'Sarabun',sans-serif;}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 select option{background:#EDE7DB;color:#1A1208;}
 input,select,textarea{color:#1A1208!important;-webkit-text-fill-color:#1A1208!important;}
 ::placeholder{color:#A89070!important;}
 ::-webkit-input-placeholder{color:#A89070!important;-webkit-text-fill-color:#A89070!important;}
 </style>
-
 </head>
 <body>
 
@@ -140,7 +138,6 @@ input,select,textarea{color:#1A1208!important;-webkit-text-fill-color:#1A1208!im
 </div>
 
 <!-- MODAL: งบประมาณ -->
-
 <div class="modal-overlay" id="modal-budget">
   <div class="modal-sheet">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
@@ -164,7 +161,6 @@ input,select,textarea{color:#1A1208!important;-webkit-text-fill-color:#1A1208!im
 </div>
 
 <!-- MODAL: สินเชื่อ -->
-
 <div class="modal-overlay" id="modal-debt">
   <div class="modal-sheet">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
@@ -172,160 +168,157 @@ input,select,textarea{color:#1A1208!important;-webkit-text-fill-color:#1A1208!im
       <button onclick="closeModal('modal-debt')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;flex-shrink:0;">&#x2715;</button>
     </div>
 
-```
-<!-- สถาบันการเงิน -->
-<div class="form-group">
-  <label class="form-label">สถาบันการเงิน / เจ้าหนี้</label>
-  <select class="form-control" id="debt-institution" onchange="debtInstChange(this.value)">
-    <option value="">— เลือกสถาบัน —</option>
-    <optgroup label="ธนาคารรัฐ">
-      <option>ธนาคารกรุงไทย (KTB)</option>
-      <option>ธนาคารออมสิน (GSB)</option>
-      <option>ธนาคารเพื่อการเกษตรและสหกรณ์ (ธ.ก.ส.)</option>
-      <option>ธนาคารอาคารสงเคราะห์ (ธอส.)</option>
-      <option>ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อม (SME D Bank)</option>
-      <option>ธนาคารเพื่อการส่งออกและนำเข้า (EXIM)</option>
-      <option>กยศ. (กองทุนเงินให้กู้ยืมเพื่อการศึกษา)</option>
-    </optgroup>
-    <optgroup label="ธนาคารพาณิชย์">
-      <option>ธนาคารกสิกรไทย (KBANK)</option>
-      <option>ธนาคารไทยพาณิชย์ (SCB)</option>
-      <option>ธนาคารกรุงเทพ (BBL)</option>
-      <option>ธนาคารกรุงศรีอยุธยา (BAY)</option>
-      <option>ธนาคารทหารไทยธนชาต (TTB)</option>
-      <option>ธนาคารยูโอบี (UOB)</option>
-      <option>ธนาคารซีไอเอ็มบี (CIMB)</option>
-      <option>ธนาคารแลนด์ แอนด์ เฮ้าส์ (LH Bank)</option>
-      <option>ธนาคารทิสโก้ (TISCO)</option>
-      <option>ธนาคารเกียรตินาคินภัทร (KKP)</option>
-    </optgroup>
-    <optgroup label="บัตรเครดิต / สินเชื่อส่วนบุคคล">
-      <option>KTC (บัตรเครดิต/สินเชื่อ)</option>
-      <option>AEON (อิออน)</option>
-      <option>Central Card / Central The 1</option>
-      <option>Krungsri First Choice</option>
-      <option>SCB มันนี่</option>
-      <option>กสิกร พี่เบิ้ม</option>
-    </optgroup>
-    <optgroup label="ไฟแนนซ์ / ลิสซิ่ง">
-      <option>Toyota Leasing (TLT)</option>
-      <option>Honda Leasing</option>
-      <option>Nissan Financial Services</option>
-      <option>Isuzu Leasing</option>
-      <option>Kiatnakin Phatra (KKP Leasing)</option>
-      <option>Tisco Leasing</option>
-      <option>SCB Leasing</option>
-      <option>Ayudhya Capital</option>
-      <option>ลิสซิ่งรถไถ / เครื่องจักรเกษตร</option>
-    </optgroup>
-    <optgroup label="สินเชื่อนาโน / ไมโครไฟแนนซ์">
-      <option>Ngern Tid Lor (เงินติดล้อ)</option>
-      <option>MONEYMAN</option>
-      <option>ศรีสวัสดิ์ (Sri Sawad)</option>
-      <option>Muangthai Capital (MTC)</option>
-      <option>SAWAD</option>
-    </optgroup>
-    <optgroup label="สถาบันชุมชน">
-      <option>กองทุนหมู่บ้าน</option>
-      <option>สหกรณ์การเกษตร</option>
-      <option>สหกรณ์ออมทรัพย์</option>
-      <option>กลุ่มออมทรัพย์ชุมชน</option>
-    </optgroup>
-    <optgroup label="กู้นอกระบบ / ส่วนตัว">
-      <option>กู้พี่น้อง / ครอบครัว (ไม่มีดอกเบี้ย)</option>
-      <option>กู้พี่น้อง / ครอบครัว (มีดอกเบี้ย)</option>
-      <option>กู้เพื่อน / คนรู้จัก</option>
-      <option>เจ้าหนี้นอกระบบ</option>
-    </optgroup>
-    <optgroup label="อื่นๆ">
-      <option value="__custom__">ระบุเอง...</option>
-    </optgroup>
-  </select>
-</div>
-<div class="form-group" id="debt-inst-custom-wrap" style="display:none;">
-  <label class="form-label">ระบุชื่อสถาบัน / เจ้าหนี้</label>
-  <input type="text" class="form-control" id="debt-inst-custom" placeholder="เช่น สหกรณ์ XXX, นายสมชาย">
-</div>
+    <!-- สถาบันการเงิน -->
+    <div class="form-group">
+      <label class="form-label">สถาบันการเงิน / เจ้าหนี้</label>
+      <select class="form-control" id="debt-institution" onchange="debtInstChange(this.value)">
+        <option value="">— เลือกสถาบัน —</option>
+        <optgroup label="ธนาคารรัฐ">
+          <option>ธนาคารกรุงไทย (KTB)</option>
+          <option>ธนาคารออมสิน (GSB)</option>
+          <option>ธนาคารเพื่อการเกษตรและสหกรณ์ (ธ.ก.ส.)</option>
+          <option>ธนาคารอาคารสงเคราะห์ (ธอส.)</option>
+          <option>ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อม (SME D Bank)</option>
+          <option>ธนาคารเพื่อการส่งออกและนำเข้า (EXIM)</option>
+          <option>กยศ. (กองทุนเงินให้กู้ยืมเพื่อการศึกษา)</option>
+        </optgroup>
+        <optgroup label="ธนาคารพาณิชย์">
+          <option>ธนาคารกสิกรไทย (KBANK)</option>
+          <option>ธนาคารไทยพาณิชย์ (SCB)</option>
+          <option>ธนาคารกรุงเทพ (BBL)</option>
+          <option>ธนาคารกรุงศรีอยุธยา (BAY)</option>
+          <option>ธนาคารทหารไทยธนชาต (TTB)</option>
+          <option>ธนาคารยูโอบี (UOB)</option>
+          <option>ธนาคารซีไอเอ็มบี (CIMB)</option>
+          <option>ธนาคารแลนด์ แอนด์ เฮ้าส์ (LH Bank)</option>
+          <option>ธนาคารทิสโก้ (TISCO)</option>
+          <option>ธนาคารเกียรตินาคินภัทร (KKP)</option>
+        </optgroup>
+        <optgroup label="บัตรเครดิต / สินเชื่อส่วนบุคคล">
+          <option>KTC (บัตรเครดิต/สินเชื่อ)</option>
+          <option>AEON (อิออน)</option>
+          <option>Central Card / Central The 1</option>
+          <option>Krungsri First Choice</option>
+          <option>SCB มันนี่</option>
+          <option>กสิกร พี่เบิ้ม</option>
+        </optgroup>
+        <optgroup label="ไฟแนนซ์ / ลิสซิ่ง">
+          <option>Toyota Leasing (TLT)</option>
+          <option>Honda Leasing</option>
+          <option>Nissan Financial Services</option>
+          <option>Isuzu Leasing</option>
+          <option>Kiatnakin Phatra (KKP Leasing)</option>
+          <option>Tisco Leasing</option>
+          <option>SCB Leasing</option>
+          <option>Ayudhya Capital</option>
+          <option>ลิสซิ่งรถไถ / เครื่องจักรเกษตร</option>
+        </optgroup>
+        <optgroup label="สินเชื่อนาโน / ไมโครไฟแนนซ์">
+          <option>Ngern Tid Lor (เงินติดล้อ)</option>
+          <option>MONEYMAN</option>
+          <option>ศรีสวัสดิ์ (Sri Sawad)</option>
+          <option>Muangthai Capital (MTC)</option>
+          <option>SAWAD</option>
+        </optgroup>
+        <optgroup label="สถาบันชุมชน">
+          <option>กองทุนหมู่บ้าน</option>
+          <option>สหกรณ์การเกษตร</option>
+          <option>สหกรณ์ออมทรัพย์</option>
+          <option>กลุ่มออมทรัพย์ชุมชน</option>
+        </optgroup>
+        <optgroup label="กู้นอกระบบ / ส่วนตัว">
+          <option>กู้พี่น้อง / ครอบครัว (ไม่มีดอกเบี้ย)</option>
+          <option>กู้พี่น้อง / ครอบครัว (มีดอกเบี้ย)</option>
+          <option>กู้เพื่อน / คนรู้จัก</option>
+          <option>เจ้าหนี้นอกระบบ</option>
+        </optgroup>
+        <optgroup label="อื่นๆ">
+          <option value="__custom__">ระบุเอง...</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="form-group" id="debt-inst-custom-wrap" style="display:none;">
+      <label class="form-label">ระบุชื่อสถาบัน / เจ้าหนี้</label>
+      <input type="text" class="form-control" id="debt-inst-custom" placeholder="เช่น สหกรณ์ XXX, นายสมชาย">
+    </div>
 
-<!-- ประเภทสินเชื่อ -->
-<div class="form-group">
-  <label class="form-label">ประเภทสินเชื่อ</label>
-  <select class="form-control" id="debt-type">
-    <option value="">— เลือกประเภท —</option>
-    <option>สินเชื่อบ้าน / ที่ดิน</option>
-    <option>สินเชื่อรถยนต์ / จักรยานยนต์</option>
-    <option>สินเชื่อรถไถ / เครื่องจักรเกษตร</option>
-    <option>สินเชื่อส่วนบุคคล (Personal Loan)</option>
-    <option>บัตรเครดิต</option>
-    <option>สินเชื่อการเกษตร (ธ.ก.ส.)</option>
-    <option>สินเชื่อธุรกิจ / SME</option>
-    <option>สินเชื่อการศึกษา (กยศ.)</option>
-    <option>สินเชื่อนาโน / ไมโครไฟแนนซ์</option>
-    <option>กู้ส่วนตัว (ไม่มีดอกเบี้ย)</option>
-    <option>กู้ส่วนตัว (มีดอกเบี้ย)</option>
-    <option>อื่นๆ</option>
-  </select>
-</div>
+    <!-- ประเภทสินเชื่อ -->
+    <div class="form-group">
+      <label class="form-label">ประเภทสินเชื่อ</label>
+      <select class="form-control" id="debt-type">
+        <option value="">— เลือกประเภท —</option>
+        <option>สินเชื่อบ้าน / ที่ดิน</option>
+        <option>สินเชื่อรถยนต์ / จักรยานยนต์</option>
+        <option>สินเชื่อรถไถ / เครื่องจักรเกษตร</option>
+        <option>สินเชื่อส่วนบุคคล (Personal Loan)</option>
+        <option>บัตรเครดิต</option>
+        <option>สินเชื่อการเกษตร (ธ.ก.ส.)</option>
+        <option>สินเชื่อธุรกิจ / SME</option>
+        <option>สินเชื่อการศึกษา (กยศ.)</option>
+        <option>สินเชื่อนาโน / ไมโครไฟแนนซ์</option>
+        <option>กู้ส่วนตัว (ไม่มีดอกเบี้ย)</option>
+        <option>กู้ส่วนตัว (มีดอกเบี้ย)</option>
+        <option>อื่นๆ</option>
+      </select>
+    </div>
 
-<!-- ยอดสินเชื่อทั้งหมด (มาก่อน) -->
-<div class="form-group">
-  <label class="form-label">ยอดสินเชื่อทั้งหมด (฿)</label>
-  <input type="number" class="form-control" id="debt-original" placeholder="0" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;">
-</div>
-<!-- ยอดสินเชื่อคงเหลือ -->
-<div class="form-group">
-  <label class="form-label">ยอดสินเชื่อคงเหลือ (฿)</label>
-  <input type="number" class="form-control" id="debt-total" placeholder="0" inputmode="decimal">
-</div>
+    <!-- ยอดสินเชื่อทั้งหมด (มาก่อน) -->
+    <div class="form-group">
+      <label class="form-label">ยอดสินเชื่อทั้งหมด (฿)</label>
+      <input type="number" class="form-control" id="debt-original" placeholder="0" inputmode="decimal" style="font-size:18px;font-weight:600;background:#F0EBE1;">
+    </div>
+    <!-- ยอดสินเชื่อคงเหลือ -->
+    <div class="form-group">
+      <label class="form-label">ยอดสินเชื่อคงเหลือ (฿)</label>
+      <input type="number" class="form-control" id="debt-total" placeholder="0" inputmode="decimal">
+    </div>
 
-<!-- ดอกเบี้ย -->
-<div class="two-col">
-  <div class="form-group">
-    <label class="form-label">ดอกเบี้ย (% ต่อปี)</label>
-    <input type="number" class="form-control" id="debt-interest-rate" placeholder="0.00" inputmode="decimal" step="0.01">
-  </div>
-  <div class="form-group">
-    <label class="form-label">ประเภทดอกเบี้ย</label>
-    <select class="form-control" id="debt-interest-type">
-      <option value="">— เลือก —</option>
-      <option>ดอกเบี้ยคงที่ (Flat Rate)</option>
-      <option>ดอกเบี้ยลดต้นลดดอก (Effective Rate)</option>
-      <option>ดอกเบี้ยรายวัน</option>
-      <option>ไม่มีดอกเบี้ย</option>
-    </select>
-  </div>
-</div>
+    <!-- ดอกเบี้ย -->
+    <div class="two-col">
+      <div class="form-group">
+        <label class="form-label">ดอกเบี้ย (% ต่อปี)</label>
+        <input type="number" class="form-control" id="debt-interest-rate" placeholder="0.00" inputmode="decimal" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label">ประเภทดอกเบี้ย</label>
+        <select class="form-control" id="debt-interest-type">
+          <option value="">— เลือก —</option>
+          <option>ดอกเบี้ยคงที่ (Flat Rate)</option>
+          <option>ดอกเบี้ยลดต้นลดดอก (Effective Rate)</option>
+          <option>ดอกเบี้ยรายวัน</option>
+          <option>ไม่มีดอกเบี้ย</option>
+        </select>
+      </div>
+    </div>
 
-<!-- งวด -->
-<div class="two-col">
-  <div class="form-group">
-    <label class="form-label">ค่างวด / เดือน (฿)</label>
-    <input type="number" class="form-control" id="debt-installment" placeholder="0" inputmode="decimal">
-  </div>
-  <div class="form-group">
-    <label class="form-label">จ่ายไปแล้ว (งวด)</label>
-    <input type="number" class="form-control" id="debt-paid-count" placeholder="0" inputmode="numeric" min="0">
-  </div>
-</div>
+    <!-- งวด -->
+    <div class="two-col">
+      <div class="form-group">
+        <label class="form-label">ค่างวด / เดือน (฿)</label>
+        <input type="number" class="form-control" id="debt-installment" placeholder="0" inputmode="decimal">
+      </div>
+      <div class="form-group">
+        <label class="form-label">จ่ายไปแล้ว (งวด)</label>
+        <input type="number" class="form-control" id="debt-paid-count" placeholder="0" inputmode="numeric" min="0">
+      </div>
+    </div>
 
-<!-- โปะเงินต้นพิเศษ -->
-<div class="form-group">
-  <label class="form-label">โปะเงินต้นพิเศษ (฿) <span style="font-weight:400;text-transform:none;font-size:11px;color:#8A7A68;">(ถ้ามี)</span></label>
-  <input type="number" class="form-control" id="debt-extra-paid" placeholder="0" inputmode="decimal">
-</div>
+    <!-- โปะเงินต้นพิเศษ -->
+    <div class="form-group">
+      <label class="form-label">โปะเงินต้นพิเศษ (฿) <span style="font-weight:400;text-transform:none;font-size:11px;color:#8A7A68;">(ถ้ามี)</span></label>
+      <input type="number" class="form-control" id="debt-extra-paid" placeholder="0" inputmode="decimal">
+    </div>
 
-<div class="form-group">
-  <label class="form-label">วันครบกำหนดงวดถัดไป</label>
-  <input type="date" class="form-control" id="debt-nextdue">
-</div>
-<div class="form-group">
-  <label class="form-label">หมายเหตุ</label>
-  <input type="text" class="form-control" id="debt-note" placeholder="ไม่บังคับ">
-</div>
-<button class="btn-primary" onclick="saveDebt()">บันทึกสินเชื่อ</button>
-<button id="btn-delete-debt" class="btn-danger" style="display:none;" onclick="deleteDebt()">ลบรายการสินเชื่อนี้</button>
-```
-
+    <div class="form-group">
+      <label class="form-label">วันครบกำหนดงวดถัดไป</label>
+      <input type="date" class="form-control" id="debt-nextdue">
+    </div>
+    <div class="form-group">
+      <label class="form-label">หมายเหตุ</label>
+      <input type="text" class="form-control" id="debt-note" placeholder="ไม่บังคับ">
+    </div>
+    <button class="btn-primary" onclick="saveDebt()">บันทึกสินเชื่อ</button>
+    <button id="btn-delete-debt" class="btn-danger" style="display:none;" onclick="deleteDebt()">ลบรายการสินเชื่อนี้</button>
   </div>
 </div>
 
@@ -649,6 +642,5 @@ window.addEventListener('load',function(){
   renderBudget();
 });
 </script>
-
 </body>
 </html>
