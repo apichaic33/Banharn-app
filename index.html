@@ -356,6 +356,8 @@
     .search-bar svg { width: 16px; height: 16px; stroke: #8A7060; flex-shrink: 0; }
     .search-input { border: none; background: none; font-family: 'Sarabun', sans-serif; font-size: 14px; color: #2A1A0E !important; -webkit-text-fill-color: #2A1A0E !important; outline: none; flex: 1; width: 100%; }
     .search-input::placeholder { color: #A89070 !important; -webkit-text-fill-color: #A89070 !important; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+    @keyframes spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
     /* GLOBAL OVERRIDES */
     * { color: inherit; }
@@ -579,13 +581,46 @@
   <!-- MODAL: ตั้งค่า -->
   <div class="modal-overlay" id="modal-settings">
     <div class="modal-sheet">
-      <div class="modal-handle"></div>
-      <div class="modal-title">ตั้งค่าการเชื่อมต่อ</div>
-      <div class="info-box"><strong>วิธีเชื่อมต่อ Google Sheets</strong><br>1. นำไฟล์ gas-backend.gs ไปวางใน Apps Script<br>2. ใส่ Spreadsheet ID และรัน setupSheets()<br>3. Deploy เป็น Web App แล้วคัดลอก URL มาใส่ด้านล่าง</div>
-      <div class="form-group"><label class="form-label">Google Apps Script URL</label><input type="url" class="form-control" id="gas-url" placeholder="https://script.google.com/macros/s/..."></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+        <div class="modal-title" style="margin:0;">ตั้งค่าการเชื่อมต่อ</div>
+        <button onclick="closeModal('modal-settings')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;">&#x2715;</button>
+      </div>
+
+      <!-- Sync Status -->
+      <div id="sync-status-card" style="background:#F8F4EE;border:1px solid #E0D5C4;border-radius:12px;padding:12px 14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-size:11px;font-weight:600;color:#6A5848;letter-spacing:0.5px;margin-bottom:4px;">สถานะการ Sync</div>
+          <div id="sync-status-text" style="font-size:13px;color:#2A1A0E;">รอการตั้งค่า URL</div>
+        </div>
+        <button onclick="manualSync()" style="background:#6C3212;border:none;color:#FAF0E6;border-radius:10px;padding:8px 14px;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;cursor:pointer;">Sync ตอนนี้</button>
+      </div>
+
+      <!-- How to -->
+      <div class="info-box" style="margin-bottom:16px;font-size:12px;line-height:1.8;">
+        <strong style="font-size:13px;">📋 วิธีตั้งค่า (ทำครั้งเดียว)</strong><br>
+        1. เปิด Google Sheets ใหม่ แล้วไปที่ <strong>Extensions → Apps Script</strong><br>
+        2. วางโค้ดจากไฟล์ <strong>Code.gs</strong> ลงในหน้าต่าง Script<br>
+        3. ใส่ Spreadsheet ID ของคุณในบรรทัด <code style="background:#E8E0D0;padding:1px 5px;border-radius:4px;">SPREADSHEET_ID</code><br>
+        4. รัน function <strong>setupSheets()</strong> หนึ่งครั้ง<br>
+        5. คลิก <strong>Deploy → New deployment</strong> เลือกประเภท <strong>Web app</strong><br>
+        &nbsp;&nbsp;&nbsp;• Execute as: <strong>Me</strong><br>
+        &nbsp;&nbsp;&nbsp;• Who has access: <strong>Anyone</strong><br>
+        6. คัดลอก URL ที่ได้มาใส่ด้านล่าง
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Google Apps Script URL</label>
+        <input type="url" class="form-control" id="gas-url" placeholder="https://script.google.com/macros/s/...">
+      </div>
       <button class="btn-primary" onclick="saveSettings()">บันทึกและทดสอบการเชื่อมต่อ</button>
-      <div id="connection-result" style="margin-top:10px;text-align:center;font-size:13px;color:var(--text-sub);"></div>
-      <button class="btn-ghost" onclick="closeModal('modal-settings')">ปิด</button>
+      <div id="connection-result" style="margin-top:10px;text-align:center;font-size:13px;"></div>
+
+      <!-- Import / Export raw -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;">
+        <button onclick="exportJSON()" style="padding:11px;border:1.5px solid #6C3212;background:none;border-radius:12px;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;color:#6C3212!important;-webkit-text-fill-color:#6C3212!important;cursor:pointer;">⬇️ Export JSON</button>
+        <button onclick="importJSON()" style="padding:11px;border:1.5px solid #6C3212;background:none;border-radius:12px;font-family:Sarabun,sans-serif;font-size:13px;font-weight:600;color:#6C3212!important;-webkit-text-fill-color:#6C3212!important;cursor:pointer;">⬆️ Import JSON</button>
+      </div>
+      <input type="file" id="import-file-input" accept=".json" style="display:none;" onchange="handleImportFile(this)">
     </div>
   </div>
 
@@ -755,13 +790,175 @@ var FARM_EXPENSE_QTY_CATS=['เมล็ดพันธุ์','กล้าไ�
 var FARM_INCOME_NO_QTY=['เงินอุดหนุนจากรัฐ','รายได้อื่นๆ']; // หมวดที่ไม่ต้องแสดง qty/unit
 var FARM_UNITS=['กิโลกรัม (กก.)','ตัน','ถัง','กระสอบ','ลิตร','ไร่','ต้น','หัว','ฝัก','ผล','ชิ้น','โหล','กล่อง','คัน','ตัว','อื่นๆ'];
 
-var DATA=(function(){
-  var r=localStorage.getItem('banharnData');
-  try{return r?JSON.parse(r):{home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
-  catch(e){return {home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}};}
+// ============================================================
+//  DATABASE ENGINE — Google Sheets as Primary DB
+//  localStorage = offline cache เท่านั้น
+//  หลักการ: GAS = Master, Device = Cache
+// ============================================================
+
+var _EMPTY_DATA = function(){ return {home:{transactions:[],budgets:[],debts:[]},farm:{transactions:[],budgets:[],debts:[]}}; };
+
+// โหลด cache จาก localStorage (ใช้แสดงผลขณะรอ pull)
+var DATA = (function(){
+  try{
+    var r = localStorage.getItem('banharnData');
+    return r ? JSON.parse(r) : _EMPTY_DATA();
+  } catch(e){ return _EMPTY_DATA(); }
 })();
 
-function saveData(){localStorage.setItem('banharnData',JSON.stringify(DATA));}
+var _gasUrl       = localStorage.getItem('gasUrl') || '';
+var _syncStatus   = 'idle';
+var _pushTimer    = null;
+var _offlineQueue = [];  // รายการที่รอ push เมื่อออฟไลน์
+var _isOnline     = navigator.onLine;
+var _appReady     = false; // true เมื่อ pull สำเร็จแล้ว
+
+// ─── ฟังก์ชันหลัก ───────────────────────────────────────────
+
+// บันทึก: เขียน cache → push ไป GAS ทันที (debounce 800ms)
+function saveData() {
+  localStorage.setItem('banharnData', JSON.stringify(DATA));
+  clearTimeout(_pushTimer);
+  _pushTimer = setTimeout(_doPush, 800);
+}
+
+// เปิดแอพ: Pull จาก GAS ก่อนเสมอ (GAS = master)
+function _doInitialLoad() {
+  if (!_gasUrl) {
+    _setSyncStatus('nourl', 'ยังไม่ได้ตั้งค่า GAS URL');
+    _appReady = true;
+    return;
+  }
+  _setSyncStatus('syncing', 'กำลังโหลดข้อมูล...');
+  _gasGet('pull')
+    .then(function(d) {
+      if (d.status === 'ok' && d.home && d.farm) {
+        _applyRemoteData(d);
+        _setSyncStatus('ok', 'โหลดแล้ว ' + _timeTH());
+      } else {
+        _setSyncStatus('error', d.message || 'โหลดไม่สำเร็จ');
+      }
+      _appReady = true;
+      // flush offline queue (ถ้ามี)
+      _flushOfflineQueue();
+    })
+    .catch(function() {
+      _setSyncStatus('offline', 'ออฟไลน์ — ใช้ข้อมูล cache');
+      _appReady = true;
+    });
+}
+
+// Push ข้อมูลปัจจุบันไป GAS
+function _doPush() {
+  if (!_gasUrl) return;
+  if (!_isOnline) {
+    // เก็บใน offline queue แล้วแสดง badge
+    _setSyncStatus('offline', 'ออฟไลน์ — รอ Sync ' + _offlineQueue.length + ' รายการ');
+    return;
+  }
+  _setSyncStatus('syncing', 'กำลัง Sync...');
+  _gasPost('sync', DATA)
+    .then(function(d) {
+      if (d.status === 'ok' && d.home && d.farm) {
+        _applyRemoteData(d);
+        _setSyncStatus('ok', 'Sync แล้ว ' + _timeTH());
+      } else {
+        _setSyncStatus('error', d.message || 'Sync ผิดพลาด');
+      }
+    })
+    .catch(function() {
+      _setSyncStatus('offline', 'ออฟไลน์ — รอเชื่อมต่อ');
+      // เมื่อกลับออนไลน์จะ push อีกครั้งผ่าน online event
+    });
+}
+
+// Apply ข้อมูลจาก GAS ลง DATA + cache
+function _applyRemoteData(d) {
+  DATA.home = d.home;
+  DATA.farm = d.farm;
+  localStorage.setItem('banharnData', JSON.stringify(DATA));
+  renderHome();
+  // sync manage page ถ้าเปิดอยู่
+  if (typeof renderDebt === 'function') renderDebt();
+  if (typeof renderBudget === 'function') renderBudget();
+}
+
+// ─── Offline Queue ───────────────────────────────────────────
+
+function _flushOfflineQueue() {
+  if (!_isOnline || !_gasUrl) return;
+  // push ข้อมูลล่าสุดออกไป (queue รวมกันอยู่แล้วใน DATA)
+  _doPush();
+}
+
+// ─── Network Events ──────────────────────────────────────────
+
+window.addEventListener('online', function() {
+  _isOnline = true;
+  showToast('🌐 กลับออนไลน์แล้ว — กำลัง Sync...');
+  _doPush(); // push ข้อมูลที่ค้างอยู่
+});
+window.addEventListener('offline', function() {
+  _isOnline = false;
+  _setSyncStatus('offline', 'ออฟไลน์ — ข้อมูลบันทึก cache ไว้');
+});
+
+// ─── HTTP Helpers ─────────────────────────────────────────────
+
+function _gasGet(action) {
+  return fetch(_gasUrl + '?action=' + action, { redirect: 'follow' })
+    .then(function(r) { return r.json(); });
+}
+
+function _gasPost(action, data) {
+  return fetch(_gasUrl, {
+    method  : 'POST',
+    redirect: 'follow',
+    headers : { 'Content-Type': 'text/plain' },
+    body    : JSON.stringify({ action: action, data: JSON.stringify(data) })
+  }).then(function(r) { return r.json(); });
+}
+
+// ─── UI Status ───────────────────────────────────────────────
+
+function _setSyncStatus(status, msg) {
+  _syncStatus = status;
+  var dot = document.querySelector('.sync-dot');
+  var txt = document.querySelector('.sync-row span');
+  // อัปเดต settings card ด้วย
+  var card = document.getElementById('sync-status-text');
+  if (card) card.textContent = msg || '';
+
+  var colors = {
+    syncing : '#C87629',
+    ok      : '#4A7A3A',
+    error   : '#C84030',
+    offline : '#C87629',
+    nourl   : '#A89070'
+  };
+  var col = colors[status] || '#A89070';
+
+  if (dot) {
+    dot.style.background = col;
+    dot.style.animation  = status === 'syncing' ? 'pulse 0.8s infinite' : 'none';
+  }
+  if (txt) {
+    txt.textContent = msg || 'พร้อมใช้งาน';
+    txt.style.color = col;
+    txt.style.webkitTextFillColor = col;
+  }
+}
+
+function _timeTH() {
+  var d = new Date();
+  return d.getHours() + ':' + String(d.getMinutes()).padStart(2,'0') + ' น.';
+}
+
+// Manual sync (ปุ่ม Sync ตอนนี้)
+function manualSync() {
+  if (_syncStatus === 'syncing') return;
+  _doInitialLoad(); // pull ใหม่ทั้งหมด = refresh จาก server
+}
 function fmt(n){return (parseFloat(n)||0).toLocaleString('th-TH');}
 function todayStr(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function formatDateTH(str){if(!str)return '-';var d=new Date(str);if(isNaN(d))return str;return d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);}
@@ -784,8 +981,11 @@ function init(){
   var d=new Date();
   document.getElementById('header-date').textContent=DAYS_TH[d.getDay()]+' '+d.getDate()+' '+MONTHS_TH[d.getMonth()]+' '+(d.getFullYear()+543);
   document.getElementById('input-date').value=todayStr();
-  document.getElementById('gas-url').value=localStorage.getItem('gasUrl')||'';
-  renderHome();
+  var savedUrl=localStorage.getItem('gasUrl')||'';
+  document.getElementById('gas-url').value=savedUrl;
+  _gasUrl=savedUrl;
+  renderHome(); // แสดง cache ก่อน
+  _doInitialLoad(); // แล้ว pull จาก GAS (อัปเดตใหม่เมื่อได้รับ)
 }
 
 function renderHome(){
@@ -1374,9 +1574,64 @@ function viewRenderList(){
 }
 
 function saveSettings(){
-  var url=document.getElementById('gas-url').value.trim();localStorage.setItem('gasUrl',url);
-  var res=document.getElementById('connection-result');res.textContent='กำลังทดสอบ...';
-  fetch(url+'?action=ping').then(function(r){return r.json();}).then(function(d){res.textContent=d.status==='ok'?'เชื่อมต่อสำเร็จ':'เชื่อมต่อไม่สำเร็จ';res.style.color=d.status==='ok'?'#4A7A3A':'#8B3020';}).catch(function(){res.textContent='เชื่อมต่อไม่สำเร็จ';res.style.color='#8B3020';});
+  var url=document.getElementById('gas-url').value.trim();
+  localStorage.setItem('gasUrl',url);
+  _gasUrl=url;
+  var res=document.getElementById('connection-result');
+  res.textContent='กำลังทดสอบ...';res.style.color='#C87629';
+  if(!url){res.textContent='กรุณาใส่ URL';res.style.color='#C84030';return;}
+  _gasGet('ping')
+    .then(function(d){
+      if(d.status==='ok'){
+        res.textContent='✅ เชื่อมต่อสำเร็จ';res.style.color='#4A7A3A';
+        // Pull ข้อมูลจาก GAS ทันที (GAS = master)
+        setTimeout(function(){
+          closeModal('modal-settings');
+          _doInitialLoad();
+        }, 800);
+      } else {
+        res.textContent='❌ เชื่อมต่อไม่สำเร็จ: '+(d.message||'');res.style.color='#C84030';
+      }
+    })
+    .catch(function(){
+      res.textContent='❌ เชื่อมต่อไม่ได้ — ตรวจสอบ URL และ Deploy settings';res.style.color='#C84030';
+    });
+}
+
+function exportJSON(){
+  var json=JSON.stringify(DATA,null,2);
+  var blob=new Blob([json],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  var d=new Date();
+  a.href=url;
+  a.download='banhan_data_'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'.json';
+  a.click();URL.revokeObjectURL(url);
+  showToast('Export JSON แล้ว');
+}
+
+function importJSON(){
+  document.getElementById('import-file-input').click();
+}
+
+function handleImportFile(input){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var imported=JSON.parse(e.target.result);
+      if(!imported.home||!imported.farm){alert('ไฟล์ JSON ไม่ถูกต้อง');return;}
+      if(!confirm('นำเข้าข้อมูลจะ แทนที่ข้อมูลปัจจุบัน ยืนยัน?'))return;
+      DATA.home=imported.home;
+      DATA.farm=imported.farm;
+      saveData();
+      renderHome();
+      closeModal('modal-settings');
+      showToast('Import ข้อมูลแล้ว');
+    }catch(ex){alert('ไม่สามารถอ่านไฟล์ได้: '+ex);}
+  };
+  reader.readAsText(file);
+  input.value='';
 }
 
 var _editAcc='home',_editId='',_editType='income';
