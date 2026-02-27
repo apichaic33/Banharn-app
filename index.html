@@ -666,6 +666,19 @@ input, select, textarea { color: #1A1208 !important; -webkit-text-fill-color: #1
 
   </div>
 
+<!-- MODAL: รายละเอียดสินเชื่อ -->
+
+<div class="modal-overlay" id="modal-debt-detail">
+  <div class="modal-sheet" style="max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <div style="font-family:'Mitr',sans-serif;font-size:17px;font-weight:600;color:var(--text);" id="dd-title">รายละเอียดสินเชื่อ</div>
+      <button onclick="closeModal('modal-debt-detail')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;flex-shrink:0;">&#x2715;</button>
+    </div>
+    <div id="dd-body"></div>
+    <a href="manage.html" style="display:block;text-align:center;margin-top:14px;font-size:13px;color:#6C3212;font-family:Sarabun,sans-serif;">✏️ แก้ไขในหน้าจัดการ</a>
+  </div>
+</div>
+
   <div class="bottom-nav">
     <button class="nav-btn active" onclick="location.href='index.html'"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="nav-label">หน้าหลัก</span></button>
     <button class="nav-btn" onclick="location.href='manage.html'"><div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><span class="nav-label">จัดการ</span></button>
@@ -678,12 +691,55 @@ var MONTHS_SHORT=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','
 var DAYS_TH=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
 var CATEGORIES={
   home:{
-    income:['เงินเดือน','โบนัส / ค่าตอบแทนพิเศษ','ค่าเช่า / รายได้จากทรัพย์สิน','ดอกเบี้ย / ปันผล','รายได้อิสระ / ฟรีแลนซ์','อื่นๆ'],
-    expense:['อาหาร / เครื่องดื่ม','เดินทาง / น้ำมันรถ','สาธารณูปโภค (ไฟ/น้ำ/อินเทอร์เน็ต)','ช้อปปิ้ง / ของใช้','สุขภาพ / ยา / พยาบาล','บันเทิง / ท่องเที่ยว','การศึกษา','ซ่อมบำรุงบ้าน / รถ','ผ่อนชำระสินเชื่อ','อื่นๆ']
+    income:[
+      'เงินเดือน',
+      'โบนัส',
+      'ค่าตอบแทนพิเศษ',
+      'ค่าเช่า',
+      'รายได้จากทรัพย์สิน',
+      'ดอกเบี้ย',
+      'เงินปันผล',
+      'รายได้อิสระ / ฟรีแลนซ์',
+      'ขายสินค้า',
+      'อื่นๆ'
+    ],
+    expense:[
+      'อาหาร',
+      'เครื่องดื่ม',
+      'เดินทาง',
+      'น้ำมันรถ',
+      'ค่าไฟฟ้า',
+      'ค่าน้ำประปา',
+      'อินเทอร์เน็ต / โทรศัพท์',
+      'ช้อปปิ้ง',
+      'ของใช้ในบ้าน',
+      'สุขภาพ',
+      'ยา',
+      'ค่าพยาบาล',
+      'บันเทิง',
+      'ท่องเที่ยว',
+      'การศึกษา',
+      'ซ่อมบำรุงบ้าน',
+      'ซ่อมบำรุงรถ',
+      'ผ่อนชำระสินเชื่อ',
+      'อื่นๆ'
+    ]
   },
   farm:{
     income:['ขายพืชผล','เงินอุดหนุนจากรัฐ','รายได้อื่นๆ'],
-    expense:['เมล็ดพันธุ์','กล้าไม้','ปุ๋ยเคมี','ปุ๋ยอินทรีย์','ปุ๋ยชีวภาพ','ยาฆ่าแมลง','สารกำจัดศัตรูพืช','ยาฆ่าหญ้า','สารเคมีทางการเกษตร','น้ำมันเชื้อเพลิง','ค่าไฟสูบน้ำ','ค่าแรงงาน','จ้างเก็บเกี่ยว','อุปกรณ์การเกษตร','เครื่องมือการเกษตร','ซ่อมบำรุงเครื่องจักร','ซ่อมบำรุงรถไถ','ค่าเช่าที่ดิน','ค่าเช่าเครื่องจักร','ค่าน้ำ','ระบบชลประทาน','ค่าขนส่ง','บรรจุภัณฑ์','ค่าประกันภัยพืชผล','อื่นๆ']
+    expense:[
+      'เมล็ดพันธุ์','กล้าไม้',
+      'ปุ๋ยเคมี','ปุ๋ยอินทรีย์','ปุ๋ยชีวภาพ',
+      'ยาฆ่าแมลง','สารกำจัดศัตรูพืช','ยาฆ่าหญ้า','สารเคมีทางการเกษตร',
+      'น้ำมันเชื้อเพลิง','ค่าไฟสูบน้ำ',
+      'ค่าแรงงาน','จ้างเก็บเกี่ยว',
+      'อุปกรณ์การเกษตร','เครื่องมือการเกษตร',
+      'ซ่อมบำรุงเครื่องจักร','ซ่อมบำรุงรถไถ',
+      'ค่าเช่าที่ดิน','ค่าเช่าเครื่องจักร',
+      'ค่าน้ำ','ระบบชลประทาน',
+      'ค่าขนส่ง','บรรจุภัณฑ์',
+      'ค่าประกันภัยพืชผล','อื่นๆ'
+    ]
   }
 };
 var FARM_EXPENSE_GROUPS=[
@@ -704,6 +760,7 @@ var FARM_INCOME_SUB={
   'รายได้อื่นๆ':['ค่าเช่าที่ดิน','รับจ้างทำนา / เก็บเกี่ยว','อื่นๆ']
 };
 var FARM_EXPENSE_QTY_CATS=['เมล็ดพันธุ์','กล้าไม้','ปุ๋ยเคมี','ปุ๋ยอินทรีย์','ปุ๋ยชีวภาพ','ยาฆ่าแมลง','สารกำจัดศัตรูพืช','ยาฆ่าหญ้า','สารเคมีทางการเกษตร','น้ำมันเชื้อเพลิง','ค่าไฟสูบน้ำ'];
+var FARM_INCOME_NO_QTY=['เงินอุดหนุนจากรัฐ','รายได้อื่นๆ']; // หมวดที่ไม่ต้องแสดง qty/unit
 var FARM_UNITS=['กิโลกรัม (กก.)','ตัน','ถัง','กระสอบ','ลิตร','ไร่','ต้น','หัว','ฝัก','ผล','ชิ้น','โหล','กล่อง','คัน','ตัว','อื่นๆ'];
 
 var DATA=(function(){
@@ -776,7 +833,7 @@ function renderCreditDashboard(){
     var orig=d.originalTotal||d.total,ppct=orig>0?Math.min(Math.round((orig-d.total)/orig*100),100):0;
     var border=overdue?'#C84030':urgent?'#C87629':'#E0D5C4';
     var accLbl=x.acc==='home'?'ครัวเรือน':'เกษตร';
-    return '<div style="background:#FDFAF6;border:1px solid '+border+';border-radius:12px;padding:10px 14px;margin-bottom:8px;">'
+    return '<div style="background:#FDFAF6;border:1px solid '+border+';border-radius:12px;padding:10px 14px;margin-bottom:8px;cursor:pointer;" onclick="openDebtDetail(\''+x.acc+'\',\''+d.id+'\')">'
       +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">'
         +'<div style="font-family:Mitr,sans-serif;font-size:13px;font-weight:600;color:#2A1A0E!important;-webkit-text-fill-color:#2A1A0E!important;">'+d.name+'</div>'
         +'<span style="font-size:10px;background:'+(x.acc==='home'?'#F0E4D8':'#E8F0D8')+';color:'+(x.acc==='home'?'#7A3020':'#3A6020')+';padding:2px 8px;border-radius:8px;">'+accLbl+'</span>'
@@ -792,16 +849,121 @@ function renderCreditDashboard(){
   el.innerHTML=strip+cards;
 }
 
+function openDebtDetail(acc,id){
+  var d=null;
+  DATA[acc].debts.forEach(function(x){if(x.id===id)d=x;});
+  if(!d)return;
+  var today=new Date();today.setHours(0,0,0,0);
+  var orig=d.originalTotal||d.total;
+  var paid=orig-d.total;
+  var pct=orig>0?Math.min(Math.round(paid/orig*100),100):0;
+  var accLbl=acc==='home'?'ครัวเรือน':'การเกษตร';
+  var accColor=acc==='home'?'#7A3020':'#3A6020';
+  var accBg=acc==='home'?'#F0E4D8':'#E8F0D8';
+
+  // due status
+  var dueTxt='',dueColor='#8A7A68';
+  if(d.nextDue){
+    var due=new Date(d.nextDue);due.setHours(0,0,0,0);
+    var diff=Math.round((due-today)/86400000);
+    if(diff<0){dueTxt='⚠ เกินกำหนด '+Math.abs(diff)+' วัน';dueColor='#C84030';}
+    else if(diff===0){dueTxt='⏰ ครบกำหนดวันนี้';dueColor='#C87629';}
+    else if(diff<=7){dueTxt='⏰ อีก '+diff+' วัน ('+formatDateTH(d.nextDue)+')';dueColor='#C87629';}
+    else{dueTxt='📅 '+formatDateTH(d.nextDue);dueColor='#4A7A3A';}
+  }
+
+  // interest
+  var intHtml='';
+  if(d.interestRate||d.interestType){
+    intHtml='<div style="background:#FFF8F0;border:1px solid #E8D8CC;border-radius:10px;padding:10px 14px;margin-bottom:12px;">'
+      +'<div style="font-size:11px;font-weight:600;color:#8A7A68;letter-spacing:0.5px;margin-bottom:6px;">ดอกเบี้ย</div>'
+      +'<div style="display:flex;gap:16px;">'
+      +(d.interestRate?'<div><div style="font-size:10px;color:#8A7A68;">อัตรา</div><div style="font-family:Mitr,sans-serif;font-size:16px;font-weight:600;color:#6C3212;">'+d.interestRate+'%<span style="font-size:11px;font-weight:400;"> /ปี</span></div></div>':'')
+      +(d.interestType?'<div><div style="font-size:10px;color:#8A7A68;">ประเภท</div><div style="font-size:13px;color:#2A1A0E;font-weight:500;">'+d.interestType+'</div></div>':'')
+      +'</div></div>';
+  }
+
+  // paid installment info
+  var paidHtml='';
+  if(d.paidCount||d.extraPaid){
+    paidHtml='<div style="background:#F0F8EE;border:1px solid #C8E0C0;border-radius:10px;padding:10px 14px;margin-bottom:12px;">'
+      +'<div style="font-size:11px;font-weight:600;color:#4A6A40;letter-spacing:0.5px;margin-bottom:6px;">การชำระที่บันทึกไว้</div>'
+      +(d.paidCount?'<div style="font-size:13px;color:#2A1A0E;margin-bottom:4px;">จ่ายแล้ว <strong>'+d.paidCount+' งวด</strong>'+(d.installment?' · รวม '+fmt(d.paidCount*d.installment)+' ฿':'')+'</div>':'')
+      +(d.extraPaid&&d.extraPaid>0?'<div style="font-size:13px;color:#2A1A0E;">โปะเงินต้นพิเศษ <strong>'+fmt(d.extraPaid)+' ฿</strong></div>':'')
+      +'</div>';
+  }
+
+  document.getElementById('dd-title').textContent=d.name||'รายละเอียดสินเชื่อ';
+  document.getElementById('dd-body').innerHTML=
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
+      +'<span style="font-size:11px;background:'+accBg+';color:'+accColor+';padding:3px 10px;border-radius:8px;font-weight:600;">'+accLbl+'</span>'
+      +(d.debtType?'<span style="font-size:11px;color:#8A7A68;">'+d.debtType+'</span>':'')
+    +'</div>'
+
+    // ยอดสรุป 3 ช่อง
+    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">'
+      +'<div style="background:#F8F4EE;border-radius:10px;padding:10px;text-align:center;">'
+        +'<div style="font-size:10px;color:#8A7A68;margin-bottom:4px;">ยอดสินเชื่อ</div>'
+        +'<div style="font-family:Mitr,sans-serif;font-size:14px;font-weight:600;color:#2A1A0E;">'+fmt(orig)+'</div>'
+        +'<div style="font-size:10px;color:#8A7A68;">บาท</div>'
+      +'</div>'
+      +'<div style="background:#FFF0EE;border-radius:10px;padding:10px;text-align:center;">'
+        +'<div style="font-size:10px;color:#8A7A68;margin-bottom:4px;">คงเหลือ</div>'
+        +'<div style="font-family:Mitr,sans-serif;font-size:14px;font-weight:600;color:#8B3020;">'+fmt(d.total)+'</div>'
+        +'<div style="font-size:10px;color:#8A7A68;">บาท</div>'
+      +'</div>'
+      +'<div style="background:#F0F8EE;border-radius:10px;padding:10px;text-align:center;">'
+        +'<div style="font-size:10px;color:#8A7A68;margin-bottom:4px;">งวด/เดือน</div>'
+        +'<div style="font-family:Mitr,sans-serif;font-size:14px;font-weight:600;color:#4A7A3A;">'+fmt(d.installment||0)+'</div>'
+        +'<div style="font-size:10px;color:#8A7A68;">บาท</div>'
+      +'</div>'
+    +'</div>'
+
+    // progress bar
+    +'<div style="margin-bottom:14px;">'
+      +'<div style="display:flex;justify-content:space-between;font-size:11px;color:#8A7A68;margin-bottom:4px;">'
+        +'<span>ชำระแล้ว '+pct+'%</span><span>'+fmt(paid)+' ฿</span>'
+      +'</div>'
+      +'<div style="background:#E8E0D4;border-radius:6px;height:8px;">'
+        +'<div style="background:linear-gradient(90deg,#4A7A3A,#7AC06A);border-radius:6px;height:8px;width:'+pct+'%;transition:width 0.4s;"></div>'
+      +'</div>'
+    +'</div>'
+
+    // ดอกเบี้ย
+    +intHtml
+
+    // การชำระ
+    +paidHtml
+
+    // งวดถัดไป
+    +(d.nextDue?'<div style="background:#FFF8F4;border:1px solid #E8D8CC;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">'
+      +'<div style="font-size:12px;color:#8A7A68;">งวดถัดไป</div>'
+      +'<div style="font-size:13px;font-weight:600;color:'+dueColor+';">'+dueTxt+'</div>'
+    +'</div>':'')
+
+    // หมายเหตุ
+    +(d.note?'<div style="font-size:12px;color:#8A7A68;padding:8px 0;">📝 '+d.note+'</div>':'');
+
+  openModal('modal-debt-detail');
+}
+
 function renderAlerts(){
   var alerts=[],today=new Date();today.setHours(0,0,0,0);
-  ['home','farm'].forEach(function(a){DATA[a].debts.forEach(function(d){if(!d.nextDue)return;var due=new Date(d.nextDue);due.setHours(0,0,0,0);var diff=Math.round((due-today)/86400000);if(diff<=7)alerts.push({name:d.name,acc:a,diff:diff,nextDue:d.nextDue,installment:d.installment,total:d.total});});});
+  ['home','farm'].forEach(function(a){
+    DATA[a].debts.forEach(function(d){
+      if(!d.nextDue)return;
+      var due=new Date(d.nextDue);due.setHours(0,0,0,0);
+      var diff=Math.round((due-today)/86400000);
+      if(diff<=7)alerts.push({id:d.id,name:d.name,acc:a,diff:diff,nextDue:d.nextDue,installment:d.installment,total:d.total});
+    });
+  });
   var el=document.getElementById('alert-list');
   if(!alerts.length){el.innerHTML='<div class="no-item">ไม่มีรายการแจ้งเตือน</div>';return;}
   el.innerHTML=alerts.map(function(a){
     var lbl=a.acc==='home'?'ครัวเรือน':'เกษตร';
     var st=a.diff<0?'เกินกำหนด '+Math.abs(a.diff)+' วัน':(a.diff===0?'ครบกำหนดวันนี้':'อีก '+a.diff+' วัน');
     var ov=a.diff<0?'overdue':'';
-    return '<div class="alert-item '+ov+'" onclick="openViewModal(\''+a.acc+'\',event)">'
+    return '<div class="alert-item '+ov+'" onclick="openDebtDetail(\''+a.acc+'\',\''+a.id+'\')">'
       +'<div class="alert-dot '+ov+'"></div>'
       +'<div class="alert-info"><div class="alert-name">'+a.name+' <span style="font-weight:400;color:var(--text-sub);font-size:12px;">('+lbl+')</span></div>'
       +'<div class="alert-due">'+formatDateTH(a.nextDue)+' · '+st+'</div></div>'
@@ -931,30 +1093,48 @@ function openQuickAdd(acc){
   _acc=acc;_type='income';
   document.getElementById('input-date').value=todayStr();
   document.getElementById('input-note').value='';
-  ['form-home-fields','form-farm-fields','form-farm-expense-fields'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  // ซ่อนทุก form ก่อนเสมอ
+  ['form-home-fields','form-farm-fields','form-farm-expense-fields'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.style.display='none';
+  });
   if(acc==='home'){
     document.getElementById('form-home-fields').style.display='block';
     document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.home.income.map(function(c){return '<option>'+c+'</option>';}).join('');
-    document.getElementById('input-amount').value='';document.getElementById('input-desc').value='';
+    document.getElementById('input-amount').value='';
+    document.getElementById('input-desc').value='';
     document.getElementById('debt-select-wrap').style.display='none';
     document.getElementById('debt-info-box').style.display='none';
     document.getElementById('desc-wrap').style.display='block';
   } else {
+    document.getElementById('form-home-fields').style.display='none';
     document.getElementById('form-farm-fields').style.display='block';
+    document.getElementById('form-farm-expense-fields').style.display='none';
     var mainSel=document.getElementById('input-category-farm-main');
     mainSel.innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.farm.income.map(function(c){return '<option>'+c+'</option>';}).join('');
-    mainSel.value='';document.getElementById('farm-sub-wrap').style.display='none';document.getElementById('farm-income-qty-block').style.display='none';
-    document.getElementById('input-qty').value='';document.getElementById('input-unit-price').value='';document.getElementById('input-amount-farm').value='';document.getElementById('amount-hint').textContent='';
-    var unitSel=document.getElementById('input-unit');unitSel.innerHTML='<option value="">เลือกหน่วย</option>'+FARM_UNITS.map(function(u){return '<option>'+u+'</option>';}).join('');
+    mainSel.value='';
+    document.getElementById('farm-sub-wrap').style.display='none';
+    document.getElementById('farm-income-qty-block').style.display='none';
+    document.getElementById('input-qty').value='';
+    document.getElementById('input-unit-price').value='';
+    document.getElementById('input-amount-farm').value='';
+    document.getElementById('amount-hint').textContent='';
+    var unitSel=document.getElementById('input-unit');
+    unitSel.innerHTML='<option value="">เลือกหน่วย</option>'+FARM_UNITS.map(function(u){return '<option>'+u+'</option>';}).join('');
   }
-  _setHdr(acc,'income');openModal('modal-add');
+  _setHdr(acc,'income');
+  openModal('modal-add');
 }
 
 function setType(type){
   _type=type;
-  ['form-home-fields','form-farm-fields','form-farm-expense-fields'].forEach(function(id){document.getElementById(id).style.display='none';});
+  // ซ่อนทุก form ก่อน
+  ['form-home-fields','form-farm-fields','form-farm-expense-fields'].forEach(function(id){
+    document.getElementById(id).style.display='none';
+  });
   if(_acc==='home'){
     document.getElementById('form-home-fields').style.display='block';
+    var fe=document.getElementById('form-farm-fields');if(fe)fe.style.display='none';
+    var fee=document.getElementById('form-farm-expense-fields');if(fee)fee.style.display='none';
     document.getElementById('input-category').innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.home[type].map(function(c){return '<option>'+c+'</option>';}).join('');
     document.getElementById('debt-select-wrap').style.display='none';
     document.getElementById('debt-info-box').style.display='none';
@@ -962,12 +1142,19 @@ function setType(type){
     document.getElementById('input-desc').value='';
   } else {
     if(type==='income'){
+      document.getElementById('form-home-fields').style.display='none';
       document.getElementById('form-farm-fields').style.display='block';
+      document.getElementById('form-farm-expense-fields').style.display='none';
       var mainSel=document.getElementById('input-category-farm-main');
       mainSel.innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.farm.income.map(function(c){return '<option>'+c+'</option>';}).join('');
-      mainSel.value='';document.getElementById('farm-sub-wrap').style.display='none';document.getElementById('farm-income-qty-block').style.display='none';
-      document.getElementById('input-amount-farm').value='';document.getElementById('amount-hint').textContent='';
-    } else {showFarmExpenseForm();}
+      mainSel.value='';
+      document.getElementById('farm-sub-wrap').style.display='none';
+      document.getElementById('farm-income-qty-block').style.display='none';
+      document.getElementById('input-amount-farm').value='';
+      document.getElementById('amount-hint').textContent='';
+    } else {
+      showFarmExpenseForm();
+    }
   }
   _setHdr(_acc,type);
 }
@@ -988,9 +1175,8 @@ function saveTransaction(){
     if(!amount||amount<=0){alert('กรุณาระบุยอดรวม');return;}
     desc=subCat||mainCat;
   } else if(isFarmExpense){
-    var needQty2=false;
     var cat2=document.getElementById('input-category-farm-exp').value;
-    needQty2=FARM_EXPENSE_QTY_CATS.indexOf(cat2)>=0;
+    var needQty2=FARM_EXPENSE_QTY_CATS.indexOf(cat2)>=0;
     category=cat2;
     if(needQty2){
       qty=parseFloat(document.getElementById('input-exp-qty').value)||null;
@@ -1007,7 +1193,6 @@ function saveTransaction(){
     desc=document.getElementById('input-desc').value.trim();
     amount=parseFloat(document.getElementById('input-amount').value);
     if(!amount||amount<=0){alert('กรุณาระบุจำนวนเงิน');return;}
-    // ถ้าเลือกหมวด ผ่อนชำระสินเชื่อ ต้องมี desc
     if(!desc&&category!=='ผ่อนชำระสินเชื่อ'){alert('กรุณาระบุรายการ');return;}
     if(!desc)desc='ผ่อนชำระสินเชื่อ';
   }
@@ -1025,24 +1210,24 @@ function saveTransaction(){
         if(d.id===dId){
           var prev=d.total;
           d.total=Math.max(0,d.total-amount);
-          // บันทึก nextDue เลื่อนไป 1 เดือน
           if(d.nextDue){var nd=new Date(d.nextDue);nd.setMonth(nd.getMonth()+1);d.nextDue=nd.toISOString().split('T')[0];}
           tx.note=(tx.note?tx.note+' ':'')+'[หักสินเชื่อ: '+d.name+' '+fmt(prev)+'→'+fmt(d.total)+' ฿]';
-          // ถ้าหมดแล้ว
           if(d.total<=0){d.total=0;tx.note+=' [ปิดบัญชีสินเชื่อ]';}
         }
       });
     }
   }
 
-  DATA[_acc].transactions.push(tx);saveData();closeModal('modal-add');
+  DATA[_acc].transactions.push(tx);
+  saveData();closeModal('modal-add');
   ['input-amount','input-amount-farm','input-qty','input-unit-price','input-desc','input-note','input-exp-amount-simple','input-exp-amount','input-exp-qty','input-exp-unit-price'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
   var hint=document.getElementById('amount-hint');if(hint)hint.textContent='';
   var debtWrap=document.getElementById('debt-select-wrap');if(debtWrap)debtWrap.style.display='none';
   var debtInfo=document.getElementById('debt-info-box');if(debtInfo)debtInfo.style.display='none';
   var descWrap=document.getElementById('desc-wrap');if(descWrap)descWrap.style.display='block';
   renderHome();
-  var mv=document.getElementById('modal-view-acc');if(mv&&mv.classList.contains('open'))viewRenderList();
+  var mv=document.getElementById('modal-view-acc');
+  if(mv&&mv.classList.contains('open'))viewRenderList();
   showToast('บันทึกรายการแล้ว');
 }
 
@@ -1100,56 +1285,97 @@ function saveSettings(){
 var _editAcc='home',_editId='',_editType='income';
 
 function openEditModal(acc,id){
-  var txList=DATA[acc].transactions;var t=null;
+  var txList=DATA[acc].transactions;
+  var t=null;
   for(var i=0;i<txList.length;i++){if(txList[i].id===id){t=txList[i];break;}}
   if(!t)return;
   _editAcc=acc;_editId=id;_editType=t.type;
-  var isFarm=acc==='farm',isFarmIncome=isFarm&&t.type==='income',isFarmExpense=isFarm&&t.type==='expense';
-  var hdr=document.getElementById('modal-edit-hdr');hdr.style.background=t.type==='income'?'#4A7A3A':'#8B3020';
+
+  var isFarm=acc==='farm';
+  var isFarmIncome=isFarm&&t.type==='income';
+  var isFarmExpense=isFarm&&t.type==='expense';
+
+  var hdr=document.getElementById('modal-edit-hdr');
+  hdr.style.background=t.type==='income'?'#4A7A3A':'#8B3020';
   document.getElementById('edit-modal-title').textContent=(acc==='home'?'ครัวเรือน':'การเกษตร')+' — '+(t.type==='income'?'รายรับ':'รายจ่าย');
+
+  // type toggle — home เท่านั้น
   document.getElementById('edit-type-row').style.display=isFarm?'none':'grid';
   _editSetTypeBtns(t.type);
+
+  // ซ่อนทุก section ก่อน
   document.getElementById('edit-farm-income-cats').style.display='none';
   document.getElementById('edit-simple-cat').style.display='none';
   document.getElementById('edit-desc-wrap').style.display='none';
   document.getElementById('edit-amount-wrap').style.display='block';
+
   if(isFarmIncome){
     document.getElementById('edit-farm-income-cats').style.display='block';
     var mainSel=document.getElementById('edit-farm-main');
     mainSel.innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.farm.income.map(function(c){return '<option>'+c+'</option>';}).join('');
-    var parts=(t.category||'').split(' › ');var main=parts[0]||'',sub=parts[1]||'';mainSel.value=main;
-    var unitSel=document.getElementById('edit-unit');unitSel.innerHTML='<option value="">เลือกหน่วย</option>'+FARM_UNITS.map(function(u){return '<option>'+u+'</option>';}).join('');
-    editFarmMainChange(main);if(sub)document.getElementById('edit-farm-sub').value=sub;
-    if(t.qty)document.getElementById('edit-qty').value=t.qty;if(t.unit)document.getElementById('edit-unit').value=t.unit;if(t.unitPrice)document.getElementById('edit-unit-price').value=t.unitPrice;
+    var parts=(t.category||'').split(' › ');
+    var main=parts[0]||'',sub=parts[1]||'';
+    mainSel.value=main;
+    var unitSel=document.getElementById('edit-unit');
+    unitSel.innerHTML='<option value="">เลือกหน่วย</option>'+FARM_UNITS.map(function(u){return '<option>'+u+'</option>';}).join('');
+    editFarmMainChange(main);
+    if(sub)document.getElementById('edit-farm-sub').value=sub;
+    if(t.qty)document.getElementById('edit-qty').value=t.qty;
+    if(t.unit)document.getElementById('edit-unit').value=t.unit;
+    if(t.unitPrice)document.getElementById('edit-unit-price').value=t.unitPrice;
     document.getElementById('edit-amount').value=t.amount;
   } else if(isFarmExpense){
     document.getElementById('edit-simple-cat').style.display='block';
     var expSel=document.getElementById('edit-category-simple');
     expSel.innerHTML='<option value="">เลือกหมวดหมู่</option>'+FARM_EXPENSE_GROUPS.map(function(g){return '<optgroup label="'+g.group+'">'+g.items.map(function(c){return '<option>'+c+'</option>';}).join('')+'</optgroup>';}).join('');
     expSel.value=t.category||'';
-    var unitSel2=document.getElementById('edit-exp-unit');unitSel2.innerHTML='<option value="">เลือกหน่วย</option>'+FARM_UNITS.map(function(u){return '<option>'+u+'</option>';}).join('');
+    var unitSel2=document.getElementById('edit-exp-unit');
+    unitSel2.innerHTML='<option value="">เลือกหน่วย</option>'+FARM_UNITS.map(function(u){return '<option>'+u+'</option>';}).join('');
     editFarmExpChange(t.category||'');
-    if(t.qty)document.getElementById('edit-exp-qty').value=t.qty;if(t.unit)document.getElementById('edit-exp-unit').value=t.unit;if(t.unitPrice)document.getElementById('edit-exp-unit-price').value=t.unitPrice;
-    document.getElementById('edit-amount').value=t.amount;if(t.qty&&t.unitPrice)document.getElementById('edit-exp-amount').value=t.amount;
+    if(t.qty)document.getElementById('edit-exp-qty').value=t.qty;
+    if(t.unit)document.getElementById('edit-exp-unit').value=t.unit;
+    if(t.unitPrice)document.getElementById('edit-exp-unit-price').value=t.unitPrice;
+    document.getElementById('edit-amount').value=t.amount;
+    if(t.qty&&t.unitPrice)document.getElementById('edit-exp-amount').value=t.amount;
   } else {
-    document.getElementById('edit-simple-cat').style.display='block';document.getElementById('edit-desc-wrap').style.display='block';
+    // home income/expense
+    document.getElementById('edit-simple-cat').style.display='block';
+    document.getElementById('edit-desc-wrap').style.display='block';
     var homeSel=document.getElementById('edit-category-simple');
     homeSel.innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.home[t.type].map(function(c){return '<option>'+c+'</option>';}).join('');
-    homeSel.value=t.category||'';document.getElementById('edit-desc').value=t.desc||'';
-    document.getElementById('edit-amount').value=t.amount;document.getElementById('edit-farm-exp-qty-block').style.display='none';
+    homeSel.value=t.category||'';
+    document.getElementById('edit-desc').value=t.desc||'';
+    document.getElementById('edit-amount').value=t.amount;
+    document.getElementById('edit-farm-exp-qty-block').style.display='none';
   }
-  document.getElementById('edit-date').value=t.date||'';document.getElementById('edit-note').value=t.note||'';document.getElementById('edit-hint').textContent='';
+
+  document.getElementById('edit-date').value=t.date||'';
+  document.getElementById('edit-note').value=t.note||'';
+  document.getElementById('edit-hint').textContent='';
   openModal('modal-edit');
 }
 
 function _editSetTypeBtns(type){
-  var bi=document.getElementById('edit-btn-income'),be=document.getElementById('edit-btn-expense'),isInc=type==='income';
-  bi.style.background=isInc?'#4A7A3A':'#FDFAF6';bi.style.border='1.5px solid '+(isInc?'#4A7A3A':'#E0D5C4');bi.style.color=isInc?'#FAF0E6':'#6A5848';bi.style.webkitTextFillColor=isInc?'#FAF0E6':'#6A5848';bi.style.fontWeight=isInc?'600':'400';bi.textContent=isInc?'รายรับ ✓':'รายรับ';
-  be.style.background=!isInc?'#8B3020':'#FDFAF6';be.style.border='1.5px solid '+(!isInc?'#8B3020':'#E0D5C4');be.style.color=!isInc?'#FAF0E6':'#6A5848';be.style.webkitTextFillColor=!isInc?'#FAF0E6':'#6A5848';be.style.fontWeight=!isInc?'600':'400';be.textContent=!isInc?'รายจ่าย ✓':'รายจ่าย';
+  var bi=document.getElementById('edit-btn-income');
+  var be=document.getElementById('edit-btn-expense');
+  var isInc=type==='income';
+  bi.style.background=isInc?'#4A7A3A':'#FDFAF6';
+  bi.style.border='1.5px solid '+(isInc?'#4A7A3A':'#E0D5C4');
+  bi.style.color=isInc?'#FAF0E6':'#6A5848';
+  bi.style.webkitTextFillColor=isInc?'#FAF0E6':'#6A5848';
+  bi.style.fontWeight=isInc?'600':'400';
+  bi.textContent=isInc?'รายรับ ✓':'รายรับ';
+  be.style.background=!isInc?'#8B3020':'#FDFAF6';
+  be.style.border='1.5px solid '+(isInc?'#E0D5C4':'#8B3020');
+  be.style.color=!isInc?'#FAF0E6':'#6A5848';
+  be.style.webkitTextFillColor=!isInc?'#FAF0E6':'#6A5848';
+  be.style.fontWeight=!isInc?'600':'400';
+  be.textContent=!isInc?'รายจ่าย ✓':'รายจ่าย';
 }
 
 function editSetType(type){
-  _editType=type;_editSetTypeBtns(type);
+  _editType=type;
+  _editSetTypeBtns(type);
   document.getElementById('modal-edit-hdr').style.background=type==='income'?'#4A7A3A':'#8B3020';
   var catSel=document.getElementById('edit-category-simple');
   catSel.innerHTML='<option value="">เลือกหมวดหมู่</option>'+CATEGORIES.home[type].map(function(c){return '<option>'+c+'</option>';}).join('');
@@ -1157,57 +1383,96 @@ function editSetType(type){
 }
 
 function editFarmMainChange(main){
-  var subWrap=document.getElementById('edit-farm-sub-wrap'),subSel=document.getElementById('edit-farm-sub'),qtyBlock=document.getElementById('edit-farm-qty-block'),isProduct=main==='ขายพืชผล';
+  var subWrap=document.getElementById('edit-farm-sub-wrap');
+  var subSel=document.getElementById('edit-farm-sub');
+  var qtyBlock=document.getElementById('edit-farm-qty-block');
+  var isProduct=main==='ขายพืชผล';
   if(qtyBlock)qtyBlock.style.display=isProduct?'block':'none';
   if(!main||!FARM_INCOME_SUB[main]){subWrap.style.display='none';return;}
-  subWrap.style.display='block';subSel.innerHTML='<option value="">เลือกหมวดย่อย</option>'+FARM_INCOME_SUB[main].map(function(s){return '<option>'+s+'</option>';}).join('');
+  subWrap.style.display='block';
+  subSel.innerHTML='<option value="">เลือกหมวดย่อย</option>'+FARM_INCOME_SUB[main].map(function(s){return '<option>'+s+'</option>';}).join('');
 }
 
 function editFarmExpChange(cat){
   var needQty=FARM_EXPENSE_QTY_CATS.indexOf(cat)>=0;
-  var qtyBlock=document.getElementById('edit-farm-exp-qty-block'),amtWrap=document.getElementById('edit-amount-wrap');
-  if(qtyBlock)qtyBlock.style.display=needQty?'block':'none';if(amtWrap)amtWrap.style.display=needQty?'none':'block';
+  var qtyBlock=document.getElementById('edit-farm-exp-qty-block');
+  var amtWrap=document.getElementById('edit-amount-wrap');
+  if(qtyBlock)qtyBlock.style.display=needQty?'block':'none';
+  if(amtWrap)amtWrap.style.display=needQty?'none':'block';
 }
 
 function editCalcAmount(){
-  var qty=parseFloat(document.getElementById('edit-qty').value)||0,up=parseFloat(document.getElementById('edit-unit-price').value)||0,hint=document.getElementById('edit-hint');
-  if(qty>0&&up>0){document.getElementById('edit-amount').value=(qty*up).toFixed(2);if(hint)hint.textContent=fmt(qty)+' × '+fmt(up)+' = '+fmt(qty*up)+' บาท';}else{if(hint)hint.textContent='';}
+  var qty=parseFloat(document.getElementById('edit-qty').value)||0;
+  var up=parseFloat(document.getElementById('edit-unit-price').value)||0;
+  var hint=document.getElementById('edit-hint');
+  if(qty>0&&up>0){
+    document.getElementById('edit-amount').value=(qty*up).toFixed(2);
+    if(hint)hint.textContent=fmt(qty)+' × '+fmt(up)+' = '+fmt(qty*up)+' บาท';
+  } else {if(hint)hint.textContent='';}
 }
 
 function editCalcExpAmount(){
-  var qty=parseFloat(document.getElementById('edit-exp-qty').value)||0,up=parseFloat(document.getElementById('edit-exp-unit-price').value)||0,hint=document.getElementById('edit-exp-hint');
-  if(qty>0&&up>0){document.getElementById('edit-exp-amount').value=(qty*up).toFixed(2);if(hint)hint.textContent=fmt(qty)+' × '+fmt(up)+' = '+fmt(qty*up)+' บาท';}else{if(hint)hint.textContent='';}
+  var qty=parseFloat(document.getElementById('edit-exp-qty').value)||0;
+  var up=parseFloat(document.getElementById('edit-exp-unit-price').value)||0;
+  var hint=document.getElementById('edit-exp-hint');
+  if(qty>0&&up>0){
+    document.getElementById('edit-exp-amount').value=(qty*up).toFixed(2);
+    if(hint)hint.textContent=fmt(qty)+' × '+fmt(up)+' = '+fmt(qty*up)+' บาท';
+  } else {if(hint)hint.textContent='';}
 }
 
 function saveEditTransaction(){
-  var txList=DATA[_editAcc].transactions;var idx=-1;
+  var txList=DATA[_editAcc].transactions;
+  var idx=-1;
   for(var i=0;i<txList.length;i++){if(txList[i].id===_editId){idx=i;break;}}
-  if(idx<0)return;var t=txList[idx];
-  var isFarm=_editAcc==='farm',isFarmIncome=isFarm&&t.type==='income',isFarmExpense=isFarm&&t.type==='expense';
+  if(idx<0)return;
+  var t=txList[idx];
+  var isFarm=_editAcc==='farm';
+  var isFarmIncome=isFarm&&t.type==='income';
+  var isFarmExpense=isFarm&&t.type==='expense';
+
   if(isFarmIncome){
-    var main=document.getElementById('edit-farm-main').value,sub=document.getElementById('edit-farm-sub').value;
+    var main=document.getElementById('edit-farm-main').value;
+    var sub=document.getElementById('edit-farm-sub').value;
     if(!main){alert('กรุณาเลือกหมวดหมู่');return;}
-    t.category=sub?main+' › '+sub:main;t.desc=sub||main;
-    t.qty=parseFloat(document.getElementById('edit-qty').value)||null;t.unit=document.getElementById('edit-unit').value||'';t.unitPrice=parseFloat(document.getElementById('edit-unit-price').value)||null;t.amount=parseFloat(document.getElementById('edit-amount').value)||0;
+    t.category=sub?main+' › '+sub:main;
+    t.desc=sub||main;
+    t.qty=parseFloat(document.getElementById('edit-qty').value)||null;
+    t.unit=document.getElementById('edit-unit').value||'';
+    t.unitPrice=parseFloat(document.getElementById('edit-unit-price').value)||null;
+    t.amount=parseFloat(document.getElementById('edit-amount').value)||0;
   } else if(isFarmExpense){
     t.category=document.getElementById('edit-category-simple').value;
     var needQty=FARM_EXPENSE_QTY_CATS.indexOf(t.category)>=0;
-    if(needQty){t.qty=parseFloat(document.getElementById('edit-exp-qty').value)||null;t.unit=document.getElementById('edit-exp-unit').value||'';t.unitPrice=parseFloat(document.getElementById('edit-exp-unit-price').value)||null;t.amount=parseFloat(document.getElementById('edit-exp-amount').value)||0;}
-    else{t.amount=parseFloat(document.getElementById('edit-amount').value)||0;t.qty=null;t.unitPrice=null;t.unit='';}
+    if(needQty){
+      t.qty=parseFloat(document.getElementById('edit-exp-qty').value)||null;
+      t.unit=document.getElementById('edit-exp-unit').value||'';
+      t.unitPrice=parseFloat(document.getElementById('edit-exp-unit-price').value)||null;
+      t.amount=parseFloat(document.getElementById('edit-exp-amount').value)||0;
+    } else {
+      t.amount=parseFloat(document.getElementById('edit-amount').value)||0;
+      t.qty=null;t.unitPrice=null;t.unit='';
+    }
     t.desc=t.category||'รายจ่ายเกษตร';
   } else {
-    t.type=_editType;t.category=document.getElementById('edit-category-simple').value;t.desc=document.getElementById('edit-desc').value.trim();t.amount=parseFloat(document.getElementById('edit-amount').value)||0;
+    t.type=_editType;
+    t.category=document.getElementById('edit-category-simple').value;
+    t.desc=document.getElementById('edit-desc').value.trim();
+    t.amount=parseFloat(document.getElementById('edit-amount').value)||0;
     if(!t.desc){alert('กรุณาระบุรายการ');return;}
   }
   if(!t.amount||t.amount<=0){alert('กรุณาระบุจำนวนเงิน');return;}
-  t.date=document.getElementById('edit-date').value;t.note=document.getElementById('edit-note').value.trim();
+  t.date=document.getElementById('edit-date').value;
+  t.note=document.getElementById('edit-note').value.trim();
   saveData();closeModal('modal-edit');viewRenderList();renderHome();showToast('แก้ไขรายการแล้ว');
 }
 
 function deleteTransaction(){
   if(!confirm('ยืนยันการลบรายการนี้?'))return;
   var txList=DATA[_editAcc].transactions;
-  for(var i=0;i<txList.length;i++){if(txList[i].id===_editId){txList.splice(i,1);break;}}
+  for(var i=0;i<txList.length;i++){
+    if(txList[i].id===_editId){txList.splice(i,1);break;}
+  }
   saveData();closeModal('modal-edit');viewRenderList();renderHome();showToast('ลบรายการแล้ว');
 }
 
