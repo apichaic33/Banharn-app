@@ -636,10 +636,40 @@ function deleteDebt(){
 }
 
 window.addEventListener('load',function(){
+  // ถ้าเปิดแอพครั้งแรก (ไม่ได้มาจากการ navigate ภายใน) ให้ redirect ไป index.html
+  if(!sessionStorage.getItem('appStarted')){
+    // ตรวจว่ามี hash debt อยู่ไหม ถ้ามีค่อยเซ็ต flag แล้วไม่ redirect
+    var hash=window.location.hash;
+    if(!hash||hash.indexOf('#debt-')!==0){
+      sessionStorage.setItem('appStarted','1');
+      window.location.replace('index.html');
+      return;
+    }
+  }
+  sessionStorage.setItem('appStarted','1');
+
   document.querySelectorAll('.modal-overlay').forEach(function(el){
     el.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}});
   });
   renderBudget();
+
+  // hash navigation: #debt-acc-id → เปิดแท็บสินเชื่อและ edit modal นั้นทันที
+  var hash=window.location.hash;
+  if(hash&&hash.indexOf('#debt-')===0){
+    var parts=hash.replace('#debt-','').split('-');
+    // format: debt-{acc}-{id} — id อาจมี - ข้างใน ต้องรวม parts ที่ 2+ เป็น id
+    var hAcc=parts[0];
+    var hId=parts.slice(1).join('-');
+    if(hAcc&&hId){
+      switchTab('debt');
+      setTimeout(function(){
+        renderDebt();
+        openEditDebt(hAcc,hId);
+      },100);
+    }
+    // ล้าง hash
+    history.replaceState(null,'',window.location.pathname);
+  }
 });
 </script>
 </body>
