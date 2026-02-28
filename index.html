@@ -12,7 +12,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>บัญชีครัวเรือน &amp; เกษตร</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&family=Thasadith:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #6C3212;
@@ -67,8 +67,8 @@
       box-shadow: 0 6px 24px rgba(61,35,20,0.22);
     }
     .header-row { display: flex; justify-content: space-between; align-items: flex-start; }
-    .app-title { font-family: 'Mitr', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.3px; }
-    .header-date { font-size: 12px; opacity: 0.75; margin-top: 3px; }
+    .app-title { font-family: 'Thasadith', sans-serif; font-size: 34px; font-weight: 700; letter-spacing: 0.3px; }
+    .header-date { font-size: 12px; font-family: 'K2D', sans-serif; font-weight: 300; opacity: 0.75; margin-top: 3px; }
     .icon-btn {
       width: 34px; height: 34px; border-radius: 8px;
       border: 1.5px solid rgba(255,255,255,0.3);
@@ -76,7 +76,7 @@
       color: white; cursor: pointer;
       display: flex; align-items: center; justify-content: center; font-size: 14px;
     }
-    .sync-row { display: flex; align-items: center; gap: 5px; margin-top: 2px; font-size: 11px; opacity: 0.7; }
+    .sync-row { display: flex; align-items: center; gap: 5px; margin-top: 2px; font-size: 11px; font-family: 'K2D', sans-serif; font-weight: 300; opacity: 0.7; }
     .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #A89070; }
     .sync-dot.offline { background: #C07050; }
 
@@ -146,8 +146,8 @@
 
     /* BOTTOM NAV */
     .bottom-nav {
-      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 100%; max-width: 480px; background: #FDFAF6;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      width: 100%; background: #FDFAF6;
       border-top: 1px solid #E0D5C4; display: flex; z-index: 200;
       box-shadow: 0 -4px 24px rgba(61,35,20,0.12);
       padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
@@ -174,7 +174,7 @@
       color: white !important; -webkit-text-fill-color: white !important;
       cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
     }
-    .acc-header h2 { font-family: 'Mitr', sans-serif; font-size: 17px; font-weight: 600; }
+    .acc-header h2 { font-family: 'Mitr', sans-serif; font-size: 34px; font-weight: 600; }
     .acc-header .summary-strip .sum-card { background: rgba(255,240,220,0.15); border: 1px solid rgba(255,240,220,0.25); border-radius: 12px; }
     .acc-header .sum-label { color: rgba(255,255,255,0.7); }
     .acc-header .sum-value { color: white; font-size: 14px; }
@@ -294,7 +294,7 @@
     }
 
     .modal-handle { width: 36px; height: 3px; background: var(--border); border-radius: 2px; margin: 0 auto 14px; }
-    .modal-title { font-family: 'Mitr', sans-serif; font-size: 17px; font-weight: 600; margin-bottom: 18px; text-align: center; color: var(--text); }
+    .modal-title { font-family: 'Mitr', sans-serif; font-size: 34px; font-weight: 600; margin-bottom: 18px; text-align: center; color: var(--text); }
 
     /* FORM */
     .form-group { margin-bottom: 18px; }
@@ -659,7 +659,7 @@
 <div class="modal-overlay" id="modal-debt-detail">
   <div class="modal-sheet" style="max-height:90vh;overflow-y:auto;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
-      <div style="font-family:'Mitr',sans-serif;font-size:17px;font-weight:600;color:var(--text);" id="dd-title">รายละเอียดสินเชื่อ</div>
+      <div style="font-family:'Mitr',sans-serif;font-size:34px;font-weight:600;color:var(--text);" id="dd-title">รายละเอียดสินเชื่อ</div>
       <button onclick="closeModal('modal-debt-detail')" style="width:32px;height:32px;border-radius:50%;background:#E8E0D4;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A5848;flex-shrink:0;">&#x2715;</button>
     </div>
     <div id="dd-body"></div>
